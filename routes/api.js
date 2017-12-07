@@ -4,11 +4,11 @@ var mysql = require('mysql');
 
 //设置跨域访问
 router.all('*', function(req, res, next) {
-   res.header("Access-Control-Allow-Origin", "*");
-   res.header("Access-Control-Allow-Headers", "X-Requested-With");
-   res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
-   res.header("X-Powered-By",' 3.2.1');
-   res.header("Content-Type", "application/json;charset=utf-8");
+   // res.header("Access-Control-Allow-Origin", "*");
+   // res.header("Access-Control-Allow-Headers", "X-Requested-With");
+   // res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
+   // res.header("X-Powered-By",' 3.2.1');
+   // res.header("Content-Type", "application/json;charset=utf-8");
    next();
 });
 
@@ -18,10 +18,10 @@ router.all('*', function(req, res, next) {
  */
 router.get('/todo/completed/list', function (req, res) {
   var connection = mysql.createConnection({
-    host     : '127.0.0.1',
-    user     : 'root',
-    password : 'zhangning',
-    database : 'todolist',
+    host     : 'bdm236195480.my3w.com',
+    user     : 'bdm236195480',
+    password : 'bdm236195480',
+    database : 'bdm236195480_db',
     port: '3306'
   });
   connection.connect();
@@ -39,10 +39,10 @@ router.get('/todo/completed/list', function (req, res) {
  */
 router.get('/todo/undone/list', function (req, res) {
   var connection = mysql.createConnection({
-    host     : '60.205.20.89',
+    host     : 'bdm236195480.my3w.com',
     user     : 'bdm236195480',
     password : 'bdm236195480',
-    database : 'todolist',
+    database : 'bdm236195480_db',
     port: '3306'
   });
   connection.connect();
@@ -62,10 +62,10 @@ router.get('/todo/undone/list', function (req, res) {
 router.post('/todo/add', function (req, res) {
   var data = req.body;
   var connection = mysql.createConnection({
-    host     : '127.0.0.1',
-    user     : 'root',
-    password : 'zhangning',
-    database : 'todolist',
+    host     : 'bdm236195480.my3w.com',
+    user     : 'bdm236195480',
+    password : 'bdm236195480',
+    database : 'bdm236195480_db',
     port: '3306'
   });
   connection.connect();
@@ -92,10 +92,10 @@ router.post('/todo/add', function (req, res) {
 router.put('/todo/edit', function (req, res) {
   var data = req.body;
   var connection = mysql.createConnection({
-    host     : '127.0.0.1',
-    user     : 'root',
-    password : 'zhangning',
-    database : 'todolist',
+    host     : 'bdm236195480.my3w.com',
+    user     : 'bdm236195480',
+    password : 'bdm236195480',
+    database : 'bdm236195480_db',
     port: '3306'
   });
   connection.connect();
@@ -119,10 +119,10 @@ router.put('/todo/edit', function (req, res) {
 router.delete('/todo/completed/remove', function (req, res) {
   var data = req.body;
   var connection = mysql.createConnection({
-    host     : '127.0.0.1',
-    user     : 'root',
-    password : 'zhangning',
-    database : 'todolist',
+    host     : 'bdm236195480.my3w.com',
+    user     : 'bdm236195480',
+    password : 'bdm236195480',
+    database : 'bdm236195480_db',
     port: '3306'
   });
   connection.connect();

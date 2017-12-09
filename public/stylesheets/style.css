@@ -155,7 +155,7 @@ body {
   background-position: center;
 }
 
-.item-text {
+.item-text-undone {
   width: 452px;
   padding-left: 10px;
   padding-right: 10px;
@@ -165,6 +165,19 @@ body {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.item-text-completed {
+  width: 452px;
+  padding-left: 10px;
+  padding-right: 10px;
+  font-size: 20px;
+  color: #dbdbdb;
+  line-height: 50px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-decoration: line-through;
 }
 
 .add-todo {

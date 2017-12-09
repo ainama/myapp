@@ -33,7 +33,7 @@ pool.on('release', function (connection) {
  */
 var query = function(sql, params, callback) {
   pool.getConnection(function(error, connection) {
-    if (err) {
+    if (error) {
       callback(error, null, null);
     } else {
       connection.query(sql, params, function (error, results, fields) {

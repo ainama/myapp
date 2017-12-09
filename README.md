@@ -18,7 +18,7 @@ node.js + express + react + mysql/mongodb  练习
 ```
 
 
-# 推进计划
+# plan
   * express 中使用 webpack-dev-server 热更新
   * react-router, react-redux, sass 前端环境搭建
   * 单页面实现 express 中对路由监听

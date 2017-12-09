@@ -24,7 +24,7 @@
     "express": "~4.15.5",
     "jade": "~1.11.0",
     "morgan": "~1.9.0",
-    "node-mysql": "^0.4.2",
+    "mysql": "^2.15.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "serve-favicon": "~2.4.5"

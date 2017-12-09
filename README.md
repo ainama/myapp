@@ -21,10 +21,12 @@ node.js + express + react + mysql/mongodb  练习
 # plan
   * 已完成
     * 使用 mysql 连接池
+    * mysql 连接池封装
+    * 配置 sass
 
   * 未完成
     * express 中使用 webpack-dev-server 热更新
-    * react-router, react-redux, sass 前端环境搭建
+    * react-router, react-redux 前端环境搭建
     * 单页面实现 express 中对路由监听
     * 使用 mongoDB
     * 保护数据库账户信息

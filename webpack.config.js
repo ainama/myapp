@@ -1,12 +1,13 @@
-const Webpack = require('webpack');
 const path = require('path');
+const webpack = require('webpack');
 
 const config = {
-  entry: './web/app.js',
+  entry: {
+    app: './web/app.js'
+  },
 
   output: {
-    path: path.resolve(__dirname, './public/javascripts'),
-    // publicPath: '/javascripts/',
+    path: path.join(__dirname, './public/javascripts'),
     filename: 'index.js'
   },
 
@@ -18,11 +19,11 @@ const config = {
         query: {
           presets: ['babel-preset-react', 'babel-preset-es2015']
         }
-      }
-      // {
-      //   test: /\.scss$/,
-      //   loader: 'style!css!sass'
-      // },
+      },
+      {
+        test: /\.scss$/,
+        loader: 'style-loader!css-loader!sass-loader'
+      },
     ]
   },
 

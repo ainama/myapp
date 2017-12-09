@@ -1,34 +1,7 @@
 var express = require('express');
 var router = express.Router();
-var mysql = require('mysql');
 
-var pool = mysql.createPool({
-  host     : 'bdm236195480.my3w.com',
-  user     : 'bdm236195480',
-  password : 'bdm236195480',
-  database : 'bdm236195480_db',
-  port: '3306'
-});
-
-pool.on('acquire', function (connection) {
-  console.log('Connection %d acquired', connection.threadId);
-});
-
-pool.on('connection', function (connection) {
-  connection.query('SET SESSION auto_increment_increment=1')
-});
-
-pool.on('enqueue', function () {
-  console.log('Waiting for available connection slot');
-});
-
-pool.on('release', function (connection) {
-  console.log('Connection %d released', connection.threadId);
-});
-
-// pool.end(function (err) {
-//   // all connections in the pool have ended
-// });
+var query = require('../tools/mysql_server.js');
 
 /* 设置跨域访问 未测试 */
 router.all('*', function(req, res, next) {
@@ -45,13 +18,10 @@ router.all('*', function(req, res, next) {
  * @method /todo/completed/list
  */
 router.get('/todo/completed/list', function (req, res) {
-  pool.getConnection(function(err, connection) {
-    var command = 'SELECT * FROM test WHERE status=1 ORDER BY update_time DESC';
-    connection.query(command, function (error, results, fields) {
-      res.send({ code: 10000, msg: results });
-      connection.release();
-      if (error) throw error;
-    });
+  var sql = 'SELECT * FROM test WHERE status=1 ORDER BY update_time DESC';
+  query(sql, null, function (error, results, fields) {
+    res.send({ code: 10000, msg: results });
+    if (error) throw error;
   });
 });
 
@@ -60,13 +30,10 @@ router.get('/todo/completed/list', function (req, res) {
  * @method /todo/undone/list
  */
 router.get('/todo/undone/list', function (req, res) {
-  pool.getConnection(function(err, connection) {
-    var command = 'SELECT * FROM test WHERE status=0';
-    connection.query(command, function (error, results, fields) {
-      res.send({ code: 10000, msg: results });
-      connection.release();
-      if (error) throw error;
-    });
+  var sql = 'SELECT * FROM test WHERE status=0';
+  query(sql, null, function (error, results, fields) {
+    res.send({ code: 10000, msg: results });
+    if (error) throw error;
   });
 });
 
@@ -76,19 +43,16 @@ router.get('/todo/undone/list', function (req, res) {
  * @param {string} todo TODO内容
  */
 router.post('/todo/add', function (req, res) {
-  pool.getConnection(function(err, connection) {
-    var data = req.body;
-    var command = 'INSERT INTO test(id, todo, status) VALUES (0, ?, ?)';
-    var params = [data.todo, 0];
-    connection.query(command, params, function (error, results, fields) {
-      if (results.serverStatus == 2) {
-        res.send({ code: 10000, msg: '请求成功' });
-      } else {
-        res.send({ code: 10001, msg: '请求失败' });
-      }
-      connection.release();
-      if (error) throw error;
-    });
+  var data = req.body;
+  var sql = 'INSERT INTO test(id, todo, status) VALUES (0, ?, ?)';
+  var params = [data.todo, 0];
+  query(sql, params, function (error, results, fields) {
+    if (results.serverStatus == 2) {
+      res.send({ code: 10000, msg: '请求成功' });
+    } else {
+      res.send({ code: 10001, msg: '请求失败' });
+    }
+    if (error) throw error;
   });
 });
 
@@ -100,19 +64,16 @@ router.post('/todo/add', function (req, res) {
  * @param {int} status TODO完成状态
  */
 router.put('/todo/edit', function (req, res) {
-  pool.getConnection(function(err, connection) {
-    var data = req.body;
-    var command = 'UPDATE test SET todo = ?, status = ? WHERE id = ?';
-    var params = [data.todo, data.status, data.id];
-    connection.query(command, params, function (error, results, fields) {
-      if (results.serverStatus == 2) {
-        res.send({ code: 10000, msg: '请求成功' });
-      } else {
-        res.send({ code: 10001, msg: '请求失败' });
-      }
-      connection.release();
-      if (error) throw error;
-    });
+  var data = req.body;
+  var sql = 'UPDATE test SET todo = ?, status = ? WHERE id = ?';
+  var params = [data.todo, data.status, data.id];
+  query(sql, params, function (error, results, fields) {
+    if (results.serverStatus == 2) {
+      res.send({ code: 10000, msg: '请求成功' });
+    } else {
+      res.send({ code: 10001, msg: '请求失败' });
+    }
+    if (error) throw error;
   });
 });
 
@@ -121,17 +82,14 @@ router.put('/todo/edit', function (req, res) {
  * @method /todo/completed/remove
  */
 router.delete('/todo/completed/remove', function (req, res) {
-  pool.getConnection(function(err, connection) {
-    var command = 'DELETE FROM test WHERE status = 1';
-    connection.query(command, function (error, results, fields) {
-      if (results.serverStatus == 2) {
-        res.send({ code: 10000, msg: '请求成功' });
-      } else {
-        res.send({ code: 10001, msg: '请求失败' });
-      }
-      connection.release();
-      if (error) throw error;
-    });
+  var sql = 'DELETE FROM test WHERE status = 1';
+  connection.query(sql, function (error, results, fields) {
+    if (results.serverStatus == 2) {
+      res.send({ code: 10000, msg: '请求成功' });
+    } else {
+      res.send({ code: 10001, msg: '请求失败' });
+    }
+    if (error) throw error;
   });
 });
 

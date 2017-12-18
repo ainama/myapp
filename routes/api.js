@@ -30,7 +30,7 @@ router.get('/todo/completed/list', function (req, res) {
  * @method /todo/undone/list
  */
 router.get('/todo/undone/list', function (req, res) {
-  var sql = 'SELECT * FROM test WHERE status=0';
+  var sql = 'SELECT * FROM test WHERE status=0 ORDER BY id ASC';
   query(sql, null, function (error, results, fields) {
     res.send({ code: 10000, msg: results });
     if (error) throw error;
@@ -83,7 +83,7 @@ router.put('/todo/edit', function (req, res) {
  */
 router.delete('/todo/completed/remove', function (req, res) {
   var sql = 'DELETE FROM test WHERE status = 1';
-  connection.query(sql, function (error, results, fields) {
+  query(sql, function (error, results, fields) {
     if (results.serverStatus == 2) {
       res.send({ code: 10000, msg: '请求成功' });
     } else {

@@ -1,5 +1,5 @@
 var mysql_config = {
-  host     : '****.'****.'****',
+  host     : '****.****.****',
   user     : '********',
   password : '********',
   database : '********',

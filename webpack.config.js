@@ -3,12 +3,13 @@ const webpack = require('webpack');
 
 const config = {
   entry: {
-    app: './front/community/app.js'
+    community: './front/community/app.js',
+    todo: './front/todo/app.js'
   },
 
   output: {
     path: path.join(__dirname, './public/javascripts'),
-    filename: 'index.js'
+    filename: '[name].js'
   },
 
   module: {

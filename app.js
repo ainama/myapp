@@ -6,8 +6,10 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 var communityAPI = require('./routes/community/api');
+var communityPAGE = require('./routes/community');
+
 var todoAPI = require('./routes/todo/api');
-var index = require('./routes/index');
+var todoPAGE = require('./routes/todo');
 
 var app = express();
 
@@ -22,8 +24,10 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/api/community', communityAPI);
+app.use('/community/*', communityPAGE);
+
 app.use('/api/todo', todoAPI);
-app.use('*', index);
+app.use('/todo/*', todoPAGE);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

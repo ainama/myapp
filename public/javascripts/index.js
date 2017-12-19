@@ -17150,11 +17150,24 @@ var Page = function (_React$Component) {
           leaveConfirm: '正在上传文件'
         }
       });
+
+      this.get();
     }
   }, {
     key: 'push',
     value: function push() {
       this.props.history.push('/page2');
+    }
+  }, {
+    key: 'get',
+    value: function get() {
+      $.ajax({
+        url: '/api/community/test',
+        type: 'get',
+        success: function success(res) {
+          console.log(res);
+        }
+      });
     }
   }, {
     key: 'render',
@@ -17169,7 +17182,7 @@ var Page = function (_React$Component) {
           { onClick: function onClick() {
               _this2.push();
             } },
-          '\u53BBpage2'
+          '\u53BB\u7B2C\u4E8C\u4E2A\u9875\u9762'
         ),
         _react2.default.createElement('textarea', {
           id: 'remark',

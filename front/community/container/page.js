@@ -25,20 +25,32 @@ class Page extends React.Component {
         leaveConfirm: '正在上传文件'
        }
     });
+
+    this.get();
   }
 
   push() {
     this.props.history.push('/page2');
   }
 
+  get() {
+    $.ajax({
+      url: '/api/community/test',
+      type: 'get',
+      success: function(res) {
+        console.log(res);
+      }
+    });
+  }
+
   render() {
     return (
       <div>
-        <div onClick = { () => { this.push(); } }>去page2</div>
-          <textarea
-            id = 'remark'
-            ref = 'textarea'
-            placeholder = '请输入内容' />
+        <div onClick = { () => { this.push(); } }>去第二个页面</div>
+        <textarea
+          id = 'remark'
+          ref = 'textarea'
+          placeholder = '请输入内容' />
       </div>
     );
   }

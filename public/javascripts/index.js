@@ -17122,6 +17122,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+// import Simditor from 'simditor';
 
 var Page = function (_React$Component) {
   _inherits(Page, _React$Component);
@@ -17135,7 +17136,20 @@ var Page = function (_React$Component) {
   _createClass(Page, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      console.log(this.props);
+      var editor = new Simditor({
+        //textarea的id
+        textarea: $('#remark'),
+        //工具条都包含哪些内容
+        toolbar: ['title', 'bold', 'italic', 'underline', 'table', 'color', 'ol', 'ul', 'image', 'hr'],
+        //若需要上传功能，上传的参数设置。
+        upload: {
+          url: 'ImgUpload.action', //文件上传的接口地址
+          params: null, //键值对,指定文件上传接口的额外参数,上传的时候随文件一起提交
+          fileKey: 'fileDataFileName', //服务器端获取文件数据的参数名
+          connectionCount: 3,
+          leaveConfirm: '正在上传文件'
+        }
+      });
     }
   }, {
     key: 'push',
@@ -17156,7 +17170,11 @@ var Page = function (_React$Component) {
               _this2.push();
             } },
           '\u53BBpage2'
-        )
+        ),
+        _react2.default.createElement('textarea', {
+          id: 'remark',
+          ref: 'textarea',
+          placeholder: '\u8BF7\u8F93\u5165\u5185\u5BB9' })
       );
     }
   }]);

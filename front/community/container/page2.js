@@ -10,10 +10,14 @@ class Page2 extends React.Component {
     console.log(this.props);
   }
 
+  setZ() {
+    this.props.actions.testfunc();
+  }
+
   render() {
     return (
       <div>
-        Page2
+        <div onClick = { () => { this.setZ(); } }>actions click</div>
       </div>
     );
   }

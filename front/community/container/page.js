@@ -26,11 +26,11 @@ class Page extends React.Component {
        }
     });
 
-    this.get();
+    // this.get();
   }
 
   push() {
-    this.props.history.push('/page2');
+    this.props.history.push('/community/page2');
   }
 
   get() {

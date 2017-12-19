@@ -17,10 +17,15 @@ class Page extends React.Component {
     this.props.history.push('/page2');
   }
 
+  addArticle() {
+    this.props.history.push('/addArticle');
+  }
+
   render() {
     return (
       <div>
         <div onClick = { () => { this.push(); } }>去page2</div>
+        <div onClick = { () => { this.addArticle(); } }>去addArticle</div>
       </div>
     );
   }

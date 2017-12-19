@@ -7,6 +7,7 @@ import { createStore } from 'redux';
 import todoApp from './reducers';
 const store = createStore(todoApp);
 
+import Index from './index';
 import Page from './container/page';
 import Page2 from './container/page2';
 
@@ -15,10 +16,10 @@ import './sass';
 ReactDOM.render((
   <Provider store = { store }>
     <Router>
-      <div>
+      <Index>
         <Route exact strict path = '/' component = { Page } />
         <Route exact strict path = '/page2' component = { Page2 } />
-      </div>
+      </Index>
     </Router>
   </Provider>
 ), document.getElementById('content'));

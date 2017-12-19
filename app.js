@@ -20,12 +20,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 var communityAPI = require('./routes/community/api');
 var communityPAGE = require('./routes/community');
 app.use('/api/community', communityAPI);
-app.use('/community/*', communityPAGE);
+app.use('*', communityPAGE);
 
-var todoAPI = require('./routes/todo/api');
-var todoPAGE = require('./routes/todo');
-app.use('/api/todo', todoAPI);
-app.use('/todo/*', todoPAGE);
+// var todoAPI = require('./routes/todo/api');
+// var todoPAGE = require('./routes/todo');
+// app.use('/api/todo', todoAPI);
+// app.use('/todo/*', todoPAGE);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

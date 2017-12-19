@@ -11683,8 +11683,8 @@ _reactDom2.default.render(_react2.default.createElement(
     _react2.default.createElement(
       _index2.default,
       null,
-      _react2.default.createElement(_reactRouterDom.Route, { exact: true, strict: true, path: '/community/', component: _page2.default }),
-      _react2.default.createElement(_reactRouterDom.Route, { exact: true, strict: true, path: '/community/page2', component: _page4.default })
+      _react2.default.createElement(_reactRouterDom.Route, { exact: true, strict: true, path: '/', component: _page2.default }),
+      _react2.default.createElement(_reactRouterDom.Route, { exact: true, strict: true, path: '/page2', component: _page4.default })
     )
   )
 ), document.getElementById('content'));

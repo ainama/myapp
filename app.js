@@ -5,12 +5,6 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-var communityAPI = require('./routes/community/api');
-var communityPAGE = require('./routes/community');
-
-var todoAPI = require('./routes/todo/api');
-var todoPAGE = require('./routes/todo');
-
 var app = express();
 
 app.set('views', path.join(__dirname, 'views'));
@@ -23,9 +17,13 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+var communityAPI = require('./routes/community/api');
+var communityPAGE = require('./routes/community');
 app.use('/api/community', communityAPI);
 app.use('/community/*', communityPAGE);
 
+var todoAPI = require('./routes/todo/api');
+var todoPAGE = require('./routes/todo');
 app.use('/api/todo', todoAPI);
 app.use('/todo/*', todoPAGE);
 

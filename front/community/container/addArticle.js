@@ -9,6 +9,7 @@ import UploadImg from '../component/addArticle/uploadImg.js';
 class AddArticle extends React.Component {
   constructor(props) {
     super(props);
+    this._getInfo = this._getInfo.bind(this);
     this._addBanner = this._addBanner.bind(this);
     this._getContent = this._getContent.bind(this);
     this._uploadImage = this._uploadImage.bind(this);
@@ -20,7 +21,20 @@ class AddArticle extends React.Component {
     };
   }
 
-  componentDidMount() {}
+  componentDidMount() {
+    this._getInfo();
+  }
+
+  _getInfo() {
+    //ajax 获取data
+    // const data = {
+    //   user_id: 'lynn',
+    //   update_time: '2天前',
+    //   banner: '../images/banner.jpeg',
+    //   title: '蛙鸣社区的第一篇文章标题',
+    //   content: '文章内容，假装很长，特别特别长'
+    // };
+  }
 
   setZ() {
     this.props.actions.testfunc();

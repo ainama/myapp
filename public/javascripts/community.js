@@ -17935,6 +17935,7 @@ var AddArticle = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (AddArticle.__proto__ || Object.getPrototypeOf(AddArticle)).call(this, props));
 
+    _this._getInfo = _this._getInfo.bind(_this);
     _this._addBanner = _this._addBanner.bind(_this);
     _this._getContent = _this._getContent.bind(_this);
     _this._uploadImage = _this._uploadImage.bind(_this);
@@ -17949,7 +17950,21 @@ var AddArticle = function (_React$Component) {
 
   _createClass(AddArticle, [{
     key: 'componentDidMount',
-    value: function componentDidMount() {}
+    value: function componentDidMount() {
+      this._getInfo();
+    }
+  }, {
+    key: '_getInfo',
+    value: function _getInfo() {
+      //ajax 获取data
+      // const data = {
+      //   user_id: 'lynn',
+      //   update_time: '2天前',
+      //   banner: '../images/banner.jpeg',
+      //   title: '蛙鸣社区的第一篇文章标题',
+      //   content: '文章内容，假装很长，特别特别长'
+      // };
+    }
   }, {
     key: 'setZ',
     value: function setZ() {
@@ -28305,9 +28320,13 @@ var ShowArticle = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (ShowArticle.__proto__ || Object.getPrototypeOf(ShowArticle)).call(this, props));
 
     _this._getInfo = _this._getInfo.bind(_this);
+    _this._getLike = _this._getLike.bind(_this);
+    _this._addLike = _this._addLike.bind(_this);
+    _this._goEdit = _this._goEdit.bind(_this);
     console.log(_this.props);
     _this.state = {
-      data: {}
+      data: {},
+      status: false // 当前登录用户与页面文章作者id
     };
     return _this;
   }
@@ -28316,6 +28335,7 @@ var ShowArticle = function (_React$Component) {
     key: 'componentDidMount',
     value: function componentDidMount() {
       this._getInfo();
+      this._getLike();
     }
 
     // setZ() {
@@ -28335,15 +28355,49 @@ var ShowArticle = function (_React$Component) {
         content: '文章内容，假装很长，特别特别长'
       };
 
+      // let user = localStorage.getItem('user');
+      var user = 'lynn';
+      if (user == data.user_id) {
+        this.setState({
+          data: data,
+          status: true
+        });
+      } else {
+        this.setState({
+          data: data,
+          status: false
+        });
+      }
+    }
+  }, {
+    key: '_getLike',
+    value: function _getLike() {
+      //ajax 获取like
+      var like = 8;
       this.setState({
-        data: data
+        like: like
       });
+    }
+  }, {
+    key: '_addLike',
+    value: function _addLike() {
+      this.setState({
+        like: ++this.state.like
+      });
+    }
+  }, {
+    key: '_goEdit',
+    value: function _goEdit() {
+      this.props.history.push('/community/addArticle');
     }
   }, {
     key: 'render',
     value: function render() {
+      var _state = this.state,
+          data = _state.data,
+          status = _state.status,
+          like = _state.like;
 
-      var data = this.state.data;
 
       return _react2.default.createElement(
         'div',
@@ -28371,6 +28425,21 @@ var ShowArticle = function (_React$Component) {
           'div',
           { className: 'showArticle-content' },
           data.content
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'showArticle-footer' },
+          _react2.default.createElement(
+            'div',
+            { className: 'showArticle-like', onClick: this._addLike },
+            '\u70B9\u8D5E',
+            like
+          ),
+          status && _react2.default.createElement(
+            'div',
+            { className: 'showArticle-edit', onClick: this._goEdit },
+            '\u8BC4\u8BBA'
+          )
         )
       );
     }
@@ -28442,7 +28511,7 @@ exports = module.exports = __webpack_require__(45)(undefined);
 
 
 // module
-exports.push([module.i, "body, ul, li, h1, h2, h3, h4, h5, h6, p, form, dl, dt, dd, div {\n  margin: 0px;\n  padding: 0px;\n  font-size: 14px;\n  font-weight: normal;\n  -webkit-tap-highlight-color: transparent;\n  width: max-content; }\n\nul {\n  list-style: none; }\n\nimg {\n  border-style: none; }\n\n.head {\n  width: 100vw;\n  height: 45px;\n  background-color: #4a90e2; }\n\n.foot {\n  width: 100vw;\n  height: 45px;\n  background-color: #4a90e2; }\n\n.container {\n  width: 100vw;\n  min-height: calc(100vh - 90px); }\n\n.addArticle-layout {\n  margin: 50px auto 0;\n  padding: 0;\n  width: 600px;\n  z-index: 1;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n  -ms-flex-direction: column;\n  flex-direction: column;\n  -webkit-box-align: stretch;\n  -ms-flex-align: stretch;\n  align-items: stretch;\n  -ms-flex-negative: 0;\n  flex-shrink: 0;\n  overflow: hidden; }\n\n.fake-wrapper {\n  position: relative;\n  width: 600px;\n  height: 260px;\n  background: #f7f8f9;\n  line-height: 192px;\n  color: gray;\n  text-align: center; }\n\n.fake-banner {\n  height: 100%;\n  width: 100%; }\n\n.addArticle-banner {\n  position: absolute;\n  display: block;\n  top: 0;\n  left: 0;\n  height: 100%;\n  width: 100%;\n  opacity: 0;\n  cursor: pointer;\n  z-index: 2; }\n\n.addArticle-title {\n  margin: 20px auto; }\n\n.addArticle-input {\n  display: block;\n  width: 600px;\n  height: 60px;\n  box-sizing: border-box;\n  border: none;\n  border-radius: 2px;\n  font-size: 28px;\n  color: #888;\n  line-height: 16px;\n  padding: 6px 8px 2px 0px; }\n  .addArticle-input:focus {\n    outline: none;\n    border: none; }\n  .addArticle-input::placeholder {\n    font-size: 28px;\n    color: #999999; }\n\n/*simditor*/\n.simditor {\n  border: none !important;\n  border-top: 1px solid #c9d8db !important;\n  margin: 0 auto; }\n  .simditor .simditor-toolbar {\n    border-bottom: none !important; }\n\n.ShowArticle-layout {\n  padding: 0;\n  margin: 0;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n  -ms-flex-direction: column;\n  flex-direction: column;\n  -webkit-box-align: stretch;\n  -ms-flex-align: stretch;\n  align-items: stretch;\n  -ms-flex-negative: 0;\n  flex-shrink: 0;\n  overflow: hidden; }\n\n.showArticle-show {\n  position: relative; }\n\n.showArticle-banner {\n  width: 100vw; }\n\n.showArticle-title {\n  position: absolute;\n  margin: 0 auto;\n  left: 0;\n  right: 0;\n  bottom: 80px;\n  color: #fff;\n  z-index: 1;\n  font-size: 36px; }\n\n.showArticle-info {\n  position: absolute;\n  margin: 0 auto;\n  left: 0;\n  right: 0;\n  bottom: 20px;\n  color: #fff;\n  z-index: 1;\n  font-size: 20px;\n  width: 660px; }\n\n.showArticle-content {\n  margin: 47px auto 0;\n  padding: 0;\n  width: 660px;\n  z-index: 1; }\n", ""]);
+exports.push([module.i, "body, ul, li, h1, h2, h3, h4, h5, h6, p, form, dl, dt, dd, div {\n  margin: 0px;\n  padding: 0px;\n  font-size: 14px;\n  font-weight: normal;\n  -webkit-tap-highlight-color: transparent;\n  width: max-content; }\n\nul {\n  list-style: none; }\n\nimg {\n  border-style: none; }\n\n.head {\n  width: 100vw;\n  height: 45px;\n  background-color: #4a90e2; }\n\n.foot {\n  width: 100vw;\n  height: 45px;\n  background-color: #4a90e2; }\n\n.container {\n  width: 100vw;\n  min-height: calc(100vh - 90px); }\n\n.addArticle-layout {\n  margin: 50px auto 0;\n  padding: 0;\n  width: 600px;\n  z-index: 1;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n  -ms-flex-direction: column;\n  flex-direction: column;\n  -webkit-box-align: stretch;\n  -ms-flex-align: stretch;\n  align-items: stretch;\n  -ms-flex-negative: 0;\n  flex-shrink: 0;\n  overflow: hidden; }\n\n.fake-wrapper {\n  position: relative;\n  width: 600px;\n  height: 260px;\n  background: #f7f8f9;\n  line-height: 192px;\n  color: gray;\n  text-align: center; }\n\n.fake-banner {\n  height: 100%;\n  width: 100%; }\n\n.addArticle-banner {\n  position: absolute;\n  display: block;\n  top: 0;\n  left: 0;\n  height: 100%;\n  width: 100%;\n  opacity: 0;\n  cursor: pointer;\n  z-index: 2; }\n\n.addArticle-title {\n  margin: 20px auto; }\n\n.addArticle-input {\n  display: block;\n  width: 600px;\n  height: 60px;\n  box-sizing: border-box;\n  border: none;\n  border-radius: 2px;\n  font-size: 28px;\n  color: #888;\n  line-height: 16px;\n  padding: 6px 8px 2px 0px; }\n  .addArticle-input:focus {\n    outline: none;\n    border: none; }\n  .addArticle-input::placeholder {\n    font-size: 28px;\n    color: #999999; }\n\n/*simditor*/\n.simditor {\n  border: none !important;\n  border-top: 1px solid #c9d8db !important;\n  margin: 0 auto; }\n  .simditor .simditor-toolbar {\n    border-bottom: none !important; }\n\n.ShowArticle-layout {\n  padding: 0;\n  margin: 0;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n  -ms-flex-direction: column;\n  flex-direction: column;\n  -webkit-box-align: stretch;\n  -ms-flex-align: stretch;\n  align-items: stretch;\n  -ms-flex-negative: 0;\n  flex-shrink: 0;\n  overflow: hidden; }\n\n.showArticle-show {\n  position: relative; }\n\n.showArticle-banner {\n  width: 100vw; }\n\n.showArticle-title {\n  position: absolute;\n  margin: 0 auto;\n  left: 0;\n  right: 0;\n  bottom: 80px;\n  color: #fff;\n  z-index: 1;\n  font-size: 36px; }\n\n.showArticle-info {\n  position: absolute;\n  margin: 0 auto;\n  left: 0;\n  right: 0;\n  bottom: 20px;\n  color: #fff;\n  z-index: 1;\n  font-size: 20px;\n  width: 660px; }\n\n.showArticle-content {\n  margin: 47px auto 0;\n  padding: 0;\n  width: 660px;\n  z-index: 1; }\n\n.showArticle-footer {\n  margin: 47px auto 0;\n  padding: 0;\n  width: 660px;\n  z-index: 1; }\n", ""]);
 
 // exports
 

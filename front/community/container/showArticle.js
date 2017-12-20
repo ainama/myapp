@@ -7,14 +7,19 @@ class ShowArticle extends React.Component {
   constructor(props) {
     super(props);
     this._getInfo = this._getInfo.bind(this);
+    this._getLike = this._getLike.bind(this);
+    this._addLike = this._addLike.bind(this);
+    this._goEdit = this._goEdit.bind(this);
     console.log(this.props);
     this.state = {
-      data: {}
+      data: {},
+      status: false,  // 当前登录用户与页面文章作者id
     };
   }
 
   componentDidMount() {
     this._getInfo();
+    this._getLike();
   }
 
   // setZ() {
@@ -32,15 +37,46 @@ class ShowArticle extends React.Component {
       content: '文章内容，假装很长，特别特别长'
     };
 
-    this.setState({
-      data: data
-    })
+    // let user = localStorage.getItem('user');
+    let user = 'lynn';
+    if (user == data.user_id) {
+      this.setState({
+        data: data,
+        status: true,
+      })
+    } else {
+      this.setState({
+        data: data,
+        status: false,
+      })
+    }
+  }
 
+  _getLike() {
+    //ajax 获取like
+    let like = 8;
+    this.setState({
+      like: like
+    })
+  }
+
+  _addLike() {
+    this.setState({
+      like: ++ this.state.like
+    })
+  }
+
+  _goEdit() {
+    this.props.history.push('/community/addArticle');
   }
 
   render() {
 
-    const data = this.state.data;
+    const {
+      data,
+      status,
+      like
+    } = this.state;
 
     return (
       <div className = 'showArticle-layout'>
@@ -66,6 +102,24 @@ class ShowArticle extends React.Component {
         {/*content*/}
         <div className = 'showArticle-content'>
           { data.content }
+        </div>
+
+        {/*footer*/}
+        <div className = 'showArticle-footer'>
+
+          {/*like*/}
+          <div className = 'showArticle-like' onClick = { this._addLike }>
+            点赞{ like }
+          </div>
+
+          {/*eidt*/}
+          {
+            status &&
+            <div className = 'showArticle-edit' onClick = { this._goEdit }>
+              评论
+            </div>
+          }
+
         </div>
 
       </div>

@@ -25,14 +25,29 @@ class Page extends React.Component {
         leaveConfirm: '正在上传文件'
        }
     });
+
+    // this.get();
   }
 
   push() {
-    this.props.history.push('/page2');
+    this.props.history.push('/community/page2');
+  }
+
+  get() {
+    $.ajax({
+      url: '/api/community/test',
+      type: 'get',
+      success: function(res) {
+        console.log(res);
+      }
+    });
   }
 
   addArticle() {
-    this.props.history.push('/addArticle');
+    this.props.history.push('/community/addArticle');
+  }
+  showArticle() {
+    this.props.history.push('/community/showArticle');
   }
 
   render() {
@@ -40,6 +55,7 @@ class Page extends React.Component {
       <div>
         <div onClick = { () => { this.push(); } }>去page2</div>
         <div onClick = { () => { this.addArticle(); } }>去addArticle</div>
+        <div onClick = { () => { this.showArticle(); } }>去showArticle</div>
           <textarea
             id = 'remark'
             ref = 'textarea'

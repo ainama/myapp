@@ -19,10 +19,10 @@ ReactDOM.render((
   <Provider store = { store }>
     <Router>
       <Index>
-        <Route exact strict path = '/' component = { Page } />
-        <Route exact strict path = '/page2' component = { Page2 } />
-        <Route exact strict path = '/addArticle' component = { AddArticle } />
-        <Route exact strict path = '/showArticle' component = { ShowArticle } />
+        <Route exact strict path = '/community' component = { Page } />
+        <Route exact strict path = '/community/page2' component = { Page2 } />
+        <Route exact strict path = '/community/addArticle' component = { AddArticle } />
+        <Route exact strict path = '/community/showArticle' component = { ShowArticle } />
       </Index>
     </Router>
   </Provider>

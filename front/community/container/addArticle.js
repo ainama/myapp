@@ -3,8 +3,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from '../actions/test';
 
-import SimditorTextarea from '../component/simditorTextarea.js';
-import UploadImg from '../component/uploadImg.js';
+import SimditorTextarea from '../component/addArticle/simditorTextarea.js';
+import UploadImg from '../component/addArticle/uploadImg.js';
 
 class AddArticle extends React.Component {
   constructor(props) {

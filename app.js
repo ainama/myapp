@@ -5,9 +5,6 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-var index = require('./routes/index');
-var api = require('./routes/api');
-
 var app = express();
 
 app.set('views', path.join(__dirname, 'views'));
@@ -20,8 +17,15 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/api', api);
-app.use('*', index);
+var communityAPI = require('./routes/community/api');
+var communityPAGE = require('./routes/community');
+app.use('/api/community', communityAPI);
+app.use('/community', communityPAGE);
+
+var todoAPI = require('./routes/todo/api');
+var todoPAGE = require('./routes/todo');
+app.use('/api/todo', todoAPI);
+app.use('/todo', todoPAGE);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

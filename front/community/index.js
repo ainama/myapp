@@ -1,8 +1,28 @@
-import React from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
+// import React from 'react';
 
-import * as actions from './actions/test';
+
+// class Index extends React.Component {
+//   constructor(props) {
+//     super(props);
+//   }
+
+//   render() {
+//     return (
+//       <div>
+//         <div>11111</div>
+//         {this.props.children}
+//         <div>22222</div>
+//       </div>
+//     );
+//   }
+// }
+
+
+// export default Index;
+
+
+
+import React from 'react';
 
 class Index extends React.Component {
   constructor(props) {
@@ -26,16 +46,4 @@ class Index extends React.Component {
   }
 }
 
-const mapStateToProps = (store) => {
-  return {
-    test: store.test
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    actions: bindActionCreators(actions, dispatch)
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Index);
+export default Index;

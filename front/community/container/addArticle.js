@@ -1,44 +1,51 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-// import Simditor from 'simditor';
-// import 'simditor/styles/simditor.css';
-// import $ from 'jquery';
-
 import * as actions from '../actions/test';
+
+import SimditorTextarea from '../component/simditorTextarea.js';
+import UploadImg from '../component/uploadImg.js';
 
 class AddArticle extends React.Component {
   constructor(props) {
     super(props);
+    this._addBanner = this._addBanner.bind(this);
+    this._getContent = this._getContent.bind(this);
+    this._uploadImage = this._uploadImage.bind(this);
     console.log(this.props);
+    this.state = {
+      value: '',
+      productUrl: '',
+      title: ''
+    };
   }
 
-  componentDidMount() {
-    //var editor = new Simditor({ textarea:$('#Editor')});
-
-    const toolbar = [
-      'title', 'bold', 'italic','underline', 'strikethrough',
-      'color','', 'ol', 'ul', 'blockquote', 'code', 'table', '',
-      'link','image', 'hr', '', 'indent', 'outdent'];//设置工具栏
-
-     // var editor = new Simditor({
-     //   textarea:$('#Editor'),
-     //   placeholder: '这里输入内容...',
-     //   toolbar:toolbar,  //工具栏
-     //   defaultImage: '/Content/SimDetor/images/image.png',//编辑器插入图片时使用的默认图片
-     //   upload:{
-     //     url: 'Api/UploadImg.ashx',//文件上传的接口地址
-     //     params: null,//键值对,指定文件上传接口的额外参数,上传的时候随文件一起提交
-     //     fileKey: 'fileDataFileName',//服务器端获取文件数据的参数名
-     //     connectionCount: 3,
-     //     leaveConfirm: '正在上传文件'
-     //   },
-     // });
-
-  }
+  componentDidMount() {}
 
   setZ() {
     this.props.actions.testfunc();
+  }
+
+  _addBanner() {
+    this.refs.file.click();
+  }
+
+  _getTitle(e) {
+    console.log('getTitle => ', e.target.value);
+    this.setState({title: e.target.value})
+  }
+
+  _getContent(e) {
+    console.log('getContent => ', e);
+    // this.setState({value: e.target.value})
+  }
+
+  _uploadImage(data) {
+    console.log('uploadImage => ', data.get('image'));
+  }
+
+  _deleteImage() {
+    console.log('deleteImage => ', this.state.productUrl);
   }
 
   render() {
@@ -46,13 +53,31 @@ class AddArticle extends React.Component {
       <div className = 'addArticle-layout'>
 
         {/*banner*/}
-        <div>
-          <input
-            type = 'file'
-            className = 'addArticle-banner'
-            name = 'upload_file'
-            accept = '.jpeg, .jpg, .png'/>
+        <div className = 'fake-wrapper'>
+          <UploadImg
+            upload = { (data) => { this._uploadImage(data); } }
+            imageUrl = { this.state.productUrl }
+            delete = { () => { this._deleteImage(); } } />
         </div>
+
+        {/*title*/}
+        <div className = 'addArticle-title'>
+          <input
+            value = { this.state.title }
+            onChange = { (e) => {this._getTitle(e); } }
+            className = 'addArticle-input'
+            placeholder = '请输入标题'/>
+        </div>
+
+        {/*content*/}
+        <div>
+          <SimditorTextarea
+            id = "content"
+            value = { this.state.value }
+            onChange = { (e) => {this._getContent(e); } }
+            placeholder = '请开始你的表演'/>
+        </div>
+
       </div>
     );
   }

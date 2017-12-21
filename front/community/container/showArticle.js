@@ -10,7 +10,7 @@ class ShowArticle extends React.Component {
     this._getLike = this._getLike.bind(this);
     this._addLike = this._addLike.bind(this);
     this._goEdit = this._goEdit.bind(this);
-    console.log(this.props);
+    // console.log(this.props);
     this.state = {
       data: {},
       status: false,  // 当前登录用户与页面文章作者id
@@ -27,7 +27,7 @@ class ShowArticle extends React.Component {
   // }
 
   _getInfo() {
-    console.log('_getInfo');
+    // console.log('_getInfo');
     //ajax 获取data
     const data = {
       user_id: 'lynn',

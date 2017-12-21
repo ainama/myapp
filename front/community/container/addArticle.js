@@ -45,13 +45,13 @@ class AddArticle extends React.Component {
   }
 
   _getTitle(e) {
-    console.log('getTitle => ', e.target.value);
+    // console.log('getTitle => ', e.target.value);
     this.setState({title: e.target.value})
   }
 
   _getContent(e) {
-    console.log('getContent => ', e);
-    // this.setState({value: e.target.value})
+    // console.log('getContent => ', e);
+    this.setState({value: e})
   }
 
   _uploadImage(data) {
@@ -68,11 +68,13 @@ class AddArticle extends React.Component {
     const { title, value } = this.state;
 
     let data = {
-      imgUrl: article.imgUrl,
       title: title,
-      content: value
+      user_id: 12,
+      content: value,
+      banner: article.imgUrl,
     };
 
+    // console.log('upload', data);
     this.props.actions.uploadArticle(data);
   }
 
@@ -110,11 +112,11 @@ class AddArticle extends React.Component {
         </div>
 
         {/*upload*/}
-        <div
-          onClick = { this._upload() }
+        <button
+          onClick = { this._upload }
           className = 'addArticle-upload'>
           发布
-        </div>
+        </button>
 
       </div>
     );

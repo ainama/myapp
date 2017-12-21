@@ -136,12 +136,12 @@ router.get('/article/list', function (req, res) {
   });
 });
 
-/* lynn chaoqun */
+/* lichaoqun */
 /**
  * 上传文章banner
  * @method /api/community/uploadArticleImg
  */
-router.post('/uploader', function (req, res) {
+router.post('/article/image', function (req, res) {
   var form = new formidable.IncomingForm();   //创建上传表单
   form.encoding = 'utf-8';        //设置编辑
   form.uploadDir = 'public' + AVATAR_UPLOAD_FOLDER;     //设置上传目录
@@ -155,7 +155,7 @@ router.post('/uploader', function (req, res) {
       res.render('index', { title: TITLE });
       return;
     }
-    console.log('files', files);
+    // console.log('files', files);
 
     var extName = '';  //后缀名
     switch (files.image.type) {
@@ -184,11 +184,37 @@ router.post('/uploader', function (req, res) {
     var newPath = form.uploadDir + avatarName;
     //显示地址；
     var showUrl = domain + AVATAR_UPLOAD_FOLDER + avatarName;
-    console.log("newPath",newPath);
+    // console.log("newPath",newPath);
     fs.renameSync(files.image.path, newPath);  //重命名
     res.json({
       "newPath":showUrl
     });
+  });
+});
+/**
+ * 上传文章
+ * @method /api/community/uploadArticle
+ */
+router.post('/article/upload', function (req, res) {
+  var sql = 'INSERT INTO t_article(id, title, user_id, content, banner) VALUES(0, ?, ?, ?, ?)';
+  console.log('req', req.body);
+  var data = req.body;
+  var params = [];
+  for(var k in data) {
+    params.push(data[k]);
+  };
+  query(sql, params, function (error, results, fields) {
+
+    if (error) {
+      res.send({ code: 10002, msg: '发布失败', error: error.sqlMessage });
+      // throw error;
+    } else {
+      if (results.serverStatus == 2) {
+        res.send({ code: 10000, msg: '发布成功' });
+      } else {
+        res.send({ code: 10001, msg: '发布失败' });
+      }
+    }
   });
 });
 

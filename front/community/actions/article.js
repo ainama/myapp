@@ -11,7 +11,7 @@
  export function uploadImage(data) {
    return (dispatch) => {
      $.ajax({
-       url: '/api/community/uploadImg',
+       url: '/api/community/article/image',
        type: 'POST',
        timeout: 5000,
        data: data,
@@ -40,14 +40,12 @@
  export function uploadArticle(data) {
    return (dispatch) => {
      $.ajax({
-       url: '/api/community/uploadArticle',
+       url: '/api/community/article/upload',
        type: 'POST',
-       timeout: 5000,
        data: data,
-       contentType: false,
-       processData: false,
        success: function(res) {
-         dispatch(addImage(res.newPath));
+         console.log(res);
+         // dispatch(addImage(res.newPath));
          // console.log(res);
          // if (res.code == 10000) {
          //   dispatch(addImage(res.newPath));

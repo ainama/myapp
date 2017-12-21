@@ -28019,14 +28019,14 @@ var AddArticle = function (_React$Component) {
   }, {
     key: '_getTitle',
     value: function _getTitle(e) {
-      console.log('getTitle => ', e.target.value);
+      // console.log('getTitle => ', e.target.value);
       this.setState({ title: e.target.value });
     }
   }, {
     key: '_getContent',
     value: function _getContent(e) {
-      console.log('getContent => ', e);
-      // this.setState({value: e.target.value})
+      // console.log('getContent => ', e);
+      this.setState({ value: e });
     }
   }, {
     key: '_uploadImage',
@@ -28049,11 +28049,13 @@ var AddArticle = function (_React$Component) {
 
 
       var data = {
-        imgUrl: article.imgUrl,
         title: title,
-        content: value
+        user_id: 12,
+        content: value,
+        banner: article.imgUrl
       };
 
+      // console.log('upload', data);
       this.props.actions.uploadArticle(data);
     }
   }, {
@@ -28102,9 +28104,9 @@ var AddArticle = function (_React$Component) {
             placeholder: '\u8BF7\u5F00\u59CB\u4F60\u7684\u8868\u6F14' })
         ),
         _react2.default.createElement(
-          'div',
+          'button',
           {
-            onClick: this._upload(),
+            onClick: this._upload,
             className: 'addArticle-upload' },
           '\u53D1\u5E03'
         )
@@ -28165,7 +28167,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function uploadImage(data) {
   return function (dispatch) {
     _jquery2.default.ajax({
-      url: '/api/community/uploadImg',
+      url: '/api/community/article/image',
       type: 'POST',
       timeout: 5000,
       data: data,
@@ -28194,14 +28196,12 @@ function addImage(data) {
 function uploadArticle(data) {
   return function (dispatch) {
     _jquery2.default.ajax({
-      url: '/api/community/uploadArticle',
+      url: '/api/community/article/upload',
       type: 'POST',
-      timeout: 5000,
       data: data,
-      contentType: false,
-      processData: false,
       success: function success(res) {
-        dispatch(addImage(res.newPath));
+        console.log(res);
+        // dispatch(addImage(res.newPath));
         // console.log(res);
         // if (res.code == 10000) {
         //   dispatch(addImage(res.newPath));
@@ -28640,7 +28640,7 @@ var ShowArticle = function (_React$Component) {
     _this._getLike = _this._getLike.bind(_this);
     _this._addLike = _this._addLike.bind(_this);
     _this._goEdit = _this._goEdit.bind(_this);
-    console.log(_this.props);
+    // console.log(this.props);
     _this.state = {
       data: {},
       status: false // 当前登录用户与页面文章作者id
@@ -28662,7 +28662,7 @@ var ShowArticle = function (_React$Component) {
   }, {
     key: '_getInfo',
     value: function _getInfo() {
-      console.log('_getInfo');
+      // console.log('_getInfo');
       //ajax 获取data
       var data = {
         user_id: 'lynn',

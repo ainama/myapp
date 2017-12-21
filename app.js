@@ -7,6 +7,17 @@ var bodyParser = require('body-parser');
 
 var app = express();
 
+var login = require('./routes/login');
+
+var communityAPI = require('./routes/community/api');
+var communityPAGE = require('./routes/community');
+
+var todoAPI = require('./routes/todo/api');
+var todoPAGE = require('./routes/todo');
+
+
+
+
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
@@ -17,17 +28,16 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-var communityAPI = require('./routes/community/api');
-var communityPAGE = require('./routes/community');
+app.use('/login', login);
+
 app.use('/api/community', communityAPI);
 app.use('/community', communityPAGE);
 app.use('/community/*', communityPAGE);
 
-var todoAPI = require('./routes/todo/api');
-var todoPAGE = require('./routes/todo');
 app.use('/api/todo', todoAPI);
 app.use('/todo', todoPAGE);
 app.use('/todo/*', todoPAGE);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -46,5 +56,15 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+// // 使用 session 中间件
+// app.use(session({
+//     secret :  'secret', // 对session id 相关的cookie 进行签名
+//     resave : true,
+//     saveUninitialized: false, // 是否保存未初始化的会话
+//     cookie : {
+//       maxAge : 1000 * 60 * 3, // 设置 session 的有效时间，单位毫秒
+//     },
+// }));
 
 module.exports = app;

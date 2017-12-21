@@ -2,7 +2,9 @@
 
 frog社区
 
-node.js + express + react + react-router + redux + mysql/mongodb
+后端使用：node.js + express + mysql
+前端使用：react + react-router + redux
+使用插件：simditor
 
 
 # use

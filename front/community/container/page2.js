@@ -11,7 +11,23 @@ class Page2 extends React.Component {
   }
 
   setZ() {
-    this.props.actions.testfunc();
+    // this.props.actions.testfunc();
+    this.props.history.push('/community/login');
+  }
+
+
+  componentWillMount() {
+
+    // 登录接口
+    $.ajax({
+      url: '/api/user/login',
+      type: 'post',
+      data: {tel: '13325412542', pwd: '12345678'},
+      success: function(res) {
+        console.log('00000', res);
+      }
+    });
+
   }
 
   render() {

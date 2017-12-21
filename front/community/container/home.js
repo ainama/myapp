@@ -11,10 +11,10 @@ class Home extends React.Component {
 
   componentDidMount() {
     $.ajax({
-      url: '/api/community/test',
+      url: '/api/community/article/list',
       type: 'get',
       success: function(res) {
-        console.log(res);
+        // console.log(res);
       }
     });
   }

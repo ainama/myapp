@@ -25,8 +25,6 @@ class Page extends React.Component {
         leaveConfirm: '正在上传文件'
        }
     });
-
-    // this.get();
   }
 
   push() {
@@ -47,6 +45,7 @@ class Page extends React.Component {
     return (
       <div>
         <div onClick = { () => { this.push(); } }>去第二个页面</div>
+        <div onClick = { () => { this.get(); } }>登录成功，重定向页面</div>
         <textarea
           id = 'remark'
           ref = 'textarea'

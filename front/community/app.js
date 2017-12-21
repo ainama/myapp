@@ -10,6 +10,7 @@ const store = createStore(todoApp);
 import Index from './index';
 import Page from './container/page';
 import Page2 from './container/page2';
+import Home from './container/home';
 import AddArticle from './container/addArticle';
 import ShowArticle from './container/showArticle';
 import PersonalPage from './container/PersonalPage';
@@ -23,6 +24,7 @@ ReactDOM.render((
       <Index>
         <Route exact strict path = '/community' component = { Page } />
         <Route exact strict path = '/community/page2' component = { Page2 } />
+        <Route exact strict path = '/community/home' component = { Home } />
         <Route exact strict path = '/community/addArticle' component = { AddArticle } />
         <Route exact strict path = '/community/showArticle' component = { ShowArticle } />
         <Route exact strict path = '/community/personal' component = { PersonalPage } />

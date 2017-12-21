@@ -1,28 +1,7 @@
-// import React from 'react';
-
-
-// class Index extends React.Component {
-//   constructor(props) {
-//     super(props);
-//   }
-
-//   render() {
-//     return (
-//       <div>
-//         <div>11111</div>
-//         {this.props.children}
-//         <div>22222</div>
-//       </div>
-//     );
-//   }
-// }
-
-
-// export default Index;
-
-
-
 import React from 'react';
+
+import Header from './container/header';
+import Footer from './container/footer';
 
 class Index extends React.Component {
   constructor(props) {
@@ -33,13 +12,13 @@ class Index extends React.Component {
     return (
       <div>
 
-        <div className = 'head'>header</div>
+        <Header />
 
         <div className = 'container'>
           { this.props.children }
         </div>
 
-        <div className = 'foot'>footer</div>
+        <Footer />
 
       </div>
     );

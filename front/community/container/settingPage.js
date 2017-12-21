@@ -30,7 +30,7 @@ class SettingPage extends React.Component {
           </div>
           <div className = 'setting-page-div'>
             <span>电话</span>
-            <input defaultValue = '13325123652' className = 'setting-input'/>
+            <input defaultValue = '133255256523' className = 'setting-input'/>
           </div>
           <div className = 'setting-page-div'>
             <span>头像</span>

@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var session = require('express-session');
 
-var query = require('../../tools/mysql_server.js');
+var query = require('../../tools/community_server.js');
 
 // 使用 session 中间件
 router.use(session({
@@ -105,7 +105,7 @@ router.get('/user/logout', function (req, res) {
  * @method /api/community/test
  */
 router.get('/test', function (req, res) {
-  var sql = 'SELECT * FROM test WHERE status=1 ORDER BY update_time DESC';
+  var sql = 'select * from t_user;';
   query(sql, null, function (error, results, fields) {
     if (error) throw error;
     res.send({ code: 10000, msg: results });

@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-var query = require('../../tools/mysql_server.js');
+var query = require('../../tools/todo_server.js');
 
 /* 设置跨域访问 未测试 */
 router.all('*', function(req, res, next) {

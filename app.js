@@ -31,10 +31,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/login', login);
 
 app.use('/api/community', communityAPI);
+app.use('/community', communityPAGE);
 app.use('/community/*', communityPAGE);
 
 app.use('/api/todo', todoAPI);
 app.use('/todo', todoPAGE);
+app.use('/todo/*', todoPAGE);
 
 
 // catch 404 and forward to error handler

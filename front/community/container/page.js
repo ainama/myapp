@@ -25,8 +25,6 @@ class Page extends React.Component {
         leaveConfirm: '正在上传文件'
        }
     });
-
-    // this.get();
   }
 
   push() {

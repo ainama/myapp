@@ -7,20 +7,27 @@ import { createStore } from 'redux';
 import todoApp from './reducers';
 const store = createStore(todoApp);
 
+import Index from './index';
 import Page from './container/page';
 import Page2 from './container/page2';
-import Login from './component/login.js';
+import AddArticle from './container/addArticle';
+import ShowArticle from './container/showArticle';
+import PersonalPage from './container/PersonalPage';
+import SettingPage from './container/SettingPage';
 
 import './sass';
 
 ReactDOM.render((
   <Provider store = { store }>
     <Router>
-      <div>
+      <Index>
         <Route exact strict path = '/community' component = { Page } />
         <Route exact strict path = '/community/page2' component = { Page2 } />
-        <Route exact strict path = '/community/login' component = { Login } />
-      </div>
+        <Route exact strict path = '/community/addArticle' component = { AddArticle } />
+        <Route exact strict path = '/community/showArticle' component = { ShowArticle } />
+        <Route exact strict path = '/community/personal' component = { PersonalPage } />
+        <Route exact strict path = '/community/setting' component = { SettingPage } />
+      </Index>
     </Router>
   </Provider>
 ), document.getElementById('content'));

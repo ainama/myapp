@@ -1,0 +1,35 @@
+
+.personal-page {
+	width: 1000px;
+	margin: 0 auto;
+}
+
+.personal-info {
+  z-index: 2;
+  position: relative;
+  padding: 0 20px 24px;
+  height: 110px;
+  background-color: #fff;
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: -3px;
+
+  .personal-info-img {
+  	float: left;
+    margin-top: -50px;
+  }
+
+	.personal-info-msg {
+		float: left;
+    margin-left: 20px;
+		p {
+	    font-size: 26px;
+	    font-weight: 600;
+	    margin-bottom: 15px;
+		}
+		div {
+			font-size: 14px;
+	    color: #8590a6;
+		}
+	}
+}

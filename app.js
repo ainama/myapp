@@ -5,11 +5,18 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-var index = require('./routes/index');
-var login = require('./routes/login');
-var api = require('./routes/community/api');
-
 var app = express();
+
+var login = require('./routes/login');
+
+var communityAPI = require('./routes/community/api');
+var communityPAGE = require('./routes/community');
+
+var todoAPI = require('./routes/todo/api');
+var todoPAGE = require('./routes/todo');
+
+
+
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -21,9 +28,14 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/api', api);
-app.use('/community', index);
 app.use('/login', login);
+
+app.use('/api/community', communityAPI);
+app.use('/community/*', communityPAGE);
+
+app.use('/api/todo', todoAPI);
+app.use('/todo', todoPAGE);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -4592,6 +4592,10 @@ var _reducers = __webpack_require__(143);
 
 var _reducers2 = _interopRequireDefault(_reducers);
 
+var _index = __webpack_require__(152);
+
+var _index2 = _interopRequireDefault(_index);
+
 var _page = __webpack_require__(149);
 
 var _page2 = _interopRequireDefault(_page);
@@ -4600,9 +4604,13 @@ var _page3 = __webpack_require__(150);
 
 var _page4 = _interopRequireDefault(_page3);
 
-var _login = __webpack_require__(151);
+var _addArticle = __webpack_require__(159);
 
-var _login2 = _interopRequireDefault(_login);
+var _addArticle2 = _interopRequireDefault(_addArticle);
+
+var _showArticle = __webpack_require__(162);
+
+var _showArticle2 = _interopRequireDefault(_showArticle);
 
 __webpack_require__(153);
 
@@ -4617,11 +4625,12 @@ _reactDom2.default.render(_react2.default.createElement(
     _reactRouterDom.BrowserRouter,
     null,
     _react2.default.createElement(
-      'div',
+      _index2.default,
       null,
       _react2.default.createElement(_reactRouterDom.Route, { exact: true, strict: true, path: '/community', component: _page2.default }),
       _react2.default.createElement(_reactRouterDom.Route, { exact: true, strict: true, path: '/community/page2', component: _page4.default }),
-      _react2.default.createElement(_reactRouterDom.Route, { exact: true, strict: true, path: '/community/login', component: _login2.default })
+      _react2.default.createElement(_reactRouterDom.Route, { exact: true, strict: true, path: '/community/addArticle', component: _addArticle2.default }),
+      _react2.default.createElement(_reactRouterDom.Route, { exact: true, strict: true, path: '/community/showArticle', component: _showArticle2.default })
     )
   )
 ), document.getElementById('content'));
@@ -18734,6 +18743,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+// import Simditor from 'simditor';
 
 var Page = function (_React$Component) {
   _inherits(Page, _React$Component);
@@ -18747,12 +18757,48 @@ var Page = function (_React$Component) {
   _createClass(Page, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      console.log(this.props);
+      var editor = new Simditor({
+        //textarea的id
+        textarea: $('#remark'),
+        //工具条都包含哪些内容
+        toolbar: ['title', 'bold', 'italic', 'underline', 'table', 'color', 'ol', 'ul', 'image', 'hr'],
+        //若需要上传功能，上传的参数设置。
+        upload: {
+          url: 'ImgUpload.action', //文件上传的接口地址
+          params: null, //键值对,指定文件上传接口的额外参数,上传的时候随文件一起提交
+          fileKey: 'fileDataFileName', //服务器端获取文件数据的参数名
+          connectionCount: 3,
+          leaveConfirm: '正在上传文件'
+        }
+      });
+
+      // this.get();
     }
   }, {
     key: 'push',
     value: function push() {
       this.props.history.push('/community/page2');
+    }
+  }, {
+    key: 'get',
+    value: function get() {
+      $.ajax({
+        url: '/api/community/test',
+        type: 'get',
+        success: function success(res) {
+          console.log(res);
+        }
+      });
+    }
+  }, {
+    key: 'addArticle',
+    value: function addArticle() {
+      this.props.history.push('/community/addArticle');
+    }
+  }, {
+    key: 'showArticle',
+    value: function showArticle() {
+      this.props.history.push('/community/showArticle');
     }
   }, {
     key: 'render',
@@ -18768,7 +18814,25 @@ var Page = function (_React$Component) {
               _this2.push();
             } },
           '\u53BBpage2'
-        )
+        ),
+        _react2.default.createElement(
+          'div',
+          { onClick: function onClick() {
+              _this2.addArticle();
+            } },
+          '\u53BBaddArticle'
+        ),
+        _react2.default.createElement(
+          'div',
+          { onClick: function onClick() {
+              _this2.showArticle();
+            } },
+          '\u53BBshowArticle'
+        ),
+        _react2.default.createElement('textarea', {
+          id: 'remark',
+          ref: 'textarea',
+          placeholder: '\u8BF7\u8F93\u5165\u5185\u5BB9' })
       );
     }
   }]);
@@ -18898,11 +18962,16 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Page2);
 
 /***/ }),
-/* 151 */
+/* 151 */,
+/* 152 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -18910,173 +18979,75 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(3);
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } // import React from 'react';
 
-var Login = function (_React$Component) {
-  _inherits(Login, _React$Component);
 
-  function Login(props) {
-    _classCallCheck(this, Login);
+// class Index extends React.Component {
+//   constructor(props) {
+//     super(props);
+//   }
 
-    var _this = _possibleConstructorReturn(this, (Login.__proto__ || Object.getPrototypeOf(Login)).call(this, props));
+//   render() {
+//     return (
+//       <div>
+//         <div>11111</div>
+//         {this.props.children}
+//         <div>22222</div>
+//       </div>
+//     );
+//   }
+// }
 
-    _this._statusClick = _this._statusClick.bind(_this);
-    _this.state = {
-      active: 'login'
-    };
-    return _this;
+
+// export default Index;
+
+
+var Index = function (_React$Component) {
+  _inherits(Index, _React$Component);
+
+  function Index(props) {
+    _classCallCheck(this, Index);
+
+    return _possibleConstructorReturn(this, (Index.__proto__ || Object.getPrototypeOf(Index)).call(this, props));
   }
 
-  _createClass(Login, [{
-    key: 'componentWillMount',
-    value: function componentWillMount() {
-
-      // 登录接口
-      // $.ajax({
-      //   url: '/api/user/login',
-      //   type: 'post',
-      //   data: {tel: '13325412542', pwd: '12345678'},
-      //   success: function(res) {
-      //     console.log('00000', res);
-      //   }
-      // });
-
-      // // 注册接口
-      // $.ajax({
-      //   url: '/api/user/register',
-      //   type: 'post',
-      //   data: {name: 'hello', tel: '13325412543', pwd: '12345678'},
-      //   success: function(res) {
-      //     console.log('00000', res);
-      //   }
-      // });
-
-
-      // 获取用户信息
-      $.ajax({
-        url: '/api/user/userInfo',
-        type: 'get',
-        data: { id: 8 },
-        success: function success(res) {
-          console.log('00000', res);
-        }
-      });
-    }
-  }, {
-    key: '_statusClick',
-    value: function _statusClick(e, type) {
-      this.setState({
-        active: type
-      });
-    }
-  }, {
+  _createClass(Index, [{
     key: 'render',
     value: function render() {
-      var _this2 = this;
-
       return _react2.default.createElement(
         'div',
-        { className: 'index-login' },
+        null,
         _react2.default.createElement(
           'div',
-          { className: 'index-login-body' },
-          _react2.default.createElement(
-            'div',
-            { className: 'index-login-header' },
-            _react2.default.createElement(
-              'h1',
-              null,
-              '\u86D9\u9E23\u793E\u533A'
-            ),
-            _react2.default.createElement(
-              'h2',
-              null,
-              '\u6709\u8BDD\u4F60\u5C31\u8BF4\uFF01\u8BF4\u9519\u8BDD\u4E0D\u8981\u94B1\u7684\u4EB2\u6C11\u793E\u533A\uFF01'
-            )
-          ),
-          _react2.default.createElement(
-            'div',
-            { className: 'index-login-box' },
-            _react2.default.createElement(
-              'div',
-              { className: 'index-login-tabs' },
-              _react2.default.createElement(
-                'a',
-                {
-                  href: '#login',
-                  className: this.state.active == 'login' ? 'active' : '',
-                  onClick: function onClick(e) {
-                    return _this2._statusClick(e, 'login');
-                  } },
-                '\u767B\u5F55'
-              ),
-              _react2.default.createElement(
-                'a',
-                {
-                  href: '#register',
-                  className: this.state.active == 'register' ? 'active' : '',
-                  onClick: function onClick(e) {
-                    return _this2._statusClick(e, 'register');
-                  } },
-                '\u6CE8\u518C'
-              )
-            ),
-            this.state.active == 'login' ? _react2.default.createElement(
-              'div',
-              { className: 'index-login-login' },
-              _react2.default.createElement(
-                'div',
-                { className: 'input-cell-group' },
-                _react2.default.createElement('input', { className: 'input-cell', placeholder: '\u624B\u673A\u53F7' }),
-                _react2.default.createElement('input', { className: 'input-cell', placeholder: '\u5BC6\u7801', type: 'password' })
-              ),
-              _react2.default.createElement(
-                'div',
-                { className: 'index-login-button' },
-                '\u767B\u5F55'
-              )
-            ) : _react2.default.createElement(
-              'div',
-              { className: 'index-login-register' },
-              _react2.default.createElement(
-                'div',
-                { className: 'input-cell-group' },
-                _react2.default.createElement('input', { className: 'input-cell', placeholder: '\u59D3\u540D' }),
-                _react2.default.createElement('input', { className: 'input-cell', placeholder: '\u624B\u673A\u53F7' }),
-                _react2.default.createElement('input', {
-                  className: 'input-cell',
-                  placeholder: '\u5BC6\u7801(\u4E0D\u5C11\u4E8E8\u4F4D)',
-                  type: 'password' })
-              ),
-              _react2.default.createElement(
-                'div',
-                { className: 'index-login-button' },
-                '\u6CE8\u518C'
-              )
-            )
-          )
+          { className: 'head' },
+          'header'
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'container' },
+          this.props.children
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'foot' },
+          'footer'
         )
       );
     }
   }]);
 
-  return Login;
+  return Index;
 }(_react2.default.Component);
 
-module.exports = Login;
+exports.default = Index;
 
 /***/ }),
-/* 152 */,
 /* 153 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -19127,7 +19098,7 @@ exports = module.exports = __webpack_require__(59)(undefined);
 
 
 // module
-exports.push([module.i, "body, ul, li, h1, h2, h3, h4, h5, h6, p, form, dl, dt, dd, div {\n  margin: 0px;\n  padding: 0px;\n  font-size: 14px;\n  font-weight: normal;\n  -webkit-tap-highlight-color: transparent;\n  width: max-content; }\n\nul {\n  list-style: none; }\n\nimg {\n  border-style: none; }\n", ""]);
+exports.push([module.i, "body, ul, li, h1, h2, h3, h4, h5, h6, p, form, dl, dt, dd, div {\n  margin: 0px;\n  padding: 0px;\n  font-size: 14px;\n  font-weight: normal;\n  -webkit-tap-highlight-color: transparent;\n  width: max-content; }\n\nul {\n  list-style: none; }\n\nimg {\n  border-style: none; }\n\n.head {\n  width: 100vw;\n  height: 45px;\n  background-color: #4a90e2; }\n\n.foot {\n  width: 100vw;\n  height: 45px;\n  background-color: #4a90e2; }\n\n.container {\n  width: 100vw;\n  min-height: calc(100vh - 90px); }\n\n.addArticle-layout {\n  margin: 50px auto 0;\n  padding: 0;\n  width: 600px;\n  z-index: 1;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n  -ms-flex-direction: column;\n  flex-direction: column;\n  -webkit-box-align: stretch;\n  -ms-flex-align: stretch;\n  align-items: stretch;\n  -ms-flex-negative: 0;\n  flex-shrink: 0;\n  overflow: hidden; }\n\n.fake-wrapper {\n  position: relative;\n  width: 600px;\n  height: 260px;\n  background: #f7f8f9;\n  line-height: 192px;\n  color: gray;\n  text-align: center; }\n\n.fake-banner {\n  height: 100%;\n  width: 100%; }\n\n.addArticle-banner {\n  position: absolute;\n  display: block;\n  top: 0;\n  left: 0;\n  height: 100%;\n  width: 100%;\n  opacity: 0;\n  cursor: pointer;\n  z-index: 2; }\n\n.addArticle-title {\n  margin: 20px auto; }\n\n.addArticle-input {\n  display: block;\n  width: 600px;\n  height: 60px;\n  box-sizing: border-box;\n  border: none;\n  border-radius: 2px;\n  font-size: 28px;\n  color: #888;\n  line-height: 16px;\n  padding: 6px 8px 2px 0px; }\n  .addArticle-input:focus {\n    outline: none;\n    border: none; }\n  .addArticle-input::placeholder {\n    font-size: 28px;\n    color: #999999; }\n\n/*simditor*/\n.simditor {\n  border: none !important;\n  border-top: 1px solid #c9d8db !important;\n  margin: 0 auto; }\n  .simditor .simditor-toolbar {\n    border-bottom: none !important; }\n\n.ShowArticle-layout {\n  padding: 0;\n  margin: 0;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n  -ms-flex-direction: column;\n  flex-direction: column;\n  -webkit-box-align: stretch;\n  -ms-flex-align: stretch;\n  align-items: stretch;\n  -ms-flex-negative: 0;\n  flex-shrink: 0;\n  overflow: hidden; }\n\n.showArticle-show {\n  position: relative; }\n\n.showArticle-banner {\n  width: 100vw; }\n\n.showArticle-title {\n  position: absolute;\n  margin: 0 auto;\n  left: 0;\n  right: 0;\n  bottom: 80px;\n  color: #fff;\n  z-index: 1;\n  font-size: 36px; }\n\n.showArticle-info {\n  position: absolute;\n  margin: 0 auto;\n  left: 0;\n  right: 0;\n  bottom: 20px;\n  color: #fff;\n  z-index: 1;\n  font-size: 20px;\n  width: 660px; }\n\n.showArticle-content {\n  margin: 47px auto 0;\n  padding: 0;\n  width: 660px;\n  z-index: 1; }\n\n.showArticle-footer {\n  margin: 47px auto 0;\n  padding: 0;\n  width: 660px;\n  z-index: 1; }\n", ""]);
 
 // exports
 
@@ -19271,6 +19242,748 @@ exports.push([module.i, ".index-login {\n  display: flex;\n  justify-content: ce
 
 // exports
 
+
+/***/ }),
+/* 159 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _redux = __webpack_require__(7);
+
+var _reactRedux = __webpack_require__(20);
+
+var _test = __webpack_require__(58);
+
+var actions = _interopRequireWildcard(_test);
+
+var _simditorTextarea = __webpack_require__(160);
+
+var _simditorTextarea2 = _interopRequireDefault(_simditorTextarea);
+
+var _uploadImg = __webpack_require__(161);
+
+var _uploadImg2 = _interopRequireDefault(_uploadImg);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var AddArticle = function (_React$Component) {
+  _inherits(AddArticle, _React$Component);
+
+  function AddArticle(props) {
+    _classCallCheck(this, AddArticle);
+
+    var _this = _possibleConstructorReturn(this, (AddArticle.__proto__ || Object.getPrototypeOf(AddArticle)).call(this, props));
+
+    _this._getInfo = _this._getInfo.bind(_this);
+    _this._addBanner = _this._addBanner.bind(_this);
+    _this._getContent = _this._getContent.bind(_this);
+    _this._uploadImage = _this._uploadImage.bind(_this);
+    console.log(_this.props);
+    _this.state = {
+      value: '',
+      productUrl: '',
+      title: ''
+    };
+    return _this;
+  }
+
+  _createClass(AddArticle, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      this._getInfo();
+    }
+  }, {
+    key: '_getInfo',
+    value: function _getInfo() {
+      //ajax 获取data
+      // const data = {
+      //   user_id: 'lynn',
+      //   update_time: '2天前',
+      //   banner: '../images/banner.jpeg',
+      //   title: '蛙鸣社区的第一篇文章标题',
+      //   content: '文章内容，假装很长，特别特别长'
+      // };
+    }
+  }, {
+    key: 'setZ',
+    value: function setZ() {
+      this.props.actions.testfunc();
+    }
+  }, {
+    key: '_addBanner',
+    value: function _addBanner() {
+      this.refs.file.click();
+    }
+  }, {
+    key: '_getTitle',
+    value: function _getTitle(e) {
+      console.log('getTitle => ', e.target.value);
+      this.setState({ title: e.target.value });
+    }
+  }, {
+    key: '_getContent',
+    value: function _getContent(e) {
+      console.log('getContent => ', e);
+      // this.setState({value: e.target.value})
+    }
+  }, {
+    key: '_uploadImage',
+    value: function _uploadImage(data) {
+      console.log('uploadImage => ', data.get('image'));
+    }
+  }, {
+    key: '_deleteImage',
+    value: function _deleteImage() {
+      console.log('deleteImage => ', this.state.productUrl);
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this2 = this;
+
+      return _react2.default.createElement(
+        'div',
+        { className: 'addArticle-layout' },
+        _react2.default.createElement(
+          'div',
+          { className: 'fake-wrapper' },
+          _react2.default.createElement(_uploadImg2.default, {
+            upload: function upload(data) {
+              _this2._uploadImage(data);
+            },
+            imageUrl: this.state.productUrl,
+            'delete': function _delete() {
+              _this2._deleteImage();
+            } })
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'addArticle-title' },
+          _react2.default.createElement('input', {
+            value: this.state.title,
+            onChange: function onChange(e) {
+              _this2._getTitle(e);
+            },
+            className: 'addArticle-input',
+            placeholder: '\u8BF7\u8F93\u5165\u6807\u9898' })
+        ),
+        _react2.default.createElement(
+          'div',
+          null,
+          _react2.default.createElement(_simditorTextarea2.default, {
+            id: 'content',
+            value: this.state.value,
+            onChange: function onChange(e) {
+              _this2._getContent(e);
+            },
+            placeholder: '\u8BF7\u5F00\u59CB\u4F60\u7684\u8868\u6F14' })
+        )
+      );
+    }
+  }]);
+
+  return AddArticle;
+}(_react2.default.Component);
+
+var mapStateToProps = function mapStateToProps(store) {
+  return {
+    test: store.test
+  };
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {
+    actions: (0, _redux.bindActionCreators)(actions, dispatch)
+  };
+};
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(AddArticle);
+
+/***/ }),
+/* 160 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(3);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _jquery = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"jquery\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @description
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @author lichaoqun Create time 2017-12-20
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+
+// import Simditor from "simditor";
+
+
+// require("simditor/styles/simditor.css");
+
+var SimditorTextarea = function (_React$Component) {
+  _inherits(SimditorTextarea, _React$Component);
+
+  function SimditorTextarea(props) {
+    _classCallCheck(this, SimditorTextarea);
+
+    var _this2 = _possibleConstructorReturn(this, (SimditorTextarea.__proto__ || Object.getPrototypeOf(SimditorTextarea)).call(this, props));
+
+    _this2._initEditor = _this2._initEditor.bind(_this2);
+    _this2._getValue = _this2._getValue.bind(_this2);
+    _this2.state = {};
+    return _this2;
+  }
+
+  _createClass(SimditorTextarea, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      this._initEditor();
+      // this.editor.focus();
+    }
+  }, {
+    key: '_initEditor',
+    value: function _initEditor() {
+      var _this3 = this;
+
+      var _this = this;
+
+      var config = {
+        textarea: (0, _jquery2.default)(this.refs.textarea),
+        placeholder: this.props.placeholder,
+        // defaultImage: 'images/image.png',
+        params: {},
+        tabIndent: true,
+        toolbar: ['title', 'bold', 'italic', 'underline', 'strikethrough', 'fontScale', 'color', 'link', 'hr', 'image', 'indent', 'outdent', 'alignment'],
+        upload: {
+          // url: ENV.IMAGE_ACTION, //文件上传的接口地址
+          params: null, //键值对,指定文件上传接口的额外参数,上传的时候随文件一起提交
+          fileKey: 'file', //服务器端获取文件数据的参数名
+          connectionCount: 3,
+          leaveConfirm: '正在上传文件'
+        },
+        toolbarFloat: true,
+        toolbarFloatOffset: 0,
+        toolbarHidden: false,
+        pasteImage: false,
+        cleanPaste: false
+      };
+
+      this.editor = new Simditor(config); // 初始化编辑器
+      this.editor.setValue(this.props.value || '');
+
+      //监听改变
+      this.editor.on("valuechanged", function (e, src) {
+        _this3.props.onChange(_this3._getValue());
+      });
+
+      (0, _jquery2.default)('.simditor').on('click', function () {
+        _this.editor.focus();
+      });
+
+      //更改图片上传类型
+      (0, _jquery2.default)(".simditor input[type='file']").attr('accept', 'image/jpg,image/jpeg,image/png,image/bmp');
+    }
+  }, {
+    key: '_getValue',
+
+
+    // componentWillReceiveProps(nextProps){
+    //     this.editor.setValue(nextProps.value);
+    // };
+
+    value: function _getValue() {
+      // return this.editor._getValue().trim();
+      // let selectName = `#${this.props.id}.simditor.simditor-wrapper`;
+      var html = (0, _jquery2.default)('.simditor').find(".simditor-body").html();
+      // console.log('selectName', $(selectName).find(".simditor-body").html());
+      console.log('textareaHtml => ', html);
+      return html;
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement('textarea', {
+        id: this.props.id,
+        ref: 'textarea',
+        placeholder: '\u8BF7\u8F93\u5165\u5185\u5BB9' });
+    }
+  }]);
+
+  return SimditorTextarea;
+}(_react2.default.Component);
+
+SimditorTextarea.propTypes = {
+  id: _propTypes2.default.string,
+  value: _propTypes2.default.string,
+  placeholder: _propTypes2.default.string,
+  onChange: _propTypes2.default.func
+};
+
+SimditorTextarea.defaultProps = {};
+
+exports.default = SimditorTextarea;
+
+/***/ }),
+/* 161 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(3);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _lodash = __webpack_require__(148);
+
+var _lodash2 = _interopRequireDefault(_lodash);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @description
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @author lichaoqun Create time 2017-12-19
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+
+var UploadImg = function (_React$Component) {
+  _inherits(UploadImg, _React$Component);
+
+  function UploadImg(props) {
+    _classCallCheck(this, UploadImg);
+
+    var _this = _possibleConstructorReturn(this, (UploadImg.__proto__ || Object.getPrototypeOf(UploadImg)).call(this, props));
+
+    _this._uploadImg = _this._uploadImg.bind(_this);
+    _this._onMouseEnter = _this._onMouseEnter.bind(_this);
+    _this._onMouseLeave = _this._onMouseLeave.bind(_this);
+    _this.state = {};
+    return _this;
+  }
+
+  _createClass(UploadImg, [{
+    key: '_uploadImg',
+    value: function _uploadImg(e) {
+      var formData = new FormData();
+      formData.append('image', e.target.files[0]);
+      console.log('e.target.files[0]', e.target.files[0]);
+      // formData.append('type', this.props.imageType);
+      this.props.upload(formData);
+    }
+  }, {
+    key: '_onMouseEnter',
+    value: function _onMouseEnter() {
+      var del = this.refs.delete;
+      del.style.display = 'block';
+    }
+  }, {
+    key: '_onMouseLeave',
+    value: function _onMouseLeave() {
+      var del = this.refs.delete;
+      del.style.display = 'none';
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this2 = this;
+
+      return _react2.default.createElement(
+        'div',
+        { style: (0, _lodash2.default)({}, styles.root, this.props.containerStyle) },
+        this.props.imageUrl == '' && _react2.default.createElement(
+          'div',
+          { style: (0, _lodash2.default)({}, styles.card, this.props.cardStyle) },
+          _react2.default.createElement(
+            'form',
+            null,
+            _react2.default.createElement('input', {
+              ref: 'input',
+              style: (0, _lodash2.default)({}, styles.input, this.props.cardStyle),
+              id: 'file',
+              type: 'file',
+              name: 'image',
+              accept: '.png, .jpg, .jpeg',
+              onChange: function onChange(e) {
+                _this2._uploadImg(e);
+              } })
+          )
+        ),
+        this.props.imageUrl != '' && _react2.default.createElement(
+          'div',
+          { style: styles.floor },
+          _react2.default.createElement('img', {
+            src: this.props.imageUrl,
+            style: (0, _lodash2.default)({}, styles.img, this.props.imageStyle),
+            onMouseEnter: function onMouseEnter() {
+              _this2._onMouseEnter();
+            },
+            onMouseLeave: function onMouseLeave() {
+              _this2._onMouseLeave();
+            } }),
+          _react2.default.createElement(
+            'div',
+            {
+              ref: 'delete',
+              style: styles.delete,
+              onClick: function onClick() {
+                _this2.props.delete();
+              },
+              onMouseEnter: function onMouseEnter() {
+                _this2._onMouseEnter();
+              },
+              onMouseLeave: function onMouseLeave() {
+                _this2._onMouseLeave();
+              } },
+            _react2.default.createElement(
+              'div',
+              { style: styles.deleteBg },
+              _react2.default.createElement(
+                'svg',
+                { style: styles.svgDelete },
+                _react2.default.createElement('use', { xlinkHref: '#icon-delete2' })
+              )
+            )
+          )
+        )
+      );
+    }
+  }]);
+
+  return UploadImg;
+}(_react2.default.Component);
+
+var styles = {
+  root: {
+    display: 'flex',
+    flexDirection: 'row'
+  },
+
+  card: {
+    // border: '1px dashed #d7d8d9',
+    borderRadius: 2,
+    width: 800,
+    height: 260,
+    background: '#f7f8f9',
+    position: 'relative'
+    // display: 'flex',
+    // flexDirection: 'column',
+    // alignItems: 'center',
+    // justifyContent: 'center',
+  },
+
+  svgAdd: {
+    width: 18,
+    height: 18,
+    fill: '#fff'
+  },
+
+  addBg: {
+    backgroundColor: '#4990e2',
+    width: 28,
+    height: 28,
+    borderRadius: '100%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 8
+  },
+
+  input: {
+    position: 'absolute',
+    backgroundColor: 'red',
+    top: 0,
+    left: 0,
+    width: 800,
+    height: 260,
+    opacity: 0,
+    cursor: 'pointer'
+  },
+
+  img: {
+    borderRadius: 2
+  },
+
+  floor: {
+    position: 'relative'
+  },
+
+  delete: {
+    display: 'none',
+    cursor: 'pointer'
+  },
+
+  deleteBg: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    width: 25,
+    height: 25,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.30)'
+  },
+
+  svgDelete: {
+    width: 13,
+    height: 14,
+    fill: '#fff'
+  }
+};
+
+UploadImg.propTypes = {
+  // title: PropTypes.string,
+  // emphasis: PropTypes.bool,
+  containerStyle: _propTypes2.default.object,
+  btnTitle: _propTypes2.default.string,
+  btnRemarks: _propTypes2.default.string,
+  _uploadImg: _propTypes2.default.func,
+  imageType: _propTypes2.default.number,
+  imageUrl: _propTypes2.default.string,
+  delete: _propTypes2.default.func,
+  imageStyle: _propTypes2.default.object,
+  cardStyle: _propTypes2.default.object
+  // titleStyle: PropTypes.object
+};
+
+UploadImg.defaultProps = {};
+
+module.exports = UploadImg;
+
+/***/ }),
+/* 162 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _redux = __webpack_require__(7);
+
+var _reactRedux = __webpack_require__(20);
+
+var _test = __webpack_require__(58);
+
+var actions = _interopRequireWildcard(_test);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var ShowArticle = function (_React$Component) {
+  _inherits(ShowArticle, _React$Component);
+
+  function ShowArticle(props) {
+    _classCallCheck(this, ShowArticle);
+
+    var _this = _possibleConstructorReturn(this, (ShowArticle.__proto__ || Object.getPrototypeOf(ShowArticle)).call(this, props));
+
+    _this._getInfo = _this._getInfo.bind(_this);
+    _this._getLike = _this._getLike.bind(_this);
+    _this._addLike = _this._addLike.bind(_this);
+    _this._goEdit = _this._goEdit.bind(_this);
+    console.log(_this.props);
+    _this.state = {
+      data: {},
+      status: false // 当前登录用户与页面文章作者id
+    };
+    return _this;
+  }
+
+  _createClass(ShowArticle, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      this._getInfo();
+      this._getLike();
+    }
+
+    // setZ() {
+    //   this.props.actions.testfunc();
+    // }
+
+  }, {
+    key: '_getInfo',
+    value: function _getInfo() {
+      console.log('_getInfo');
+      //ajax 获取data
+      var data = {
+        user_id: 'lynn',
+        update_time: '2天前',
+        banner: '../images/banner.jpeg',
+        title: '蛙鸣社区的第一篇文章标题',
+        content: '文章内容，假装很长，特别特别长'
+      };
+
+      // let user = localStorage.getItem('user');
+      var user = 'lynn';
+      if (user == data.user_id) {
+        this.setState({
+          data: data,
+          status: true
+        });
+      } else {
+        this.setState({
+          data: data,
+          status: false
+        });
+      }
+    }
+  }, {
+    key: '_getLike',
+    value: function _getLike() {
+      //ajax 获取like
+      var like = 8;
+      this.setState({
+        like: like
+      });
+    }
+  }, {
+    key: '_addLike',
+    value: function _addLike() {
+      this.setState({
+        like: ++this.state.like
+      });
+    }
+  }, {
+    key: '_goEdit',
+    value: function _goEdit() {
+      this.props.history.push('/community/addArticle');
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _state = this.state,
+          data = _state.data,
+          status = _state.status,
+          like = _state.like;
+
+
+      return _react2.default.createElement(
+        'div',
+        { className: 'showArticle-layout' },
+        _react2.default.createElement(
+          'div',
+          { className: 'showArticle-show' },
+          _react2.default.createElement('img', {
+            src: data.banner,
+            className: 'showArticle-banner' }),
+          _react2.default.createElement(
+            'div',
+            { className: 'showArticle-title' },
+            data.title
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'showArticle-info' },
+            data.user_id,
+            ' . ',
+            data.update_time
+          )
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'showArticle-content' },
+          data.content
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'showArticle-footer' },
+          _react2.default.createElement(
+            'div',
+            { className: 'showArticle-like', onClick: this._addLike },
+            '\u70B9\u8D5E',
+            like
+          ),
+          status && _react2.default.createElement(
+            'div',
+            { className: 'showArticle-edit', onClick: this._goEdit },
+            '\u8BC4\u8BBA'
+          )
+        )
+      );
+    }
+  }]);
+
+  return ShowArticle;
+}(_react2.default.Component);
+
+var mapStateToProps = function mapStateToProps(store) {
+  return {
+    test: store.test
+  };
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {
+    actions: (0, _redux.bindActionCreators)(actions, dispatch)
+  };
+};
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(ShowArticle);
 
 /***/ })
 /******/ ]);

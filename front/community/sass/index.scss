@@ -14,3 +14,11 @@ ul {
 img {
   border-style: none;
 }
+
+@import './head';
+@import './foot';
+@import './container';
+@import './addArticle';
+@import './showArticle';
+@import './personalPage';
+@import './settingPage';

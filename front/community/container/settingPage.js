@@ -11,14 +11,26 @@ class SettingPage extends React.Component {
 
     // 获取用户信息
     $.ajax({
-      url: '/api/community/user/userInfo',
+      url: '/api/community/logout',
       type: 'get',
-      data: {id: 8},
       success: function(res) {
         console.log('00000', res);
       }
     });
-    
+
+    // 注册接口
+    // $.ajax({
+    //   url: '/api/community/user/register',
+    //   type: 'post',
+    //   data: {name: 'hello', tel: '13325412543', pwd: '12345678'},
+    //   success: function(res) {
+    //     console.log('00000', res);
+    //   }
+    // });
+  }
+
+  _saveInfo() {
+    this.props.history.push('/community/personal');
   }
 
   render() {
@@ -36,7 +48,9 @@ class SettingPage extends React.Component {
             <span>头像</span>
             <input className = 'setting-image' type = 'file'/>
           </div>
-          <div className = 'setting-page-btn'>保存</div>
+          <div
+            className = 'setting-page-btn'
+            onClick = {() => this._saveInfo()}>保存</div>
       </div>
     );
   }

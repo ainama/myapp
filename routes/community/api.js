@@ -14,11 +14,22 @@ router.use(session({
     },
 }));
 
+// 一个中间件栈，显示任何指向 /user/:id 的 HTTP 请求的信息
+router.use('/user/:id', function(req, res, next) {
+  if (req.session.sessionId) {
+    console.log('Request URL:', req.originalUrl);
+    next();
+  } else {
+    console.log('没有登录');
+    res.send({ code: 10008, msg: '未登录' });
+  }
+});
+
 /**
  * 注册
  * @method /user/register
  */
-router.post('/user/register', function (req, res) {
+router.post('/register', function (req, res) {
   var sql = 'INSERT INTO t_user(id, name, tel, pwd) VALUES (0, ?, ?, ?)';
   var data = req.body;
   var params = [];
@@ -45,7 +56,7 @@ router.post('/user/register', function (req, res) {
  * 登录
  * @method /user/login
  */
-router.post('/user/login', function (req, res) {
+router.post('/login', function (req, res) {
   var data = req.body;
   var sql = 'SELECT * FROM t_user where tel=' + data.tel;
   query(sql, null, function (error, results, fields) {
@@ -71,8 +82,8 @@ router.post('/user/login', function (req, res) {
  * 用户信息查询
  * @method /user/userInfo
  */
-router.get('/user/userInfo', function (req, res) {
-  if (req.session.sessionId) {
+router.get('/user/userInfo/ssss', function (req, res) {
+  // if (req.session.sessionId) {
 
     var data = req.query;
     var sql = 'SELECT * FROM t_user where id=' + data.id;
@@ -84,20 +95,19 @@ router.get('/user/userInfo', function (req, res) {
         res.send({ code: 10000, msg: results });
       }
     });
-  } else {
-    res.redirect('/community');
-  }
+  // } else {
+  //   res.redirect('/community');
+  // }
 });
 
 /**
  * 退出
  * @method /user/logout
  */
-router.get('/user/logout', function (req, res) {
+router.get('/logout', function (req, res) {
     req.session.sessionId = null; // 删除session
-    res.redirect('login');
+    res.redirect('/login');
 });
-
 
 
 /**

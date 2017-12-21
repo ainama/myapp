@@ -88,7 +88,7 @@ input:last-child {
   margin-bottom: -1px;
 }
 
-.index-login-button {
+#index-login-button {
 	background: #0f88eb;
   border-radius: 3px;
   line-height: 41px;

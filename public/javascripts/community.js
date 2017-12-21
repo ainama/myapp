@@ -29864,11 +29864,14 @@ var PersonalPage = function (_React$Component) {
 
       // 获取用户信息
       $.ajax({
-        url: '/api/community/user/userInfo',
+        url: '/api/community/user/userInfo/ssss',
         type: 'get',
-        data: { id: 8 },
+        data: { id: 3 },
         success: function success(res) {
           console.log('00000', res);
+          if (res.code == 10008) {
+            location.href = '/login';
+          }
         }
       });
     }
@@ -29959,17 +29962,33 @@ var SettingPage = function (_React$Component) {
 
       // 获取用户信息
       $.ajax({
-        url: '/api/community/user/userInfo',
+        url: '/api/community/logout',
         type: 'get',
-        data: { id: 8 },
         success: function success(res) {
           console.log('00000', res);
         }
       });
+
+      // 注册接口
+      // $.ajax({
+      //   url: '/api/community/user/register',
+      //   type: 'post',
+      //   data: {name: 'hello', tel: '13325412543', pwd: '12345678'},
+      //   success: function(res) {
+      //     console.log('00000', res);
+      //   }
+      // });
+    }
+  }, {
+    key: '_saveInfo',
+    value: function _saveInfo() {
+      this.props.history.push('/community/personal');
     }
   }, {
     key: 'render',
     value: function render() {
+      var _this2 = this;
+
       return _react2.default.createElement(
         'div',
         { className: 'setting-page' },
@@ -30005,7 +30024,11 @@ var SettingPage = function (_React$Component) {
         ),
         _react2.default.createElement(
           'div',
-          { className: 'setting-page-btn' },
+          {
+            className: 'setting-page-btn',
+            onClick: function onClick() {
+              return _this2._saveInfo();
+            } },
           '\u4FDD\u5B58'
         )
       );

@@ -11,6 +11,42 @@ class Login extends React.Component {
     }
   }
 
+  componentWillMount() {
+
+    // 登录接口
+    // $.ajax({
+    //   url: '/api/user/login',
+    //   type: 'post',
+    //   data: {tel: '13325412542', pwd: '12345678'},
+    //   success: function(res) {
+    //     console.log('00000', res);
+    //   }
+    // });
+
+    // // 注册接口
+    // $.ajax({
+    //   url: '/api/user/register',
+    //   type: 'post',
+    //   data: {name: 'hello', tel: '13325412543', pwd: '12345678'},
+    //   success: function(res) {
+    //     console.log('00000', res);
+    //   }
+    // });
+
+
+    // 获取用户信息
+    $.ajax({
+      url: '/api/user/userInfo',
+      type: 'get',
+      data: {id: 8},
+      success: function(res) {
+        console.log('00000', res);
+      }
+    });
+    
+  }
+
+
   _statusClick(e, type) {
     this.setState({
       active: type

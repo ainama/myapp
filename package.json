@@ -22,11 +22,16 @@
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
     "express": "~4.15.5",
+    "express-session": "^1.15.6",
     "jade": "~1.11.0",
     "morgan": "~1.9.0",
     "mysql": "^2.15.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
+    "react-redux": "^5.0.6",
+    "react-router-dom": "^4.2.2",
+    "react-router-redux": "^4.0.8",
+    "redux": "^3.7.2",
     "sass": "^1.0.0-beta.4",
     "serve-favicon": "~2.4.5"
   },
@@ -39,7 +44,6 @@
     "node-sass": "^4.7.2",
     "sass-loader": "^6.0.6",
     "style-loader": "^0.19.0",
-    "webpack": "^3.10.0",
-    "webpack-dev-server": "^2.9.5"
+    "webpack": "^3.10.0"
   }
 }

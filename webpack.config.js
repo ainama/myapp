@@ -3,7 +3,7 @@ const webpack = require('webpack');
 
 const config = {
   entry: {
-    app: './web/app.js'
+    app: './front/community/app.js'
   },
 
   output: {

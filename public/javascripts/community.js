@@ -12295,6 +12295,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 var TEST = exports.TEST = 'TEST';
+var GET_USER_BASE = exports.GET_USER_BASE = 'GET_USER_BASE';
 
 /***/ }),
 /* 70 */,
@@ -17215,8 +17216,11 @@ var _reactRouterRedux = __webpack_require__(122);
 
 var _test = __webpack_require__(125);
 
+var _header = __webpack_require__(149);
+
 var rootReducer = (0, _redux.combineReducers)({
-  test: _test.test
+  test: _test.test,
+  header: _header.header
 });
 
 exports.default = rootReducer;
@@ -17652,9 +17656,11 @@ var _redux = __webpack_require__(8);
 
 var _reactRedux = __webpack_require__(11);
 
-var _test = __webpack_require__(14);
+var _reactRouterDom = __webpack_require__(72);
 
-var actions = _interopRequireWildcard(_test);
+var _header = __webpack_require__(148);
+
+var actions = _interopRequireWildcard(_header);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -17676,12 +17682,55 @@ var Header = function (_React$Component) {
   }
 
   _createClass(Header, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      this.props.actions.getUserBase();
+    }
+  }, {
     key: 'render',
     value: function render() {
+      console.log(this.props.header);
       return _react2.default.createElement(
         'div',
         { className: 'header' },
-        'Header'
+        _react2.default.createElement(
+          'div',
+          { className: 'body' },
+          _react2.default.createElement('div', { className: 'logo' }),
+          _react2.default.createElement(
+            'div',
+            { className: 'group' },
+            _react2.default.createElement(
+              'div',
+              { className: 'home' },
+              '\u9996\u9875'
+            )
+          ),
+          _react2.default.createElement(
+            _reactRouterDom.Link,
+            { className: 'write', to: '/community/addArticle' },
+            _react2.default.createElement('div', { className: 'icon' }),
+            _react2.default.createElement(
+              'span',
+              null,
+              '\u5199\u6587\u7AE0'
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'user' },
+            _react2.default.createElement(
+              'div',
+              { className: 'logon' },
+              '\u767B\u5F55'
+            ),
+            _react2.default.createElement(
+              'div',
+              { className: 'register' },
+              '\u6CE8\u518C'
+            )
+          )
+        )
       );
     }
   }]);
@@ -17691,7 +17740,7 @@ var Header = function (_React$Component) {
 
 var mapStateToProps = function mapStateToProps(store) {
   return {
-    test: store.test
+    header: store.header
   };
 };
 
@@ -18058,10 +18107,10 @@ var Home = function (_React$Component) {
     key: 'componentDidMount',
     value: function componentDidMount() {
       $.ajax({
-        url: '/api/community/test',
+        url: '/api/community/article/list',
         type: 'get',
         success: function success(res) {
-          console.log(res);
+          // console.log(res);
         }
       });
     }
@@ -27811,10 +27860,100 @@ exports = module.exports = __webpack_require__(45)(undefined);
 
 
 // module
-exports.push([module.i, "body, ul, li, h1, h2, h3, h4, h5, h6, p, form, dl, dt, dd, div {\n  margin: 0px;\n  padding: 0px;\n  font-size: 14px;\n  font-weight: normal;\n  -webkit-tap-highlight-color: transparent;\n  width: max-content; }\n\nul {\n  list-style: none; }\n\nimg {\n  border-style: none; }\n\n.header {\n  width: 100vw;\n  height: 45px;\n  background-color: #4a90e2;\n  text-align: center;\n  line-height: 45px; }\n\n.footer {\n  width: 100vw;\n  height: 45px;\n  background-color: #4a90e2;\n  text-align: center;\n  line-height: 45px; }\n\n.container {\n  width: 100vw;\n  min-height: calc(100vh - 90px); }\n\n.addArticle-layout {\n  margin: 50px auto 0;\n  padding: 0;\n  width: 600px;\n  z-index: 1;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n  -ms-flex-direction: column;\n  flex-direction: column;\n  -webkit-box-align: stretch;\n  -ms-flex-align: stretch;\n  align-items: stretch;\n  -ms-flex-negative: 0;\n  flex-shrink: 0;\n  overflow: hidden; }\n\n.fake-wrapper {\n  position: relative;\n  width: 600px;\n  height: 260px;\n  background: #f7f8f9;\n  line-height: 192px;\n  color: gray;\n  text-align: center; }\n\n.fake-banner {\n  height: 100%;\n  width: 100%; }\n\n.addArticle-banner {\n  position: absolute;\n  display: block;\n  top: 0;\n  left: 0;\n  height: 100%;\n  width: 100%;\n  opacity: 0;\n  cursor: pointer;\n  z-index: 2; }\n\n.addArticle-title {\n  margin: 20px auto; }\n\n.addArticle-input {\n  display: block;\n  width: 600px;\n  height: 60px;\n  box-sizing: border-box;\n  border: none;\n  border-radius: 2px;\n  font-size: 28px;\n  color: #888;\n  line-height: 16px;\n  padding: 6px 8px 2px 0px; }\n  .addArticle-input:focus {\n    outline: none;\n    border: none; }\n  .addArticle-input::placeholder {\n    font-size: 28px;\n    color: #999999; }\n\n/*simditor*/\n.simditor {\n  border: none !important;\n  border-top: 1px solid #c9d8db !important;\n  margin: 0 auto; }\n  .simditor .simditor-toolbar {\n    border-bottom: none !important; }\n\n.ShowArticle-layout {\n  padding: 0;\n  margin: 0;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n  -ms-flex-direction: column;\n  flex-direction: column;\n  -webkit-box-align: stretch;\n  -ms-flex-align: stretch;\n  align-items: stretch;\n  -ms-flex-negative: 0;\n  flex-shrink: 0;\n  overflow: hidden; }\n\n.showArticle-show {\n  position: relative; }\n\n.showArticle-banner {\n  width: 100vw; }\n\n.showArticle-title {\n  position: absolute;\n  margin: 0 auto;\n  left: 0;\n  right: 0;\n  bottom: 80px;\n  color: #fff;\n  z-index: 1;\n  font-size: 36px; }\n\n.showArticle-info {\n  position: absolute;\n  margin: 0 auto;\n  left: 0;\n  right: 0;\n  bottom: 20px;\n  color: #fff;\n  z-index: 1;\n  font-size: 20px;\n  width: 660px; }\n\n.showArticle-content {\n  margin: 47px auto 0;\n  padding: 0;\n  width: 660px;\n  z-index: 1; }\n\n.showArticle-footer {\n  margin: 47px auto 0;\n  padding: 0;\n  width: 660px;\n  z-index: 1; }\n", ""]);
+exports.push([module.i, "body, ul, li, h1, h2, h3, h4, h5, h6, p, form, dl, dt, dd, div {\n  margin: 0px;\n  padding: 0px;\n  font-size: 14px;\n  font-weight: normal;\n  -webkit-tap-highlight-color: transparent;\n  width: max-content; }\n\nul {\n  list-style: none; }\n\nimg {\n  border-style: none; }\n\n.header {\n  width: 100vw;\n  height: 60px;\n  background-color: #fff;\n  border-bottom: 1px solid #d5d5d5;\n  display: flex;\n  flex-direction: row;\n  justify-content: center; }\n  .header .body {\n    display: flex;\n    flex-direction: row;\n    align-items: center;\n    width: 1000px; }\n  .header .logo {\n    width: 96px;\n    height: 24px;\n    background-image: url(/images/community/header_logo.png);\n    background-position: center;\n    background-repeat: no-repeat;\n    background-size: 96px 24px;\n    margin-right: 26px;\n    cursor: pointer; }\n  .header .group {\n    flex: 1; }\n    .header .group .home {\n      width: 60px;\n      height: 59px;\n      border-bottom: 2px solid #4a90e2;\n      line-height: 59px;\n      text-align: center;\n      font-size: 16px;\n      color: #555;\n      cursor: pointer; }\n  .header .write {\n    width: 114px;\n    height: 36px;\n    background-image: url(/images/community/header_write.png);\n    background-position: center;\n    background-repeat: no-repeat;\n    background-size: 114px 36px;\n    margin-right: 30px;\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    align-items: center;\n    cursor: pointer; }\n    .header .write .icon {\n      width: 16px;\n      height: 16px;\n      background-image: url(/images/community/header_write_icon.png);\n      background-position: center;\n      background-repeat: no-repeat;\n      background-size: 16px 16px;\n      margin-right: 9px; }\n    .header .write span {\n      font-size: 16px;\n      color: #fff; }\n  .header .user {\n    display: flex;\n    flex-direction: row; }\n    .header .user .logon {\n      font-size: 16px;\n      color: #555;\n      margin-right: 30px; }\n    .header .user .register {\n      font-size: 16px;\n      color: #555; }\n\n.footer {\n  width: 100vw;\n  height: 45px;\n  background-color: #4a90e2;\n  text-align: center;\n  line-height: 45px; }\n\n.container {\n  width: 100vw;\n  min-height: calc(100vh - 90px); }\n\n.addArticle-layout {\n  margin: 50px auto 0;\n  padding: 0;\n  width: 600px;\n  z-index: 1;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n  -ms-flex-direction: column;\n  flex-direction: column;\n  -webkit-box-align: stretch;\n  -ms-flex-align: stretch;\n  align-items: stretch;\n  -ms-flex-negative: 0;\n  flex-shrink: 0;\n  overflow: hidden; }\n\n.fake-wrapper {\n  position: relative;\n  width: 600px;\n  height: 260px;\n  background: #f7f8f9;\n  line-height: 192px;\n  color: gray;\n  text-align: center; }\n\n.fake-banner {\n  height: 100%;\n  width: 100%; }\n\n.addArticle-banner {\n  position: absolute;\n  display: block;\n  top: 0;\n  left: 0;\n  height: 100%;\n  width: 100%;\n  opacity: 0;\n  cursor: pointer;\n  z-index: 2; }\n\n.addArticle-title {\n  margin: 20px auto; }\n\n.addArticle-input {\n  display: block;\n  width: 600px;\n  height: 60px;\n  box-sizing: border-box;\n  border: none;\n  border-radius: 2px;\n  font-size: 28px;\n  color: #888;\n  line-height: 16px;\n  padding: 6px 8px 2px 0px; }\n  .addArticle-input:focus {\n    outline: none;\n    border: none; }\n  .addArticle-input::placeholder {\n    font-size: 28px;\n    color: #999999; }\n\n/*simditor*/\n.simditor {\n  border: none !important;\n  border-top: 1px solid #c9d8db !important;\n  margin: 0 auto; }\n  .simditor .simditor-toolbar {\n    border-bottom: none !important; }\n\n.ShowArticle-layout {\n  padding: 0;\n  margin: 0;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n  -ms-flex-direction: column;\n  flex-direction: column;\n  -webkit-box-align: stretch;\n  -ms-flex-align: stretch;\n  align-items: stretch;\n  -ms-flex-negative: 0;\n  flex-shrink: 0;\n  overflow: hidden; }\n\n.showArticle-show {\n  position: relative; }\n\n.showArticle-banner {\n  width: 100vw; }\n\n.showArticle-title {\n  position: absolute;\n  margin: 0 auto;\n  left: 0;\n  right: 0;\n  bottom: 80px;\n  color: #fff;\n  z-index: 1;\n  font-size: 36px; }\n\n.showArticle-info {\n  position: absolute;\n  margin: 0 auto;\n  left: 0;\n  right: 0;\n  bottom: 20px;\n  color: #fff;\n  z-index: 1;\n  font-size: 20px;\n  width: 660px; }\n\n.showArticle-content {\n  margin: 47px auto 0;\n  padding: 0;\n  width: 660px;\n  z-index: 1; }\n\n.showArticle-footer {\n  margin: 47px auto 0;\n  padding: 0;\n  width: 660px;\n  z-index: 1; }\n", ""]);
 
 // exports
 
+
+/***/ }),
+/* 140 */,
+/* 141 */,
+/* 142 */,
+/* 143 */,
+/* 144 */,
+/* 145 */,
+/* 146 */,
+/* 147 */,
+/* 148 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.getUserBase = getUserBase;
+
+var _actionTypes = __webpack_require__(69);
+
+var types = _interopRequireWildcard(_actionTypes);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function getUserBase() {
+  console.log('This is getUserBase()');
+
+  $.ajax({
+    url: '/api/community/user/base',
+    type: 'get',
+    success: function success(res) {
+      console.log(res);
+    }
+  });
+
+  return {
+    type: types.GET_USER_BASE,
+    payload: { status: 1 }
+  };
+}
+
+/***/ }),
+/* 149 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.header = header;
+
+var _lodash = __webpack_require__(68);
+
+var _lodash2 = _interopRequireDefault(_lodash);
+
+var _actionTypes = __webpack_require__(69);
+
+var types = _interopRequireWildcard(_actionTypes);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// status 0 请求中，1请求结束
+var defaultStatus = {
+  status: 0
+};
+
+function header() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : defaultStatus;
+  var action = arguments[1];
+
+  switch (action.type) {
+    case types.GET_USER_BASE:
+      {
+        console.log('reducers action', action);
+        return (0, _lodash2.default)({}, state, action.payload);
+      }
+
+    default:
+      {
+        return state;
+      }
+  }
+}
 
 /***/ })
 /******/ ]);

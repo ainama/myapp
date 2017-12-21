@@ -60,11 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-<<<<<<< HEAD
-/******/ 	return __webpack_require__(__webpack_require__.s = 135);
-=======
-/******/ 	return __webpack_require__(__webpack_require__.s = 137);
->>>>>>> 4f1c561231b5c4e764e63c6eed69187e3eecf264
+/******/ 	return __webpack_require__(__webpack_require__.s = 140);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -509,7 +505,8 @@ module.exports = invariant;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 8 */
+/* 8 */,
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -533,7 +530,7 @@ module.exports = emptyObject;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -602,8 +599,8 @@ module.exports = warning;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 10 */,
-/* 11 */
+/* 11 */,
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -620,8 +617,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 if (process.env.NODE_ENV !== 'production') {
   var invariant = __webpack_require__(7);
-  var warning = __webpack_require__(9);
-  var ReactPropTypesSecret = __webpack_require__(12);
+  var warning = __webpack_require__(10);
+  var ReactPropTypesSecret = __webpack_require__(13);
   var loggedTypeFailures = {};
 }
 
@@ -671,7 +668,7 @@ module.exports = checkPropTypes;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -689,13 +686,8 @@ var ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
 module.exports = ReactPropTypesSecret;
 
 /***/ }),
-<<<<<<< HEAD
-/* 13 */,
-/* 14 */
-=======
-/* 12 */,
-/* 13 */
->>>>>>> 4f1c561231b5c4e764e63c6eed69187e3eecf264
+/* 14 */,
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -734,11 +726,7 @@ var ExecutionEnvironment = {
 module.exports = ExecutionEnvironment;
 
 /***/ }),
-<<<<<<< HEAD
-/* 15 */
-=======
-/* 14 */
->>>>>>> 4f1c561231b5c4e764e63c6eed69187e3eecf264
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -819,11 +807,7 @@ module.exports = EventListener;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-<<<<<<< HEAD
-/* 16 */
-=======
-/* 15 */
->>>>>>> 4f1c561231b5c4e764e63c6eed69187e3eecf264
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -866,11 +850,7 @@ function getActiveElement(doc) /*?DOMElement*/{
 module.exports = getActiveElement;
 
 /***/ }),
-<<<<<<< HEAD
-/* 17 */
-=======
-/* 16 */
->>>>>>> 4f1c561231b5c4e764e63c6eed69187e3eecf264
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -943,11 +923,7 @@ function shallowEqual(objA, objB) {
 module.exports = shallowEqual;
 
 /***/ }),
-<<<<<<< HEAD
-/* 18 */
-=======
-/* 17 */
->>>>>>> 4f1c561231b5c4e764e63c6eed69187e3eecf264
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -990,11 +966,7 @@ function containsNode(outerNode, innerNode) {
 module.exports = containsNode;
 
 /***/ }),
-<<<<<<< HEAD
-/* 19 */
-=======
-/* 18 */
->>>>>>> 4f1c561231b5c4e764e63c6eed69187e3eecf264
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1024,11 +996,6 @@ function focusNode(node) {
 module.exports = focusNode;
 
 /***/ }),
-<<<<<<< HEAD
-=======
-/* 19 */,
->>>>>>> 4f1c561231b5c4e764e63c6eed69187e3eecf264
-/* 20 */,
 /* 21 */,
 /* 22 */,
 /* 23 */,
@@ -1050,7 +1017,7 @@ module.exports = focusNode;
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var m = __webpack_require__(6),
-    n = __webpack_require__(8),
+    n = __webpack_require__(9),
     p = __webpack_require__(3),
     q = "function" === typeof Symbol && Symbol["for"],
     r = q ? Symbol["for"]("react.element") : 60103,
@@ -1183,11 +1150,11 @@ if (process.env.NODE_ENV !== "production") {
     'use strict';
 
     var _assign = __webpack_require__(6);
-    var emptyObject = __webpack_require__(8);
+    var emptyObject = __webpack_require__(9);
     var invariant = __webpack_require__(7);
-    var warning = __webpack_require__(9);
+    var warning = __webpack_require__(10);
     var emptyFunction = __webpack_require__(3);
-    var checkPropTypes = __webpack_require__(11);
+    var checkPropTypes = __webpack_require__(12);
 
     // TODO: this is special because it gets imported during build.
 
@@ -2584,26 +2551,15 @@ if (process.env.NODE_ENV === 'production') {
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var aa = __webpack_require__(0),
-<<<<<<< HEAD
-    l = __webpack_require__(14),
+    l = __webpack_require__(15),
     B = __webpack_require__(6),
     C = __webpack_require__(3),
-    ba = __webpack_require__(15),
-    da = __webpack_require__(16),
-    ea = __webpack_require__(17),
-    fa = __webpack_require__(18),
-    ia = __webpack_require__(19),
-=======
-    l = __webpack_require__(13),
-    B = __webpack_require__(6),
-    C = __webpack_require__(3),
-    ba = __webpack_require__(14),
-    da = __webpack_require__(15),
-    ea = __webpack_require__(16),
-    fa = __webpack_require__(17),
-    ia = __webpack_require__(18),
->>>>>>> 4f1c561231b5c4e764e63c6eed69187e3eecf264
-    D = __webpack_require__(8);
+    ba = __webpack_require__(16),
+    da = __webpack_require__(17),
+    ea = __webpack_require__(18),
+    fa = __webpack_require__(19),
+    ia = __webpack_require__(20),
+    D = __webpack_require__(9);
 function E(a) {
   for (var b = arguments.length - 1, c = "Minified React error #" + a + "; visit http://facebook.github.io/react/docs/error-decoder.html?invariant\x3d" + a, d = 0; d < b; d++) {
     c += "\x26args[]\x3d" + encodeURIComponent(arguments[d + 1]);
@@ -4641,11 +4597,7 @@ module.exports = isNode;
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
-<<<<<<< HEAD
- */var _typeof=typeof Symbol==="function"&&typeof Symbol.iterator==="symbol"?function(obj){return typeof obj;}:function(obj){return obj&&typeof Symbol==="function"&&obj.constructor===Symbol&&obj!==Symbol.prototype?"symbol":typeof obj;};if(process.env.NODE_ENV!=="production"){(function(){'use strict';var React=__webpack_require__(0);var invariant=__webpack_require__(7);var warning=__webpack_require__(9);var ExecutionEnvironment=__webpack_require__(14);var _assign=__webpack_require__(6);var emptyFunction=__webpack_require__(3);var EventListener=__webpack_require__(15);var getActiveElement=__webpack_require__(16);var shallowEqual=__webpack_require__(17);var containsNode=__webpack_require__(18);var focusNode=__webpack_require__(19);var emptyObject=__webpack_require__(8);var checkPropTypes=__webpack_require__(11);var hyphenateStyleName=__webpack_require__(31);var camelizeStyleName=__webpack_require__(33);/**
-=======
- */var _typeof=typeof Symbol==="function"&&typeof Symbol.iterator==="symbol"?function(obj){return typeof obj;}:function(obj){return obj&&typeof Symbol==="function"&&obj.constructor===Symbol&&obj!==Symbol.prototype?"symbol":typeof obj;};if(process.env.NODE_ENV!=="production"){(function(){'use strict';var React=__webpack_require__(0);var invariant=__webpack_require__(7);var warning=__webpack_require__(9);var ExecutionEnvironment=__webpack_require__(13);var _assign=__webpack_require__(6);var emptyFunction=__webpack_require__(3);var EventListener=__webpack_require__(14);var getActiveElement=__webpack_require__(15);var shallowEqual=__webpack_require__(16);var containsNode=__webpack_require__(17);var focusNode=__webpack_require__(18);var emptyObject=__webpack_require__(8);var checkPropTypes=__webpack_require__(10);var hyphenateStyleName=__webpack_require__(31);var camelizeStyleName=__webpack_require__(33);/**
->>>>>>> 4f1c561231b5c4e764e63c6eed69187e3eecf264
+ */var _typeof=typeof Symbol==="function"&&typeof Symbol.iterator==="symbol"?function(obj){return typeof obj;}:function(obj){return obj&&typeof Symbol==="function"&&obj.constructor===Symbol&&obj!==Symbol.prototype?"symbol":typeof obj;};if(process.env.NODE_ENV!=="production"){(function(){'use strict';var React=__webpack_require__(0);var invariant=__webpack_require__(7);var warning=__webpack_require__(10);var ExecutionEnvironment=__webpack_require__(15);var _assign=__webpack_require__(6);var emptyFunction=__webpack_require__(3);var EventListener=__webpack_require__(16);var getActiveElement=__webpack_require__(17);var shallowEqual=__webpack_require__(18);var containsNode=__webpack_require__(19);var focusNode=__webpack_require__(20);var emptyObject=__webpack_require__(9);var checkPropTypes=__webpack_require__(12);var hyphenateStyleName=__webpack_require__(31);var camelizeStyleName=__webpack_require__(33);/**
  * WARNING: DO NOT manually require this module.
  * This is a replacement for `invariant(...)` used by the error code system
  * and will _only_ be required by the corresponding babel pass.
@@ -7791,11 +7743,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 var emptyFunction = __webpack_require__(3);
 var invariant = __webpack_require__(7);
-var warning = __webpack_require__(9);
+var warning = __webpack_require__(10);
 var assign = __webpack_require__(6);
 
-var ReactPropTypesSecret = __webpack_require__(12);
-var checkPropTypes = __webpack_require__(11);
+var ReactPropTypesSecret = __webpack_require__(13);
+var checkPropTypes = __webpack_require__(12);
 
 module.exports = function (isValidElement, throwOnDirectAccess) {
   /* global Symbol */
@@ -8314,7 +8266,7 @@ module.exports = function (isValidElement, throwOnDirectAccess) {
 
 var emptyFunction = __webpack_require__(3);
 var invariant = __webpack_require__(7);
-var ReactPropTypesSecret = __webpack_require__(12);
+var ReactPropTypesSecret = __webpack_require__(13);
 
 module.exports = function () {
   function shim(props, propName, componentName, location, propFullName, secret) {
@@ -9061,13 +9013,12 @@ module.exports = Button;
 /* 132 */,
 /* 133 */,
 /* 134 */,
-<<<<<<< HEAD
-/* 135 */
-=======
 /* 135 */,
 /* 136 */,
-/* 137 */
->>>>>>> 4f1c561231b5c4e764e63c6eed69187e3eecf264
+/* 137 */,
+/* 138 */,
+/* 139 */,
+/* 140 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9081,30 +9032,18 @@ var _reactDom = __webpack_require__(26);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-<<<<<<< HEAD
-var _page = __webpack_require__(136);
+var _page = __webpack_require__(141);
 
 var _page2 = _interopRequireDefault(_page);
 
-__webpack_require__(140);
-=======
-var _page = __webpack_require__(138);
-
-var _page2 = _interopRequireDefault(_page);
-
-__webpack_require__(142);
->>>>>>> 4f1c561231b5c4e764e63c6eed69187e3eecf264
+__webpack_require__(145);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 _reactDom2.default.render(_react2.default.createElement(_page2.default, null), document.getElementById('content'));
 
 /***/ }),
-<<<<<<< HEAD
-/* 136 */
-=======
-/* 138 */
->>>>>>> 4f1c561231b5c4e764e63c6eed69187e3eecf264
+/* 141 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9116,11 +9055,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-<<<<<<< HEAD
-var _todoList = __webpack_require__(137);
-=======
-var _todoList = __webpack_require__(139);
->>>>>>> 4f1c561231b5c4e764e63c6eed69187e3eecf264
+var _todoList = __webpack_require__(142);
 
 var _todoList2 = _interopRequireDefault(_todoList);
 
@@ -9128,11 +9063,7 @@ var _button = __webpack_require__(70);
 
 var _button2 = _interopRequireDefault(_button);
 
-<<<<<<< HEAD
-var _addTodo = __webpack_require__(139);
-=======
-var _addTodo = __webpack_require__(141);
->>>>>>> 4f1c561231b5c4e764e63c6eed69187e3eecf264
+var _addTodo = __webpack_require__(144);
 
 var _addTodo2 = _interopRequireDefault(_addTodo);
 
@@ -9288,11 +9219,7 @@ Page.defaultProps = {};
 module.exports = Page;
 
 /***/ }),
-<<<<<<< HEAD
-/* 137 */
-=======
-/* 139 */
->>>>>>> 4f1c561231b5c4e764e63c6eed69187e3eecf264
+/* 142 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9308,11 +9235,7 @@ var _propTypes = __webpack_require__(2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-<<<<<<< HEAD
-var _todoItem = __webpack_require__(138);
-=======
-var _todoItem = __webpack_require__(140);
->>>>>>> 4f1c561231b5c4e764e63c6eed69187e3eecf264
+var _todoItem = __webpack_require__(143);
 
 var _todoItem2 = _interopRequireDefault(_todoItem);
 
@@ -9360,11 +9283,7 @@ var TodoList = function (_React$Component) {
 module.exports = TodoList;
 
 /***/ }),
-<<<<<<< HEAD
-/* 138 */
-=======
-/* 140 */
->>>>>>> 4f1c561231b5c4e764e63c6eed69187e3eecf264
+/* 143 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9434,11 +9353,7 @@ TodoItem.defaultProps = {};
 module.exports = TodoItem;
 
 /***/ }),
-<<<<<<< HEAD
-/* 139 */
-=======
-/* 141 */
->>>>>>> 4f1c561231b5c4e764e63c6eed69187e3eecf264
+/* 144 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9518,37 +9433,22 @@ var AddTodo = function (_React$Component) {
 module.exports = AddTodo;
 
 /***/ }),
-<<<<<<< HEAD
-/* 140 */
-=======
-/* 142 */
->>>>>>> 4f1c561231b5c4e764e63c6eed69187e3eecf264
+/* 145 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-<<<<<<< HEAD
-__webpack_require__(141);
+__webpack_require__(146);
 
 /***/ }),
-/* 141 */
-=======
-__webpack_require__(143);
-
-/***/ }),
-/* 143 */
->>>>>>> 4f1c561231b5c4e764e63c6eed69187e3eecf264
+/* 146 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-<<<<<<< HEAD
-var content = __webpack_require__(142);
-=======
-var content = __webpack_require__(144);
->>>>>>> 4f1c561231b5c4e764e63c6eed69187e3eecf264
+var content = __webpack_require__(147);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -9573,11 +9473,7 @@ if(false) {
 }
 
 /***/ }),
-<<<<<<< HEAD
-/* 142 */
-=======
-/* 144 */
->>>>>>> 4f1c561231b5c4e764e63c6eed69187e3eecf264
+/* 147 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(45)(undefined);

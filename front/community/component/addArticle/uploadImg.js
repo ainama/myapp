@@ -19,7 +19,6 @@ class UploadImg extends React.Component {
   _uploadImg(e) {
     var formData = new FormData();
     formData.append('image', e.target.files[0]);
-    console.log('e.target.files[0]', e.target.files[0]);
     // formData.append('type', this.props.imageType);
     this.props.upload(formData);
   }
@@ -138,11 +137,15 @@ const styles = {
   },
 
   img: {
-    borderRadius: 2
+    borderRadius: 2,
+    width: '100%',
+    height: '100%',
   },
 
   floor: {
-    position: 'relative'
+    position: 'relative',
+    width: 800,
+    height: 260,
   },
 
   delete: {
@@ -170,18 +173,15 @@ const styles = {
 };
 
 UploadImg.propTypes = {
-  // title: PropTypes.string,
-  // emphasis: PropTypes.bool,
   containerStyle: PropTypes.object,
   btnTitle: PropTypes.string,
   btnRemarks: PropTypes.string,
-  _uploadImg: PropTypes.func,
+  upload: PropTypes.func,
   imageType: PropTypes.number,
   imageUrl: PropTypes.string,
   delete: PropTypes.func,
   imageStyle: PropTypes.object,
   cardStyle: PropTypes.object,
-  // titleStyle: PropTypes.object
 };
 
 UploadImg.defaultProps = {

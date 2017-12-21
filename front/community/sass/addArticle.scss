@@ -1,6 +1,6 @@
 .addArticle-layout {
   margin: 50px auto 0;
-  padding: 0;
+  padding: 0px 0px 20px 0px;
   width: 600px;
   z-index: 1;
   display: -webkit-box;
@@ -72,6 +72,18 @@
     font-size: 28px;
     color: #999999;
   }
+}
+
+.addArticle-upload {
+  border-radius: 4px;
+  text-align: center;
+  border: 1px solid #b3b3b3;
+  color: gray;
+  width: 82px;
+  height: 32px;
+  line-height: 30px;
+  padding: 0;
+  cursor: pointer;
 }
 
 /*simditor*/

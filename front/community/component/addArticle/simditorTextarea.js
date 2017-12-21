@@ -88,7 +88,7 @@ class SimditorTextarea extends React.Component {
     // let selectName = `#${this.props.id}.simditor.simditor-wrapper`;
     let html = $('.simditor').find(".simditor-body").html();
     // console.log('selectName', $(selectName).find(".simditor-body").html());
-    console.log('textareaHtml => ', html);
+    // console.log('textareaHtml => ', html);
     return html;
   };
 

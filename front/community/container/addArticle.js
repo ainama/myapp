@@ -1,7 +1,7 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import * as actions from '../actions/test';
+import * as actions from '../actions/article';
 
 import SimditorTextarea from '../component/addArticle/simditorTextarea.js';
 import UploadImg from '../component/addArticle/uploadImg.js';
@@ -13,11 +13,11 @@ class AddArticle extends React.Component {
     this._addBanner = this._addBanner.bind(this);
     this._getContent = this._getContent.bind(this);
     this._uploadImage = this._uploadImage.bind(this);
-    console.log(this.props);
+    this._upload = this._upload.bind(this);
+    // console.log(this.props);
     this.state = {
-      value: '',
-      productUrl: '',
-      title: ''
+      value: this.props.article.content,
+      title: this.props.article.title
     };
   }
 
@@ -36,33 +36,52 @@ class AddArticle extends React.Component {
     // };
   }
 
-  setZ() {
-    this.props.actions.testfunc();
-  }
+  // setZ() {
+  //   this.props.actions.testfunc();
+  // }
 
   _addBanner() {
     this.refs.file.click();
   }
 
   _getTitle(e) {
-    console.log('getTitle => ', e.target.value);
+    // console.log('getTitle => ', e.target.value);
     this.setState({title: e.target.value})
   }
 
   _getContent(e) {
-    console.log('getContent => ', e);
-    // this.setState({value: e.target.value})
+    // console.log('getContent => ', e);
+    this.setState({value: e})
   }
 
   _uploadImage(data) {
-    console.log('uploadImage => ', data.get('image'));
+    // console.log('uploadImage => ', data.get('image'));
+    this.props.actions.uploadImage(data);
   }
 
   _deleteImage() {
-    console.log('deleteImage => ', this.state.productUrl);
+    // console.log('deleteImage => ', this.props.article.imgUrl);
+  }
+
+  _upload() {
+    const { article } = this.props;
+    const { title, value } = this.state;
+
+    let data = {
+      title: title,
+      user_id: 12,
+      content: value,
+      banner: article.imgUrl,
+    };
+
+    // console.log('upload', data);
+    this.props.actions.uploadArticle(data);
   }
 
   render() {
+
+    const { article } = this.props;
+
     return (
       <div className = 'addArticle-layout'>
 
@@ -70,7 +89,7 @@ class AddArticle extends React.Component {
         <div className = 'fake-wrapper'>
           <UploadImg
             upload = { (data) => { this._uploadImage(data); } }
-            imageUrl = { this.state.productUrl }
+            imageUrl = { article.imgUrl }
             delete = { () => { this._deleteImage(); } } />
         </div>
 
@@ -92,6 +111,13 @@ class AddArticle extends React.Component {
             placeholder = '请开始你的表演'/>
         </div>
 
+        {/*upload*/}
+        <button
+          onClick = { this._upload }
+          className = 'addArticle-upload'>
+          发布
+        </button>
+
       </div>
     );
   }
@@ -99,7 +125,8 @@ class AddArticle extends React.Component {
 
 const mapStateToProps = (store) => {
   return {
-    test: store.test
+    test: store.test,
+    article: store.article
   };
 };
 

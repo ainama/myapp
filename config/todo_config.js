@@ -6,12 +6,4 @@ var mysql_config = {
   port: '3306'
 };
 
-// var mysql_config = {
-//   host     : '47.95.194.249',
-//   user     : 'root',
-//   password : 'root',
-//   database : 'communityDB',
-//   port: '3306'
-// };
-
 module.exports = mysql_config;

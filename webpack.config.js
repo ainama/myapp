@@ -22,7 +22,7 @@ const config = {
         }
       },
       {
-        test: /\.scss$/,
+        test: /(\.css|\.scss)$/,
         loader: 'style-loader!css-loader!sass-loader'
       },
     ]

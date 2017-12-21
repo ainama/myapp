@@ -60,7 +60,11 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
+<<<<<<< HEAD
 /******/ 	return __webpack_require__(__webpack_require__.s = 135);
+=======
+/******/ 	return __webpack_require__(__webpack_require__.s = 137);
+>>>>>>> 4f1c561231b5c4e764e63c6eed69187e3eecf264
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -685,8 +689,13 @@ var ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
 module.exports = ReactPropTypesSecret;
 
 /***/ }),
+<<<<<<< HEAD
 /* 13 */,
 /* 14 */
+=======
+/* 12 */,
+/* 13 */
+>>>>>>> 4f1c561231b5c4e764e63c6eed69187e3eecf264
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -725,7 +734,11 @@ var ExecutionEnvironment = {
 module.exports = ExecutionEnvironment;
 
 /***/ }),
+<<<<<<< HEAD
 /* 15 */
+=======
+/* 14 */
+>>>>>>> 4f1c561231b5c4e764e63c6eed69187e3eecf264
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -806,7 +819,11 @@ module.exports = EventListener;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
+<<<<<<< HEAD
 /* 16 */
+=======
+/* 15 */
+>>>>>>> 4f1c561231b5c4e764e63c6eed69187e3eecf264
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -849,7 +866,11 @@ function getActiveElement(doc) /*?DOMElement*/{
 module.exports = getActiveElement;
 
 /***/ }),
+<<<<<<< HEAD
 /* 17 */
+=======
+/* 16 */
+>>>>>>> 4f1c561231b5c4e764e63c6eed69187e3eecf264
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -922,7 +943,11 @@ function shallowEqual(objA, objB) {
 module.exports = shallowEqual;
 
 /***/ }),
+<<<<<<< HEAD
 /* 18 */
+=======
+/* 17 */
+>>>>>>> 4f1c561231b5c4e764e63c6eed69187e3eecf264
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -965,7 +990,11 @@ function containsNode(outerNode, innerNode) {
 module.exports = containsNode;
 
 /***/ }),
+<<<<<<< HEAD
 /* 19 */
+=======
+/* 18 */
+>>>>>>> 4f1c561231b5c4e764e63c6eed69187e3eecf264
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -995,6 +1024,10 @@ function focusNode(node) {
 module.exports = focusNode;
 
 /***/ }),
+<<<<<<< HEAD
+=======
+/* 19 */,
+>>>>>>> 4f1c561231b5c4e764e63c6eed69187e3eecf264
 /* 20 */,
 /* 21 */,
 /* 22 */,
@@ -2551,6 +2584,7 @@ if (process.env.NODE_ENV === 'production') {
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var aa = __webpack_require__(0),
+<<<<<<< HEAD
     l = __webpack_require__(14),
     B = __webpack_require__(6),
     C = __webpack_require__(3),
@@ -2559,6 +2593,16 @@ var aa = __webpack_require__(0),
     ea = __webpack_require__(17),
     fa = __webpack_require__(18),
     ia = __webpack_require__(19),
+=======
+    l = __webpack_require__(13),
+    B = __webpack_require__(6),
+    C = __webpack_require__(3),
+    ba = __webpack_require__(14),
+    da = __webpack_require__(15),
+    ea = __webpack_require__(16),
+    fa = __webpack_require__(17),
+    ia = __webpack_require__(18),
+>>>>>>> 4f1c561231b5c4e764e63c6eed69187e3eecf264
     D = __webpack_require__(8);
 function E(a) {
   for (var b = arguments.length - 1, c = "Minified React error #" + a + "; visit http://facebook.github.io/react/docs/error-decoder.html?invariant\x3d" + a, d = 0; d < b; d++) {
@@ -4597,7 +4641,11 @@ module.exports = isNode;
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
+<<<<<<< HEAD
  */var _typeof=typeof Symbol==="function"&&typeof Symbol.iterator==="symbol"?function(obj){return typeof obj;}:function(obj){return obj&&typeof Symbol==="function"&&obj.constructor===Symbol&&obj!==Symbol.prototype?"symbol":typeof obj;};if(process.env.NODE_ENV!=="production"){(function(){'use strict';var React=__webpack_require__(0);var invariant=__webpack_require__(7);var warning=__webpack_require__(9);var ExecutionEnvironment=__webpack_require__(14);var _assign=__webpack_require__(6);var emptyFunction=__webpack_require__(3);var EventListener=__webpack_require__(15);var getActiveElement=__webpack_require__(16);var shallowEqual=__webpack_require__(17);var containsNode=__webpack_require__(18);var focusNode=__webpack_require__(19);var emptyObject=__webpack_require__(8);var checkPropTypes=__webpack_require__(11);var hyphenateStyleName=__webpack_require__(31);var camelizeStyleName=__webpack_require__(33);/**
+=======
+ */var _typeof=typeof Symbol==="function"&&typeof Symbol.iterator==="symbol"?function(obj){return typeof obj;}:function(obj){return obj&&typeof Symbol==="function"&&obj.constructor===Symbol&&obj!==Symbol.prototype?"symbol":typeof obj;};if(process.env.NODE_ENV!=="production"){(function(){'use strict';var React=__webpack_require__(0);var invariant=__webpack_require__(7);var warning=__webpack_require__(9);var ExecutionEnvironment=__webpack_require__(13);var _assign=__webpack_require__(6);var emptyFunction=__webpack_require__(3);var EventListener=__webpack_require__(14);var getActiveElement=__webpack_require__(15);var shallowEqual=__webpack_require__(16);var containsNode=__webpack_require__(17);var focusNode=__webpack_require__(18);var emptyObject=__webpack_require__(8);var checkPropTypes=__webpack_require__(10);var hyphenateStyleName=__webpack_require__(31);var camelizeStyleName=__webpack_require__(33);/**
+>>>>>>> 4f1c561231b5c4e764e63c6eed69187e3eecf264
  * WARNING: DO NOT manually require this module.
  * This is a replacement for `invariant(...)` used by the error code system
  * and will _only_ be required by the corresponding babel pass.
@@ -8469,7 +8517,7 @@ module.exports = function(list, options) {
 
 	// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
 	// tags it will allow on a page
-	if (!options.singleton) options.singleton = isOldIE();
+	if (!options.singleton && typeof options.singleton !== "boolean") options.singleton = isOldIE();
 
 	// By default, add <style> tags to the <head> element
 	if (!options.insertInto) options.insertInto = "head";
@@ -8887,7 +8935,9 @@ module.exports = function (css) {
 /* 65 */,
 /* 66 */,
 /* 67 */,
-/* 68 */
+/* 68 */,
+/* 69 */,
+/* 70 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8947,8 +8997,6 @@ var Button = function (_React$Component) {
 module.exports = Button;
 
 /***/ }),
-/* 69 */,
-/* 70 */,
 /* 71 */,
 /* 72 */,
 /* 73 */,
@@ -9013,7 +9061,13 @@ module.exports = Button;
 /* 132 */,
 /* 133 */,
 /* 134 */,
+<<<<<<< HEAD
 /* 135 */
+=======
+/* 135 */,
+/* 136 */,
+/* 137 */
+>>>>>>> 4f1c561231b5c4e764e63c6eed69187e3eecf264
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9027,18 +9081,30 @@ var _reactDom = __webpack_require__(26);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
+<<<<<<< HEAD
 var _page = __webpack_require__(136);
 
 var _page2 = _interopRequireDefault(_page);
 
 __webpack_require__(140);
+=======
+var _page = __webpack_require__(138);
+
+var _page2 = _interopRequireDefault(_page);
+
+__webpack_require__(142);
+>>>>>>> 4f1c561231b5c4e764e63c6eed69187e3eecf264
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 _reactDom2.default.render(_react2.default.createElement(_page2.default, null), document.getElementById('content'));
 
 /***/ }),
+<<<<<<< HEAD
 /* 136 */
+=======
+/* 138 */
+>>>>>>> 4f1c561231b5c4e764e63c6eed69187e3eecf264
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9050,15 +9116,23 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
+<<<<<<< HEAD
 var _todoList = __webpack_require__(137);
+=======
+var _todoList = __webpack_require__(139);
+>>>>>>> 4f1c561231b5c4e764e63c6eed69187e3eecf264
 
 var _todoList2 = _interopRequireDefault(_todoList);
 
-var _button = __webpack_require__(68);
+var _button = __webpack_require__(70);
 
 var _button2 = _interopRequireDefault(_button);
 
+<<<<<<< HEAD
 var _addTodo = __webpack_require__(139);
+=======
+var _addTodo = __webpack_require__(141);
+>>>>>>> 4f1c561231b5c4e764e63c6eed69187e3eecf264
 
 var _addTodo2 = _interopRequireDefault(_addTodo);
 
@@ -9214,7 +9288,11 @@ Page.defaultProps = {};
 module.exports = Page;
 
 /***/ }),
+<<<<<<< HEAD
 /* 137 */
+=======
+/* 139 */
+>>>>>>> 4f1c561231b5c4e764e63c6eed69187e3eecf264
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9230,7 +9308,11 @@ var _propTypes = __webpack_require__(2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
+<<<<<<< HEAD
 var _todoItem = __webpack_require__(138);
+=======
+var _todoItem = __webpack_require__(140);
+>>>>>>> 4f1c561231b5c4e764e63c6eed69187e3eecf264
 
 var _todoItem2 = _interopRequireDefault(_todoItem);
 
@@ -9278,7 +9360,11 @@ var TodoList = function (_React$Component) {
 module.exports = TodoList;
 
 /***/ }),
+<<<<<<< HEAD
 /* 138 */
+=======
+/* 140 */
+>>>>>>> 4f1c561231b5c4e764e63c6eed69187e3eecf264
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9348,7 +9434,11 @@ TodoItem.defaultProps = {};
 module.exports = TodoItem;
 
 /***/ }),
+<<<<<<< HEAD
 /* 139 */
+=======
+/* 141 */
+>>>>>>> 4f1c561231b5c4e764e63c6eed69187e3eecf264
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9364,7 +9454,7 @@ var _propTypes = __webpack_require__(2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _button = __webpack_require__(68);
+var _button = __webpack_require__(70);
 
 var _button2 = _interopRequireDefault(_button);
 
@@ -9428,22 +9518,37 @@ var AddTodo = function (_React$Component) {
 module.exports = AddTodo;
 
 /***/ }),
+<<<<<<< HEAD
 /* 140 */
+=======
+/* 142 */
+>>>>>>> 4f1c561231b5c4e764e63c6eed69187e3eecf264
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
+<<<<<<< HEAD
 __webpack_require__(141);
 
 /***/ }),
 /* 141 */
+=======
+__webpack_require__(143);
+
+/***/ }),
+/* 143 */
+>>>>>>> 4f1c561231b5c4e764e63c6eed69187e3eecf264
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
+<<<<<<< HEAD
 var content = __webpack_require__(142);
+=======
+var content = __webpack_require__(144);
+>>>>>>> 4f1c561231b5c4e764e63c6eed69187e3eecf264
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -9457,8 +9562,8 @@ if(content.locals) module.exports = content.locals;
 if(false) {
 	// When the styles change, update the <style> tags
 	if(!content.locals) {
-		module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/sass-loader/lib/loader.js!./index.scss", function() {
-			var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/sass-loader/lib/loader.js!./index.scss");
+		module.hot.accept("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./index.scss", function() {
+			var newContent = require("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./index.scss");
 			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 			update(newContent);
 		});
@@ -9468,7 +9573,11 @@ if(false) {
 }
 
 /***/ }),
+<<<<<<< HEAD
 /* 142 */
+=======
+/* 144 */
+>>>>>>> 4f1c561231b5c4e764e63c6eed69187e3eecf264
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(45)(undefined);

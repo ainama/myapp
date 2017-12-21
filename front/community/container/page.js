@@ -41,15 +41,23 @@ class Page extends React.Component {
     });
   }
 
+  addArticle() {
+    this.props.history.push('/community/addArticle');
+  }
+  showArticle() {
+    this.props.history.push('/community/showArticle');
+  }
+
   render() {
     return (
       <div>
-        <div onClick = { () => { this.push(); } }>去第二个页面</div>
-        <div onClick = { () => { this.get(); } }>登录成功，重定向页面</div>
-        <textarea
-          id = 'remark'
-          ref = 'textarea'
-          placeholder = '请输入内容' />
+        <div onClick = { () => { this.push(); } }>去page2</div>
+        <div onClick = { () => { this.addArticle(); } }>去addArticle</div>
+        <div onClick = { () => { this.showArticle(); } }>去showArticle</div>
+          <textarea
+            id = 'remark'
+            ref = 'textarea'
+            placeholder = '请输入内容' />
       </div>
     );
   }

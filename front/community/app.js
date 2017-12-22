@@ -41,6 +41,7 @@ ReactDOM.render((
         <Route exact strict path = '/community/page2' component = { Page2 } />
         <Route exact strict path = '/community/home' component = { Home } />
         <Route exact strict path = '/community/addArticle' component = { AddArticle } />
+        <Route exact strict path = '/community/addArticle/:type' component = { AddArticle } />
         <Route exact strict path = '/community/showArticle/:article' component = { ShowArticle } />
         <Route exact strict path = '/community/personal' component = { PersonalPage } />
         <Route exact strict path = '/community/setting' component = { SettingPage } />

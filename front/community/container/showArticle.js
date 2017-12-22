@@ -2,93 +2,45 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import * as actions from '../actions/test';
+import * as actions from '../actions/article';
 
 class ShowArticle extends React.Component {
   constructor(props) {
     super(props);
-    this._getInfo = this._getInfo.bind(this);
-    this._getLike = this._getLike.bind(this);
     this._addLike = this._addLike.bind(this);
     this._goEdit = this._goEdit.bind(this);
     this.state = {
-      data: {},
-      status: false,  // 当前登录用户与页面文章作者id
+      user: 3,  // 当前登录用户与页面文章作者id
+      status: false,
     };
   }
 
   componentDidMount() {
     let article_id = this.props.match.params.article;
-    this._getInfo(article_id);
-    this._getLike();
-  }
-
-  _getInfo(id) {
-    console.log('getInfo', id);
-    //ajax 获取data
-    $.ajax({
-      url: '/api/community/article/read',
-      type: 'POST',
-      data: { id: id },
-      success: function(res) {
-        console.log(res.msg);
-        // dispatch(addImage(res.newPath));
-        // console.log(res);
-        // if (res.code == 10000) {
-        //   dispatch(addImage(res.newPath));
-        // } else {
-        //   alert(res.msg);
-        // }
-      }
-    });
-    const data = {
-      user_id: 'lynn',
-      update_time: '2天前',
-      banner: '../images/banner.jpeg',
-      title: '蛙鸣社区的第一篇文章标题',
-      content: '文章内容，假装很长，特别特别长'
-    };
-
-    // let user = localStorage.getItem('user');
-    let user = 'lynn';
-    if (user == data.user_id) {
-      this.setState({
-        data: data,
-        status: true,
-      })
-    } else {
-      this.setState({
-        data: data,
-        status: false,
-      })
-    }
-  }
-
-  _getLike() {
-    //ajax 获取like
-    let like = 8;
-    this.setState({
-      like: like
-    })
+    this.props.actions.getArticle(article_id);  // 获取文章信息
+    this.props.actions.getLike(article_id);  // 获取文章点赞信息
   }
 
   _addLike() {
-    this.setState({
-      like: ++ this.state.like
-    })
+    this.setState({ status: true});
+    let article_id = this.props.match.params.article;
+    let data = {
+      article_id: this.props.article.article_id,
+      user_id: this.state.user
+    };
+    this.props.actions.editLike(data);
+    this.props.actions.getLike(article_id);  // 获取文章信息
   }
 
   _goEdit() {
-    this.props.history.push('/community/addArticle');
+    // console.log('showArticle => ', this.props.article);
+    this.props.history.push('/community/addArticle/edit');
   }
 
   render() {
 
-    const {
-      data,
-      status,
-      like
-    } = this.state;
+    const article = this.props.article;
+    const { user, status } = this.state;
 
     return (
       <div className = 'showArticle-layout'>
@@ -98,38 +50,43 @@ class ShowArticle extends React.Component {
 
           {/*bg*/}
           <img
-            src = { data.banner }
+            src = { article.banner }
             className = 'showArticle-banner'/>
 
           {/*title*/}
-          <div className = 'showArticle-title'>{ data.title }</div>
+          <div className = 'showArticle-title'>{ article.title }</div>
 
           {/*info*/}
           <div className = 'showArticle-info'>
-            { data.user_id } . { data.update_time }
+            { article.user_id } . { article.update_time }
           </div>
 
         </div>
 
         {/*content*/}
         <div className = 'showArticle-content'>
-          { data.content }
+          { article.content }
         </div>
 
         {/*footer*/}
         <div className = 'showArticle-footer'>
 
           {/*like*/}
-          <div className = 'showArticle-like' onClick = { this._addLike }>
-            点赞{ like }
-          </div>
+          <button
+            disabled = { status }
+            className = 'showArticle-like'
+            onClick = { this._addLike }>
+            点赞{ article.like }
+          </button>
 
           {/*eidt*/}
           {
-            status &&
-            <div className = 'showArticle-edit' onClick = { this._goEdit }>
-              评论
-            </div>
+            user == article.user_id &&
+            <button
+              className = 'showArticle-edit'
+              onClick = { this._goEdit }>
+              编辑
+            </button>
           }
 
         </div>
@@ -145,7 +102,8 @@ ShowArticle.propTypes = {
 
 const mapStateToProps = (store) => {
   return {
-    test: store.test
+    test: store.test,
+    article: store.article
   };
 };
 

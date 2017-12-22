@@ -6,7 +6,7 @@ class PersonalPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      
+
     }
   }
 
@@ -14,11 +14,14 @@ class PersonalPage extends React.Component {
 
     // 获取用户信息
     $.ajax({
-      url: '/api/community/user/userInfo',
+      url: '/api/community/user/userInfo/ssss',
       type: 'get',
-      data: {id: 8},
+      data: {id: 3},
       success: function(res) {
         console.log('00000', res);
+        if (res.code == 10008) {
+          location.href = '/login';
+        }
       }
     });
     

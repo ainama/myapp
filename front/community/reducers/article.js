@@ -8,9 +8,14 @@ import assign from 'lodash.assign';
 import * as types from '../actions/action-types';
 
 const defaultStatus = {
-  imgUrl: '',
+  article_id: 0,
   title: '',
-  content: ''
+  user_id: 0,
+  content: '',
+  banner: '',
+  create_time: '',
+  update_time: '',
+  like: 0
   // isChange: false,
 };
 
@@ -18,8 +23,18 @@ export function article(state = defaultStatus, action) {
   switch (action.type) {
 
     case types.ADD_ARTICLE_IMG: {
-      console.log('action', action.payload);
-      return assign({}, state, { imgUrl: action.payload });
+      // console.log('ADD_ARTICLE_IMG reducer => ', action.payload);
+      return assign({}, state, { banner: action.payload });
+    }
+
+    case types.SHOW_ARTICLE: {
+      // console.log('SHOW_ARTICLE reducer => ', action.payload);
+      return assign({}, state, action.payload, { article_id: action.payload.id });
+    }
+
+    case types.SHOW_LIKE: {
+      // console.log('SHOW_LIKE reducer => ', action.payload);
+      return assign({}, state, { like: action.payload.count });
     }
 
     default:

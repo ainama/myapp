@@ -21,11 +21,22 @@ router.use(session({
     },
 }));
 
+// 一个中间件栈，显示任何指向 /user/:id 的 HTTP 请求的信息
+router.use('/user/:id', function(req, res, next) {
+  if (req.session.sessionId) {
+    console.log('Request URL:', req.originalUrl);
+    next();
+  } else {
+    console.log('没有登录');
+    res.send({ code: 10008, msg: '未登录' });
+  }
+});
+
 /**
  * 注册
  * @method /user/register
  */
-router.post('/user/register', function (req, res) {
+router.post('/register', function (req, res) {
   var sql = 'INSERT INTO t_user(id, name, tel, pwd) VALUES (0, ?, ?, ?)';
   var data = req.body;
   var params = [];
@@ -52,7 +63,7 @@ router.post('/user/register', function (req, res) {
  * 登录
  * @method /user/login
  */
-router.post('/user/login', function (req, res) {
+router.post('/login', function (req, res) {
   var data = req.body;
   var sql = 'SELECT * FROM t_user where tel=' + data.tel;
   query(sql, null, function (error, results, fields) {
@@ -78,8 +89,8 @@ router.post('/user/login', function (req, res) {
  * 用户信息查询
  * @method /user/userInfo
  */
-router.get('/user/userInfo', function (req, res) {
-  if (req.session.sessionId) {
+router.get('/user/userInfo/ssss', function (req, res) {
+  // if (req.session.sessionId) {
 
     var data = req.query;
     var sql = 'SELECT * FROM t_user where id=' + data.id;
@@ -91,18 +102,18 @@ router.get('/user/userInfo', function (req, res) {
         res.send({ code: 10000, msg: results });
       }
     });
-  } else {
-    res.redirect('/community');
-  }
+  // } else {
+  //   res.redirect('/community');
+  // }
 });
 
 /**
  * 退出
  * @method /user/logout
  */
-router.get('/user/logout', function (req, res) {
+router.get('/logout', function (req, res) {
     req.session.sessionId = null; // 删除session
-    res.redirect('login');
+    res.redirect('/login');
 });
 
 /* zhangning */
@@ -114,6 +125,7 @@ router.get('/user/base', function (req, res) {
   // 1. 获取当前用户ID
 
   // 2.1 ID存在，返回用户信息
+
 
   // 2.2 ID不存在，返回10001未登录
 
@@ -192,31 +204,59 @@ router.post('/article/image', function (req, res) {
   });
 });
 /**
- * 上传文章
+ *  add/edit article
  * @method /api/community/article/upload
  */
 router.post('/article/upload', function(req, res) {
-  var sql = 'INSERT INTO t_article(id, title, user_id, content, banner) VALUES(0, ?, ?, ?, ?)';
-  console.log('req', req.body);
-  var data = req.body;
-  var params = [];
-  for(var k in data) {
-    params.push(data[k]);
-  };
-  query(sql, params, function(error, results, fields) {
 
-    if (error) {
-      res.send({ code: 10002, msg: '发布失败', error: error.sqlMessage });
-      // throw error;
-    } else {
-      if (results.serverStatus == 2) {
-        res.send({ code: 10000, msg: '发布成功' });
+  // console.log('req => ', req.body.id)
+  if (req.body.id == 0) {
+    var sql = 'INSERT INTO t_article(id, title, user_id, content, banner) VALUES(0, ?, ?, ?, ?)';
+    var data = req.body;
+    var params = [];
+    for(var k in data) {
+      params.push(data[k]);
+    };
+    params.splice(0,1);
+    // console.log('add => ', params)
+    query(sql, params, function(error, results, fields) {
+      if (error) {
+        res.send({ code: 10002, msg: '发布失败', error: error.sqlMessage });
+        // throw error;
       } else {
-        res.send({ code: 10001, msg: '发布失败' });
+        if (results.serverStatus == 2) {
+          res.send({ code: 10000, msg: '发布成功' });
+        } else {
+          res.send({ code: 10001, msg: '发布失败' });
+        }
       }
-    }
-  });
+    });
+  } else {
+    var article_id = req.body.id;
+    var sql = 'UPDATE t_article SET title = ?, user_id = ?, content = ?, banner = ?, create_time = ? WHERE id = ?';
+    var data = req.body;
+    var params = [data.title, data.user_id, data.content, data.banner, data.create_time, article_id];
+    // for(var k in data) {
+    //   params.push(data[k]);
+    // };
+    // params.splice(0,1);
+    // params.push(article_id);
+    // console.log('edit => ', params)
+    query(sql, params, function(error, results, fields) {
+      if (error) {
+        res.send({ code: 10002, msg: '发布失败', error: error.sqlMessage });
+        // throw error;
+      } else {
+        if (results.serverStatus == 2) {
+          res.send({ code: 10000, msg: '发布成功' });
+        } else {
+          res.send({ code: 10001, msg: '发布失败' });
+        }
+      }
+    });
+  }
 });
+
 /**
  * 读文章
  * @method /api/community/article/read
@@ -229,6 +269,48 @@ router.post('/article/read', function(req, res) {
       throw error;
     } else {
       res.send({ code: 10000, msg: results });
+    }
+  });
+});
+
+/**
+ * 读like
+ * @method /api/community/article/getlike
+ */
+router.post('/article/getlike', function(req, res) {
+  var data = req.body;
+  var sql = 'SELECT COUNT(*) AS count FROM t_like WHERE article_id = ' + data.id;
+  query(sql, function(error, results, fields) {
+    if (error) {
+      throw error;
+    } else {
+      res.send({ code: 10000, like: results });
+    }
+  });
+});
+
+/**
+ * add like
+ * @method /api/community/article/like
+ */
+router.post('/article/like', function(req, res) {
+  var sql = 'INSERT INTO t_like(id, article_id, user_id) VALUES(0, ?, ?)';
+  var data = req.body;
+  var params = [];
+  for(var k in data) {
+    params.push(data[k]);
+  };
+  console.log('add => ', params)
+  query(sql, params, function(error, results, fields) {
+    if (error) {
+      res.send({ code: 10002, msg: '发布失败', error: error.sqlMessage });
+      // throw error;
+    } else {
+      if (results.serverStatus == 2) {
+        res.send({ code: 10000, msg: '发布成功' });
+      } else {
+        res.send({ code: 10001, msg: '发布失败' });
+      }
     }
   });
 });

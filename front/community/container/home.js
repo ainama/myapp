@@ -2,7 +2,7 @@ import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import * as actions from '../actions/test';
+import * as actions from '../actions/home';
 
 class Home extends React.Component {
   constructor(props) {
@@ -10,27 +10,30 @@ class Home extends React.Component {
   }
 
   componentDidMount() {
-    $.ajax({
-      url: '/api/community/article/list',
-      type: 'get',
-      success: function(res) {
-        // console.log(res);
-      }
-    });
+    this.props.actions.getArticleList();
   }
 
   render() {
+    console.log(this.props.home);
     return (
-      <div>
-        Home
-      </div>
+      <React.Fragment>
+
+        {/* 最近文章 */}
+        <div>
+          left
+        </div>
+
+        {/* 热门文章 */}
+        <div>right</div>
+
+      </React.Fragment>
     );
   }
 }
 
 const mapStateToProps = (store) => {
   return {
-    test: store.test
+    home: store.home
   };
 };
 

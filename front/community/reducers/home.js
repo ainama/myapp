@@ -7,17 +7,15 @@ import * as types from '../actions/action-types';
  * @param {int} status 0 请求中，1 未登录，2 已登录
  */
 const defaultStatus = {
-  status: 0
+  recentList: [ ]
 };
 
-export function header(state = defaultStatus, action) {
+export function home(state = defaultStatus, action) {
   switch (action.type) {
-    case types.GET_USER_BASE: {
+    case types.GET_ARTICLE_LIST: {
       let stateObj = { };
       if (action.payload.code == 10000) {
-        stateObj = { status: 2 };
-      } else if (action.payload.code == 10008) {
-        stateObj = { status: 1 };
+        stateObj = { recentList: action.payload.msg };
       }
       return assign({ }, state, stateObj);
     }

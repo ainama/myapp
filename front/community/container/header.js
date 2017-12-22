@@ -15,22 +15,46 @@ class Header extends React.Component {
   }
 
   render() {
-    console.log(this.props.header);
     return (
       <div className = 'header'>
         <div className = 'body'>
-          <div className = 'logo'></div>
+
+          {/* logo */}
+          <Link className = 'logo' to = '/community/home'></Link>
+
+          {/* 预留区 */}
           <div className = 'group'>
-            <div className = 'home'>首页</div>
+            <Link to = '/community/home'>
+              <div className = 'home'>首页</div>
+            </Link>
           </div>
-          <Link className = 'write' to = '/community/addArticle'>
-            <div className = 'icon'></div>
-            <span>写文章</span>
-          </Link>
+
+          {/* 写文章 */}
+          {
+            this.props.header.status != 0 &&
+            <Link className = 'write' to = '/community/addArticle'>
+              <div className = 'icon'></div>
+              <span>写文章</span>
+            </Link>
+          }
+
+          {/* 登录相关 */}
           <div className = 'user'>
-            <div className = 'logon'>登录</div>
-            <div className = 'register'>注册</div>
+            {
+              this.props.header.status == 1 &&
+              <React.Fragment>
+                <div className = 'logon'>登录</div>
+                <div className = 'register'>注册</div>
+              </React.Fragment>
+            }
+            {
+              this.props.header.status == 2 &&
+              <React.Fragment>
+                <img src = '' />
+              </React.Fragment>
+            }
           </div>
+
         </div>
       </div>
     );

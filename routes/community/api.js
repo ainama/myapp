@@ -122,14 +122,8 @@ router.get('/logout', function (req, res) {
  * @method /api/community/user/base
  */
 router.get('/user/base', function (req, res) {
-  // 1. 获取当前用户ID
-
-  // 2.1 ID存在，返回用户信息
-
-
-  // 2.2 ID不存在，返回10001未登录
-
-  var sql = 'select * from t_user;';
+  let sid = req.session.sessionId;
+  var sql = 'SELECT * FROM t_user WHERE id=' + sid + ';';
   query(sql, null, function (error, results, fields) {
     if (error) throw error;
     res.send({ code: 10000, msg: results });

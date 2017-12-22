@@ -7,13 +7,13 @@ var bodyParser = require('body-parser');
 
 var app = express();
 
-var login = require('./routes/login');
+var login = require('./routes/pages/login');
 
 var communityAPI = require('./routes/community/api');
-var communityPAGE = require('./routes/community');
+var communityPAGE = require('./routes/pages/community');
 
 var todoAPI = require('./routes/todo/api');
-var todoPAGE = require('./routes/todo');
+var todoPAGE = require('./routes/pages/todo');
 
 
 app.set('views', path.join(__dirname, 'views'));

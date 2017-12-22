@@ -34,7 +34,7 @@ router.use('/user/:id', function(req, res, next) {
 
 /**
  * 注册
- * @method /user/register
+ * @method /api/community/user/register
  */
 router.post('/register', function (req, res) {
   var sql = 'INSERT INTO t_user(id, name, tel, pwd) VALUES (0, ?, ?, ?)';
@@ -61,7 +61,7 @@ router.post('/register', function (req, res) {
 
 /**
  * 登录
- * @method /user/login
+ * @method /api/community/user/login
  */
 router.post('/login', function (req, res) {
   var data = req.body;
@@ -87,7 +87,7 @@ router.post('/login', function (req, res) {
 
 /**
  * 用户信息查询
- * @method /user/userInfo
+ * @method /api/community/user/userInfo
  */
 router.get('/user/userInfo/ssss', function (req, res) {
   // if (req.session.sessionId) {
@@ -109,7 +109,7 @@ router.get('/user/userInfo/ssss', function (req, res) {
 
 /**
  * 退出
- * @method /user/logout
+ * @method /api/community/user/logout
  */
 router.get('/logout', function (req, res) {
     req.session.sessionId = null; // 删除session

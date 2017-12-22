@@ -296,11 +296,11 @@ if (process.env.NODE_ENV !== 'production') {
   // By explicitly using `prop-types` you are opting into new development behavior.
   // http://fb.me/prop-types-in-prod
   var throwOnDirectAccess = true;
-  module.exports = __webpack_require__(39)(isValidElement, throwOnDirectAccess);
+  module.exports = __webpack_require__(40)(isValidElement, throwOnDirectAccess);
 } else {
   // By explicitly using `prop-types` you are opting into new production behavior.
   // http://fb.me/prop-types-in-prod
-  module.exports = __webpack_require__(40)();
+  module.exports = __webpack_require__(41)();
 }
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
@@ -2237,7 +2237,7 @@ var singleton = null;
 var	singletonCounter = 0;
 var	stylesInsertedAtTop = [];
 
-var	fixUrls = __webpack_require__(50);
+var	fixUrls = __webpack_require__(51);
 
 module.exports = function(list, options) {
 	if (typeof DEBUG !== "undefined" && DEBUG) {
@@ -9284,6 +9284,86 @@ module.exports = camelize;
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.withRouter = exports.matchPath = exports.Switch = exports.StaticRouter = exports.Router = exports.Route = exports.Redirect = exports.Prompt = exports.NavLink = exports.MemoryRouter = exports.Link = exports.HashRouter = exports.BrowserRouter = undefined;
+
+var _BrowserRouter2 = __webpack_require__(76);
+
+var _BrowserRouter3 = _interopRequireDefault(_BrowserRouter2);
+
+var _HashRouter2 = __webpack_require__(78);
+
+var _HashRouter3 = _interopRequireDefault(_HashRouter2);
+
+var _Link2 = __webpack_require__(55);
+
+var _Link3 = _interopRequireDefault(_Link2);
+
+var _MemoryRouter2 = __webpack_require__(80);
+
+var _MemoryRouter3 = _interopRequireDefault(_MemoryRouter2);
+
+var _NavLink2 = __webpack_require__(83);
+
+var _NavLink3 = _interopRequireDefault(_NavLink2);
+
+var _Prompt2 = __webpack_require__(86);
+
+var _Prompt3 = _interopRequireDefault(_Prompt2);
+
+var _Redirect2 = __webpack_require__(88);
+
+var _Redirect3 = _interopRequireDefault(_Redirect2);
+
+var _Route2 = __webpack_require__(56);
+
+var _Route3 = _interopRequireDefault(_Route2);
+
+var _Router2 = __webpack_require__(44);
+
+var _Router3 = _interopRequireDefault(_Router2);
+
+var _StaticRouter2 = __webpack_require__(94);
+
+var _StaticRouter3 = _interopRequireDefault(_StaticRouter2);
+
+var _Switch2 = __webpack_require__(96);
+
+var _Switch3 = _interopRequireDefault(_Switch2);
+
+var _matchPath2 = __webpack_require__(98);
+
+var _matchPath3 = _interopRequireDefault(_matchPath2);
+
+var _withRouter2 = __webpack_require__(99);
+
+var _withRouter3 = _interopRequireDefault(_withRouter2);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.BrowserRouter = _BrowserRouter3.default;
+exports.HashRouter = _HashRouter3.default;
+exports.Link = _Link3.default;
+exports.MemoryRouter = _MemoryRouter3.default;
+exports.NavLink = _NavLink3.default;
+exports.Prompt = _Prompt3.default;
+exports.Redirect = _Redirect3.default;
+exports.Route = _Route3.default;
+exports.Router = _Router3.default;
+exports.StaticRouter = _StaticRouter3.default;
+exports.Switch = _Switch3.default;
+exports.matchPath = _matchPath3.default;
+exports.withRouter = _withRouter3.default;
+
+/***/ }),
+/* 40 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
 /* WEBPACK VAR INJECTION */(function(process) {/**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -9805,7 +9885,7 @@ module.exports = function (isValidElement, throwOnDirectAccess) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 40 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9864,7 +9944,7 @@ module.exports = function () {
 };
 
 /***/ }),
-/* 41 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9958,7 +10038,7 @@ var locationsAreEqual = exports.locationsAreEqual = function locationsAreEqual(a
 };
 
 /***/ }),
-/* 42 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10051,7 +10131,7 @@ var createTransitionManager = function createTransitionManager() {
 exports.default = createTransitionManager;
 
 /***/ }),
-/* 43 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10061,7 +10141,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _Router = __webpack_require__(44);
+var _Router = __webpack_require__(45);
 
 var _Router2 = _interopRequireDefault(_Router);
 
@@ -10070,7 +10150,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 exports.default = _Router2.default; // Written in this round about way for babel-transform-imports
 
 /***/ }),
-/* 44 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10220,7 +10300,7 @@ Router.childContextTypes = {
 exports.default = Router;
 
 /***/ }),
-/* 45 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10305,7 +10385,7 @@ var matchPath = function matchPath(pathname) {
 exports.default = matchPath;
 
 /***/ }),
-/* 46 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10398,7 +10478,7 @@ var createTransitionManager = function createTransitionManager() {
 exports.default = createTransitionManager;
 
 /***/ }),
-/* 47 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10431,7 +10511,7 @@ function warning(message) {
 }
 
 /***/ }),
-/* 48 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10514,7 +10594,7 @@ function isPlainObject(value) {
 exports.default = isPlainObject;
 
 /***/ }),
-/* 49 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10544,7 +10624,7 @@ try {
 module.exports = g;
 
 /***/ }),
-/* 50 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10637,86 +10717,6 @@ module.exports = function (css) {
 	// send back the fixed css
 	return fixedCss;
 };
-
-/***/ }),
-/* 51 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.withRouter = exports.matchPath = exports.Switch = exports.StaticRouter = exports.Router = exports.Route = exports.Redirect = exports.Prompt = exports.NavLink = exports.MemoryRouter = exports.Link = exports.HashRouter = exports.BrowserRouter = undefined;
-
-var _BrowserRouter2 = __webpack_require__(76);
-
-var _BrowserRouter3 = _interopRequireDefault(_BrowserRouter2);
-
-var _HashRouter2 = __webpack_require__(78);
-
-var _HashRouter3 = _interopRequireDefault(_HashRouter2);
-
-var _Link2 = __webpack_require__(55);
-
-var _Link3 = _interopRequireDefault(_Link2);
-
-var _MemoryRouter2 = __webpack_require__(80);
-
-var _MemoryRouter3 = _interopRequireDefault(_MemoryRouter2);
-
-var _NavLink2 = __webpack_require__(83);
-
-var _NavLink3 = _interopRequireDefault(_NavLink2);
-
-var _Prompt2 = __webpack_require__(86);
-
-var _Prompt3 = _interopRequireDefault(_Prompt2);
-
-var _Redirect2 = __webpack_require__(88);
-
-var _Redirect3 = _interopRequireDefault(_Redirect2);
-
-var _Route2 = __webpack_require__(56);
-
-var _Route3 = _interopRequireDefault(_Route2);
-
-var _Router2 = __webpack_require__(43);
-
-var _Router3 = _interopRequireDefault(_Router2);
-
-var _StaticRouter2 = __webpack_require__(94);
-
-var _StaticRouter3 = _interopRequireDefault(_StaticRouter2);
-
-var _Switch2 = __webpack_require__(96);
-
-var _Switch3 = _interopRequireDefault(_Switch2);
-
-var _matchPath2 = __webpack_require__(98);
-
-var _matchPath3 = _interopRequireDefault(_matchPath2);
-
-var _withRouter2 = __webpack_require__(99);
-
-var _withRouter3 = _interopRequireDefault(_withRouter2);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.BrowserRouter = _BrowserRouter3.default;
-exports.HashRouter = _HashRouter3.default;
-exports.Link = _Link3.default;
-exports.MemoryRouter = _MemoryRouter3.default;
-exports.NavLink = _NavLink3.default;
-exports.Prompt = _Prompt3.default;
-exports.Redirect = _Redirect3.default;
-exports.Route = _Route3.default;
-exports.Router = _Router3.default;
-exports.StaticRouter = _StaticRouter3.default;
-exports.Switch = _Switch3.default;
-exports.matchPath = _matchPath3.default;
-exports.withRouter = _withRouter3.default;
 
 /***/ }),
 /* 52 */
@@ -11108,7 +11108,7 @@ var _propTypes = __webpack_require__(2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _matchPath = __webpack_require__(45);
+var _matchPath = __webpack_require__(46);
 
 var _matchPath2 = _interopRequireDefault(_matchPath);
 
@@ -11786,7 +11786,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 exports.default = createStore;
 
-var _isPlainObject = __webpack_require__(48);
+var _isPlainObject = __webpack_require__(49);
 
 var _isPlainObject2 = _interopRequireDefault(_isPlainObject);
 
@@ -12270,11 +12270,11 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = verifyPlainObject;
 
-var _isPlainObject = __webpack_require__(48);
+var _isPlainObject = __webpack_require__(49);
 
 var _isPlainObject2 = _interopRequireDefault(_isPlainObject);
 
-var _warning = __webpack_require__(47);
+var _warning = __webpack_require__(48);
 
 var _warning2 = _interopRequireDefault(_warning);
 
@@ -22500,7 +22500,7 @@ var _reactDom = __webpack_require__(30);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _reactRouterDom = __webpack_require__(51);
+var _reactRouterDom = __webpack_require__(39);
 
 var _reactRedux = __webpack_require__(11);
 
@@ -22617,7 +22617,7 @@ var _createBrowserHistory = __webpack_require__(77);
 
 var _createBrowserHistory2 = _interopRequireDefault(_createBrowserHistory);
 
-var _Router = __webpack_require__(43);
+var _Router = __webpack_require__(44);
 
 var _Router2 = _interopRequireDefault(_Router);
 
@@ -22716,11 +22716,11 @@ var _invariant = __webpack_require__(5);
 
 var _invariant2 = _interopRequireDefault(_invariant);
 
-var _LocationUtils = __webpack_require__(41);
+var _LocationUtils = __webpack_require__(42);
 
 var _PathUtils = __webpack_require__(21);
 
-var _createTransitionManager = __webpack_require__(42);
+var _createTransitionManager = __webpack_require__(43);
 
 var _createTransitionManager2 = _interopRequireDefault(_createTransitionManager);
 
@@ -23036,7 +23036,7 @@ var _createHashHistory = __webpack_require__(79);
 
 var _createHashHistory2 = _interopRequireDefault(_createHashHistory);
 
-var _Router = __webpack_require__(43);
+var _Router = __webpack_require__(44);
 
 var _Router2 = _interopRequireDefault(_Router);
 
@@ -23126,11 +23126,11 @@ var _invariant = __webpack_require__(5);
 
 var _invariant2 = _interopRequireDefault(_invariant);
 
-var _LocationUtils = __webpack_require__(41);
+var _LocationUtils = __webpack_require__(42);
 
 var _PathUtils = __webpack_require__(21);
 
-var _createTransitionManager = __webpack_require__(42);
+var _createTransitionManager = __webpack_require__(43);
 
 var _createTransitionManager2 = _interopRequireDefault(_createTransitionManager);
 
@@ -23486,7 +23486,7 @@ var _createMemoryHistory = __webpack_require__(82);
 
 var _createMemoryHistory2 = _interopRequireDefault(_createMemoryHistory);
 
-var _Router = __webpack_require__(44);
+var _Router = __webpack_require__(45);
 
 var _Router2 = _interopRequireDefault(_Router);
 
@@ -23583,9 +23583,9 @@ var _warning2 = _interopRequireDefault(_warning);
 
 var _PathUtils = __webpack_require__(21);
 
-var _LocationUtils = __webpack_require__(41);
+var _LocationUtils = __webpack_require__(42);
 
-var _createTransitionManager = __webpack_require__(42);
+var _createTransitionManager = __webpack_require__(43);
 
 var _createTransitionManager2 = _interopRequireDefault(_createTransitionManager);
 
@@ -24667,7 +24667,7 @@ var _LocationUtils = __webpack_require__(24);
 
 var _PathUtils = __webpack_require__(22);
 
-var _createTransitionManager = __webpack_require__(46);
+var _createTransitionManager = __webpack_require__(47);
 
 var _createTransitionManager2 = _interopRequireDefault(_createTransitionManager);
 
@@ -24991,7 +24991,7 @@ var _LocationUtils = __webpack_require__(24);
 
 var _PathUtils = __webpack_require__(22);
 
-var _createTransitionManager = __webpack_require__(46);
+var _createTransitionManager = __webpack_require__(47);
 
 var _createTransitionManager2 = _interopRequireDefault(_createTransitionManager);
 
@@ -25328,7 +25328,7 @@ var _PathUtils = __webpack_require__(22);
 
 var _LocationUtils = __webpack_require__(24);
 
-var _createTransitionManager = __webpack_require__(46);
+var _createTransitionManager = __webpack_require__(47);
 
 var _createTransitionManager2 = _interopRequireDefault(_createTransitionManager);
 
@@ -25548,7 +25548,7 @@ var _propTypes2 = _interopRequireDefault(_propTypes);
 
 var _PathUtils = __webpack_require__(21);
 
-var _Router = __webpack_require__(44);
+var _Router = __webpack_require__(45);
 
 var _Router2 = _interopRequireDefault(_Router);
 
@@ -25784,7 +25784,7 @@ var _invariant = __webpack_require__(5);
 
 var _invariant2 = _interopRequireDefault(_invariant);
 
-var _matchPath = __webpack_require__(45);
+var _matchPath = __webpack_require__(46);
 
 var _matchPath2 = _interopRequireDefault(_matchPath);
 
@@ -25886,7 +25886,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _matchPath = __webpack_require__(45);
+var _matchPath = __webpack_require__(46);
 
 var _matchPath2 = _interopRequireDefault(_matchPath);
 
@@ -26005,7 +26005,7 @@ var _propTypes2 = _interopRequireDefault(_propTypes);
 
 var _PropTypes = __webpack_require__(60);
 
-var _warning = __webpack_require__(47);
+var _warning = __webpack_require__(48);
 
 var _warning2 = _interopRequireDefault(_warning);
 
@@ -26525,7 +26525,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 var freeGlobal = (typeof global === 'undefined' ? 'undefined' : _typeof(global)) == 'object' && global && global.Object === Object && global;
 
 exports.default = freeGlobal;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(49)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(50)))
 
 /***/ }),
 /* 109 */
@@ -26757,7 +26757,7 @@ if (typeof self !== 'undefined') {
 
 var result = (0, _ponyfill2['default'])(root);
 exports['default'] = result;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(49), __webpack_require__(64)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(50), __webpack_require__(64)(module)))
 
 /***/ }),
 /* 116 */
@@ -26802,7 +26802,7 @@ exports.default = combineReducers;
 
 var _createStore = __webpack_require__(62);
 
-var _isPlainObject = __webpack_require__(48);
+var _isPlainObject = __webpack_require__(49);
 
 var _isPlainObject2 = _interopRequireDefault(_isPlainObject);
 
@@ -27314,7 +27314,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = verifySubselectors;
 
-var _warning = __webpack_require__(47);
+var _warning = __webpack_require__(48);
 
 var _warning2 = _interopRequireDefault(_warning);
 
@@ -27425,7 +27425,7 @@ var _redux = __webpack_require__(8);
 
 var _reactRedux = __webpack_require__(11);
 
-var _reactRouterDom = __webpack_require__(51);
+var _reactRouterDom = __webpack_require__(39);
 
 var _header = __webpack_require__(126);
 
@@ -28012,6 +28012,8 @@ var _redux = __webpack_require__(8);
 
 var _reactRedux = __webpack_require__(11);
 
+var _reactRouterDom = __webpack_require__(39);
+
 var _home = __webpack_require__(131);
 
 var actions = _interopRequireWildcard(_home);
@@ -28056,6 +28058,9 @@ var Home = function (_React$Component) {
       return tagString;
     }
   }, {
+    key: 'articleDetail',
+    value: function articleDetail() {}
+  }, {
     key: 'render',
     value: function render() {
       var _this2 = this;
@@ -28070,8 +28075,11 @@ var Home = function (_React$Component) {
             var head = item.head_img != null ? item.head_img : '/images/community/header_default_avatar.png';
             var tagString = _this2.tagString(item.content);
             return _react2.default.createElement(
-              'div',
-              { key: index, className: 'item' },
+              _reactRouterDom.Link,
+              {
+                key: index,
+                className: 'item',
+                to: '/community/showArticle/' + item.id },
               _react2.default.createElement(
                 'div',
                 { className: 'user' },
@@ -29300,7 +29308,7 @@ exports = module.exports = __webpack_require__(26)(undefined);
 
 
 // module
-exports.push([module.i, "body, ul, li, h1, h2, h3, h4, h5, h6, p, form, dl, dt, dd, div {\n  margin: 0px;\n  padding: 0px;\n  font-size: 14px;\n  font-weight: normal;\n  -webkit-tap-highlight-color: transparent;\n  width: max-content; }\n\nul {\n  list-style: none; }\n\nimg {\n  border-style: none; }\n\na {\n  text-decoration: none;\n  cursor: pointer; }\n\n.header {\n  width: 100vw;\n  height: 60px;\n  background-color: #fff;\n  border-bottom: 1px solid #d5d5d5;\n  display: flex;\n  flex-direction: row;\n  justify-content: center; }\n  .header .body {\n    display: flex;\n    flex-direction: row;\n    align-items: center;\n    width: 1000px; }\n  .header .logo {\n    width: 96px;\n    height: 24px;\n    background-image: url(/images/community/header_logo.png);\n    background-position: center;\n    background-repeat: no-repeat;\n    background-size: 96px 24px;\n    margin-right: 26px;\n    cursor: pointer; }\n  .header .group {\n    flex: 1; }\n    .header .group .home {\n      width: 60px;\n      height: 59px;\n      border-bottom: 2px solid #4a90e2;\n      line-height: 59px;\n      text-align: center;\n      font-size: 16px;\n      color: #555;\n      cursor: pointer; }\n  .header .write {\n    width: 114px;\n    height: 36px;\n    background-image: url(/images/community/header_write.png);\n    background-position: center;\n    background-repeat: no-repeat;\n    background-size: 114px 36px;\n    margin-right: 30px;\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    align-items: center;\n    cursor: pointer; }\n    .header .write .icon {\n      width: 16px;\n      height: 16px;\n      background-image: url(/images/community/header_write_icon.png);\n      background-position: center;\n      background-repeat: no-repeat;\n      background-size: 16px 16px;\n      margin-right: 9px; }\n    .header .write span {\n      font-size: 16px;\n      color: #fff; }\n  .header .user {\n    display: flex;\n    flex-direction: row;\n    position: relative; }\n    .header .user .logon {\n      font-size: 16px;\n      color: #555;\n      margin-right: 30px;\n      cursor: pointer; }\n    .header .user .register {\n      font-size: 16px;\n      color: #555;\n      cursor: pointer; }\n    .header .user .img {\n      width: 32px;\n      height: 32px;\n      cursor: pointer; }\n  .header .expand {\n    position: absolute;\n    top: 46px;\n    left: -30px;\n    width: 92px;\n    padding-top: 10px;\n    padding-bottom: 10px;\n    background-color: #fff;\n    border: 1px solid #d5d5d5;\n    box-shadow: 1px 2px 8px 0 rgba(44, 64, 88, 0.2); }\n    .header .expand .item {\n      width: 100%;\n      height: 34px;\n      text-align: center;\n      line-height: 34px;\n      font-size: 14px;\n      cursor: pointer;\n      color: #bbb; }\n    .header .expand .item:hover {\n      background-color: #f9f9f9;\n      color: #969696; }\n\n.footer {\n  width: 100vw;\n  height: 45px;\n  background-color: #4a90e2;\n  text-align: center;\n  line-height: 45px; }\n\n.container {\n  width: 100vw;\n  display: flex;\n  flex-direction: row;\n  justify-content: center; }\n  .container .body {\n    width: 1000px;\n    min-height: calc(100vh - 90px); }\n\n.addArticle-layout {\n  margin: 50px auto 0;\n  padding: 0px 0px 20px 0px;\n  width: 600px;\n  z-index: 1;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n  -ms-flex-direction: column;\n  flex-direction: column;\n  -webkit-box-align: stretch;\n  -ms-flex-align: stretch;\n  align-items: stretch;\n  -ms-flex-negative: 0;\n  flex-shrink: 0;\n  overflow: hidden; }\n\n.fake-wrapper {\n  position: relative;\n  width: 600px;\n  height: 260px;\n  background: #f7f8f9;\n  line-height: 192px;\n  color: gray;\n  text-align: center; }\n\n.fake-banner {\n  height: 100%;\n  width: 100%; }\n\n.addArticle-banner {\n  position: absolute;\n  display: block;\n  top: 0;\n  left: 0;\n  height: 100%;\n  width: 100%;\n  opacity: 0;\n  cursor: pointer;\n  z-index: 2; }\n\n.addArticle-title {\n  margin: 20px auto; }\n\n.addArticle-input {\n  display: block;\n  width: 600px;\n  height: 60px;\n  box-sizing: border-box;\n  border: none;\n  border-radius: 2px;\n  font-size: 28px;\n  color: #888;\n  line-height: 16px;\n  padding: 6px 8px 2px 0px; }\n  .addArticle-input:focus {\n    outline: none;\n    border: none; }\n  .addArticle-input::placeholder {\n    font-size: 28px;\n    color: #999999; }\n\n.addArticle-upload {\n  border-radius: 4px;\n  text-align: center;\n  border: 1px solid #b3b3b3;\n  color: gray;\n  width: 82px;\n  height: 32px;\n  line-height: 30px;\n  padding: 0;\n  cursor: pointer; }\n\n/*simditor*/\n.simditor {\n  border: none !important;\n  border-top: 1px solid #c9d8db !important;\n  margin: 0 auto; }\n  .simditor .simditor-toolbar {\n    border-bottom: none !important; }\n\n.ShowArticle-layout {\n  padding: 0;\n  margin: 0;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n  -ms-flex-direction: column;\n  flex-direction: column;\n  -webkit-box-align: stretch;\n  -ms-flex-align: stretch;\n  align-items: stretch;\n  -ms-flex-negative: 0;\n  flex-shrink: 0;\n  overflow: hidden; }\n\n.showArticle-show {\n  position: relative; }\n\n.showArticle-banner {\n  width: 100vw; }\n\n.showArticle-title {\n  position: absolute;\n  margin: 0 auto;\n  left: 0;\n  right: 0;\n  bottom: 80px;\n  color: #fff;\n  z-index: 1;\n  font-size: 36px; }\n\n.showArticle-info {\n  position: absolute;\n  margin: 0 auto;\n  left: 0;\n  right: 0;\n  bottom: 20px;\n  color: #fff;\n  z-index: 1;\n  font-size: 20px;\n  width: 660px; }\n\n.showArticle-content {\n  margin: 47px auto 0;\n  padding: 0;\n  width: 660px;\n  z-index: 1; }\n\n.showArticle-footer {\n  margin: 47px auto 0;\n  padding: 0;\n  width: 660px;\n  z-index: 1; }\n\n.personal-page {\n  width: 1000px;\n  margin: 0 auto; }\n\n.personal-info {\n  z-index: 2;\n  position: relative;\n  padding: 0 20px 24px;\n  height: 110px;\n  background-color: #fff;\n  width: 100%;\n  box-sizing: border-box;\n  margin-top: -3px; }\n  .personal-info .personal-info-img {\n    float: left;\n    margin-top: -50px; }\n  .personal-info .personal-info-msg {\n    float: left;\n    margin-left: 20px; }\n    .personal-info .personal-info-msg p {\n      font-size: 26px;\n      font-weight: 600;\n      margin-bottom: 15px; }\n    .personal-info .personal-info-msg div {\n      font-size: 14px;\n      color: #8590a6; }\n\n.setting-page {\n  width: 1000px;\n  margin: 0 auto; }\n  .setting-page .setting-page-div {\n    margin-top: 15px; }\n  .setting-page .setting-input {\n    width: 180px;\n    padding: 8px 10px;\n    margin-left: 10px; }\n  .setting-page .setting-image {\n    margin-left: 10px; }\n  .setting-page .setting-page-btn {\n    padding: 8px 10px;\n    background-color: #0865c2;\n    color: #fff;\n    border-radius: 3px;\n    margin-top: 20px; }\n\n.home-page {\n  width: 100%;\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between; }\n  .home-page .recent {\n    width: 640px;\n    padding-top: 10px;\n    padding-bottom: 10px; }\n    .home-page .recent .item {\n      width: 100%;\n      padding-top: 20px;\n      padding-bottom: 20px;\n      border-bottom: 1px solid #f0f0f0; }\n      .home-page .recent .item .user {\n        display: flex;\n        flex-direction: row;\n        align-items: center; }\n        .home-page .recent .item .user .head {\n          width: 32px;\n          height: 32px;\n          margin-right: 10px; }\n        .home-page .recent .item .user .name {\n          font-size: 12px;\n          color: #555;\n          margin-right: 10px; }\n      .home-page .recent .item .article {\n        width: 100%;\n        display: flex;\n        flex-direction: row;\n        justify-content: space-between; }\n      .home-page .recent .item .title {\n        font-size: 18px;\n        color: #555;\n        margin-top: 6px;\n        margin-bottom: 6px;\n        width: 450px;\n        height: 25px;\n        overflow: hidden;\n        white-space: nowrap;\n        text-overflow: ellipsis; }\n      .home-page .recent .item .content {\n        width: 420px;\n        overflow: hidden;\n        display: -webkit-box;\n        -webkit-box-orient: vertical;\n        -webkit-line-clamp: 3;\n        font-size: 12px;\n        color: #555;\n        line-height: 22px; }\n        .home-page .recent .item .content p {\n          width: 420px; }\n      .home-page .recent .item .banner {\n        width: 176px;\n        height: 92px;\n        margin-top: 6px; }\n    .home-page .recent .item:last-child {\n      border-bottom: 0px; }\n  .home-page .hot {\n    width: 320px; }\n", ""]);
+exports.push([module.i, "body, ul, li, h1, h2, h3, h4, h5, h6, p, form, dl, dt, dd, div {\n  margin: 0px;\n  padding: 0px;\n  font-size: 14px;\n  font-weight: normal;\n  -webkit-tap-highlight-color: transparent;\n  width: max-content; }\n\nul {\n  list-style: none; }\n\nimg {\n  border-style: none; }\n\na {\n  text-decoration: none;\n  cursor: pointer; }\n\n.header {\n  width: 100vw;\n  height: 60px;\n  background-color: #fff;\n  border-bottom: 1px solid #d5d5d5;\n  display: flex;\n  flex-direction: row;\n  justify-content: center; }\n  .header .body {\n    display: flex;\n    flex-direction: row;\n    align-items: center;\n    width: 1000px; }\n  .header .logo {\n    width: 96px;\n    height: 24px;\n    background-image: url(/images/community/header_logo.png);\n    background-position: center;\n    background-repeat: no-repeat;\n    background-size: 96px 24px;\n    margin-right: 26px;\n    cursor: pointer; }\n  .header .group {\n    flex: 1; }\n    .header .group .home {\n      width: 60px;\n      height: 59px;\n      border-bottom: 2px solid #4a90e2;\n      line-height: 59px;\n      text-align: center;\n      font-size: 16px;\n      color: #555;\n      cursor: pointer; }\n  .header .write {\n    width: 114px;\n    height: 36px;\n    background-image: url(/images/community/header_write.png);\n    background-position: center;\n    background-repeat: no-repeat;\n    background-size: 114px 36px;\n    margin-right: 30px;\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    align-items: center;\n    cursor: pointer; }\n    .header .write .icon {\n      width: 16px;\n      height: 16px;\n      background-image: url(/images/community/header_write_icon.png);\n      background-position: center;\n      background-repeat: no-repeat;\n      background-size: 16px 16px;\n      margin-right: 9px; }\n    .header .write span {\n      font-size: 16px;\n      color: #fff; }\n  .header .user {\n    display: flex;\n    flex-direction: row;\n    position: relative; }\n    .header .user .logon {\n      font-size: 16px;\n      color: #555;\n      margin-right: 30px;\n      cursor: pointer; }\n    .header .user .register {\n      font-size: 16px;\n      color: #555;\n      cursor: pointer; }\n    .header .user .img {\n      width: 32px;\n      height: 32px;\n      cursor: pointer; }\n  .header .expand {\n    position: absolute;\n    top: 46px;\n    left: -30px;\n    width: 92px;\n    padding-top: 10px;\n    padding-bottom: 10px;\n    background-color: #fff;\n    border: 1px solid #d5d5d5;\n    box-shadow: 1px 2px 8px 0 rgba(44, 64, 88, 0.2); }\n    .header .expand .item {\n      width: 100%;\n      height: 34px;\n      text-align: center;\n      line-height: 34px;\n      font-size: 14px;\n      cursor: pointer;\n      color: #bbb; }\n    .header .expand .item:hover {\n      background-color: #f9f9f9;\n      color: #969696; }\n\n.footer {\n  width: 100vw;\n  height: 45px;\n  background-color: #4a90e2;\n  text-align: center;\n  line-height: 45px; }\n\n.container {\n  width: 100vw;\n  display: flex;\n  flex-direction: row;\n  justify-content: center; }\n  .container .body {\n    width: 1000px;\n    min-height: calc(100vh - 90px); }\n\n.addArticle-layout {\n  margin: 50px auto 0;\n  padding: 0px 0px 20px 0px;\n  width: 600px;\n  z-index: 1;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n  -ms-flex-direction: column;\n  flex-direction: column;\n  -webkit-box-align: stretch;\n  -ms-flex-align: stretch;\n  align-items: stretch;\n  -ms-flex-negative: 0;\n  flex-shrink: 0;\n  overflow: hidden; }\n\n.fake-wrapper {\n  position: relative;\n  width: 600px;\n  height: 260px;\n  background: #f7f8f9;\n  line-height: 192px;\n  color: gray;\n  text-align: center; }\n\n.fake-banner {\n  height: 100%;\n  width: 100%; }\n\n.addArticle-banner {\n  position: absolute;\n  display: block;\n  top: 0;\n  left: 0;\n  height: 100%;\n  width: 100%;\n  opacity: 0;\n  cursor: pointer;\n  z-index: 2; }\n\n.addArticle-title {\n  margin: 20px auto; }\n\n.addArticle-input {\n  display: block;\n  width: 600px;\n  height: 60px;\n  box-sizing: border-box;\n  border: none;\n  border-radius: 2px;\n  font-size: 28px;\n  color: #888;\n  line-height: 16px;\n  padding: 6px 8px 2px 0px; }\n  .addArticle-input:focus {\n    outline: none;\n    border: none; }\n  .addArticle-input::placeholder {\n    font-size: 28px;\n    color: #999999; }\n\n.addArticle-upload {\n  border-radius: 4px;\n  text-align: center;\n  border: 1px solid #b3b3b3;\n  color: gray;\n  width: 82px;\n  height: 32px;\n  line-height: 30px;\n  padding: 0;\n  cursor: pointer; }\n\n/*simditor*/\n.simditor {\n  border: none !important;\n  border-top: 1px solid #c9d8db !important;\n  margin: 0 auto; }\n  .simditor .simditor-toolbar {\n    border-bottom: none !important; }\n\n.ShowArticle-layout {\n  padding: 0;\n  margin: 0;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n  -ms-flex-direction: column;\n  flex-direction: column;\n  -webkit-box-align: stretch;\n  -ms-flex-align: stretch;\n  align-items: stretch;\n  -ms-flex-negative: 0;\n  flex-shrink: 0;\n  overflow: hidden; }\n\n.showArticle-show {\n  position: relative; }\n\n.showArticle-banner {\n  width: 100vw; }\n\n.showArticle-title {\n  position: absolute;\n  margin: 0 auto;\n  left: 0;\n  right: 0;\n  bottom: 80px;\n  color: #fff;\n  z-index: 1;\n  font-size: 36px; }\n\n.showArticle-info {\n  position: absolute;\n  margin: 0 auto;\n  left: 0;\n  right: 0;\n  bottom: 20px;\n  color: #fff;\n  z-index: 1;\n  font-size: 20px;\n  width: 660px; }\n\n.showArticle-content {\n  margin: 47px auto 0;\n  padding: 0;\n  width: 660px;\n  z-index: 1; }\n\n.showArticle-footer {\n  margin: 47px auto 0;\n  padding: 0;\n  width: 660px;\n  z-index: 1; }\n\n.personal-page {\n  width: 1000px;\n  margin: 0 auto; }\n\n.personal-info {\n  z-index: 2;\n  position: relative;\n  padding: 0 20px 24px;\n  height: 110px;\n  background-color: #fff;\n  width: 100%;\n  box-sizing: border-box;\n  margin-top: -3px; }\n  .personal-info .personal-info-img {\n    float: left;\n    margin-top: -50px; }\n  .personal-info .personal-info-msg {\n    float: left;\n    margin-left: 20px; }\n    .personal-info .personal-info-msg p {\n      font-size: 26px;\n      font-weight: 600;\n      margin-bottom: 15px; }\n    .personal-info .personal-info-msg div {\n      font-size: 14px;\n      color: #8590a6; }\n\n.setting-page {\n  width: 1000px;\n  margin: 0 auto; }\n  .setting-page .setting-page-div {\n    margin-top: 15px; }\n  .setting-page .setting-input {\n    width: 180px;\n    padding: 8px 10px;\n    margin-left: 10px; }\n  .setting-page .setting-image {\n    margin-left: 10px; }\n  .setting-page .setting-page-btn {\n    padding: 8px 10px;\n    background-color: #0865c2;\n    color: #fff;\n    border-radius: 3px;\n    margin-top: 20px; }\n\n.home-page {\n  width: 100%;\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between; }\n  .home-page .recent {\n    width: 640px;\n    padding-top: 10px;\n    padding-bottom: 10px; }\n    .home-page .recent .item {\n      width: 100%;\n      padding-top: 20px;\n      padding-bottom: 20px;\n      border-bottom: 1px solid #f0f0f0;\n      cursor: pointer; }\n      .home-page .recent .item .user {\n        display: flex;\n        flex-direction: row;\n        align-items: center; }\n        .home-page .recent .item .user .head {\n          width: 32px;\n          height: 32px;\n          margin-right: 10px; }\n        .home-page .recent .item .user .name {\n          font-size: 12px;\n          color: #555;\n          margin-right: 10px; }\n      .home-page .recent .item .article {\n        width: 100%;\n        display: flex;\n        flex-direction: row;\n        justify-content: space-between; }\n      .home-page .recent .item .title {\n        font-size: 18px;\n        color: #555;\n        margin-top: 6px;\n        margin-bottom: 6px;\n        width: 450px;\n        height: 25px;\n        overflow: hidden;\n        white-space: nowrap;\n        text-overflow: ellipsis; }\n      .home-page .recent .item .content {\n        width: 420px;\n        overflow: hidden;\n        display: -webkit-box;\n        -webkit-box-orient: vertical;\n        -webkit-line-clamp: 3;\n        font-size: 12px;\n        color: #555;\n        line-height: 22px; }\n        .home-page .recent .item .content p {\n          width: 420px; }\n      .home-page .recent .item .banner {\n        width: 176px;\n        height: 92px;\n        margin-top: 6px; }\n    .home-page .recent .item:last-child {\n      border-bottom: 0px; }\n  .home-page .hot {\n    width: 320px; }\n", ""]);
 
 // exports
 
@@ -30194,7 +30202,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         r = e.getState;return "function" == typeof t || "function" == typeof r ? S()({ dispatch: t, getState: r }) : void console.error("\n[redux-logger v3] BREAKING CHANGE\n[redux-logger v3] Since 3.0.0 redux-logger exports by default logger with default settings.\n[redux-logger v3] Change\n[redux-logger v3] import createLogger from 'redux-logger'\n[redux-logger v3] to\n[redux-logger v3] import { createLogger } from 'redux-logger'\n");
   };e.defaults = L, e.createLogger = S, e.logger = T, e.default = T, Object.defineProperty(e, "__esModule", { value: !0 });
 });
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(49)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(50)))
 
 /***/ }),
 /* 153 */

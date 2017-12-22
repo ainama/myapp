@@ -1,6 +1,7 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 import * as actions from '../actions/home';
 
@@ -27,6 +28,10 @@ class Home extends React.Component {
     return tagString;
   }
 
+  articleDetail() {
+
+  }
+
   render() {
     return (
       <div className = 'home-page'>
@@ -38,7 +43,10 @@ class Home extends React.Component {
               let head = item.head_img != null ? item.head_img : '/images/community/header_default_avatar.png';
               let tagString = this.tagString(item.content);
               return (
-                <div key = { index } className = 'item'>
+                <Link
+                  key = { index }
+                  className = 'item'
+                  to = { '/community/showArticle/' + item.id }>
                   <div className = 'user'>
                     <img className = 'head' src = { head } />
                     <div className = 'name'>{ item.name }</div>
@@ -53,7 +61,7 @@ class Home extends React.Component {
                       className = 'right banner'
                       src = { item.banner } />
                   </div>
-                </div>
+                </Link>
               );
             })
           }

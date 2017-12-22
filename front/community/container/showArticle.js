@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from '../actions/test';
@@ -10,7 +11,6 @@ class ShowArticle extends React.Component {
     this._getLike = this._getLike.bind(this);
     this._addLike = this._addLike.bind(this);
     this._goEdit = this._goEdit.bind(this);
-    // console.log(this.props);
     this.state = {
       data: {},
       status: false,  // 当前登录用户与页面文章作者id
@@ -18,17 +18,29 @@ class ShowArticle extends React.Component {
   }
 
   componentDidMount() {
-    this._getInfo();
+    let article_id = this.props.match.params.article;
+    this._getInfo(article_id);
     this._getLike();
   }
 
-  // setZ() {
-  //   this.props.actions.testfunc();
-  // }
-
-  _getInfo() {
-    // console.log('_getInfo');
+  _getInfo(id) {
+    console.log('getInfo', id);
     //ajax 获取data
+    $.ajax({
+      url: '/api/community/article/read',
+      type: 'POST',
+      data: { id: id },
+      success: function(res) {
+        console.log(res.msg);
+        // dispatch(addImage(res.newPath));
+        // console.log(res);
+        // if (res.code == 10000) {
+        //   dispatch(addImage(res.newPath));
+        // } else {
+        //   alert(res.msg);
+        // }
+      }
+    });
     const data = {
       user_id: 'lynn',
       update_time: '2天前',
@@ -126,6 +138,10 @@ class ShowArticle extends React.Component {
     );
   }
 }
+
+ShowArticle.propTypes = {
+  params: PropTypes.object,
+};
 
 const mapStateToProps = (store) => {
   return {

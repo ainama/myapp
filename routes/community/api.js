@@ -139,7 +139,7 @@ router.get('/article/list', function (req, res) {
 /* lichaoqun */
 /**
  * 上传文章banner
- * @method /api/community/uploadArticleImg
+ * @method /api/community/article/image
  */
 router.post('/article/image', function (req, res) {
   var form = new formidable.IncomingForm();   //创建上传表单
@@ -193,9 +193,9 @@ router.post('/article/image', function (req, res) {
 });
 /**
  * 上传文章
- * @method /api/community/uploadArticle
+ * @method /api/community/article/upload
  */
-router.post('/article/upload', function (req, res) {
+router.post('/article/upload', function(req, res) {
   var sql = 'INSERT INTO t_article(id, title, user_id, content, banner) VALUES(0, ?, ?, ?, ?)';
   console.log('req', req.body);
   var data = req.body;
@@ -203,7 +203,7 @@ router.post('/article/upload', function (req, res) {
   for(var k in data) {
     params.push(data[k]);
   };
-  query(sql, params, function (error, results, fields) {
+  query(sql, params, function(error, results, fields) {
 
     if (error) {
       res.send({ code: 10002, msg: '发布失败', error: error.sqlMessage });
@@ -214,6 +214,21 @@ router.post('/article/upload', function (req, res) {
       } else {
         res.send({ code: 10001, msg: '发布失败' });
       }
+    }
+  });
+});
+/**
+ * 读文章
+ * @method /api/community/article/read
+ */
+router.post('/article/read', function(req, res) {
+  var data = req.body;
+  var sql = 'SELECT * FROM t_article WHERE id = ' + data.id;
+  query(sql, function(error, results, fields) {
+    if (error) {
+      throw error;
+    } else {
+      res.send({ code: 10000, msg: results });
     }
   });
 });

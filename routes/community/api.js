@@ -17,7 +17,7 @@ router.use(session({
     resave : true,
     saveUninitialized: false, // 是否保存未初始化的会话
     cookie : {
-      maxAge : 1000 * 60 * 3, // 设置 session 的有效时间，单位毫秒
+      maxAge : 1000 * 60 * 30, // 设置 session 的有效时间，单位毫秒
     },
 }));
 
@@ -122,8 +122,20 @@ router.get('/logout', function (req, res) {
  * @method /api/community/user/base
  */
 router.get('/user/base', function (req, res) {
-  let sid = req.session.sessionId;
-  var sql = 'SELECT * FROM t_user WHERE id=' + sid + ';';
+  var sid = req.session.sessionId;
+  var sql = 'SELECT id,head_img FROM t_user WHERE id=' + sid;
+  query(sql, null, function (error, results, fields) {
+    if (error) throw error;
+    res.send({ code: 10000, msg: results[0] });
+  });
+});
+
+/**
+ * 最近文章列表
+ * @method /api/community/article/recent
+ */
+router.get('/article/recent', function (req, res) {
+  var sql = 'SELECT * FROM t_article ORDER BY create_time DESC limit 10';
   query(sql, null, function (error, results, fields) {
     if (error) throw error;
     res.send({ code: 10000, msg: results });
@@ -131,10 +143,10 @@ router.get('/user/base', function (req, res) {
 });
 
 /**
- * 获取文章列表
- * @method /api/community/article/list
+ * 热门文章列表
+ * @method /api/community/article/hot
  */
-router.get('/article/list', function (req, res) {
+router.get('/article/hot', function (req, res) {
   var sql = 'select * from t_article;';
   query(sql, null, function (error, results, fields) {
     if (error) throw error;

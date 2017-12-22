@@ -9,3 +9,12 @@ export function getUserBase() {
     myFetch(url, fetchObj, outputObj, dispatch);
   };
 }
+
+export function logout() {
+  return (dispatch) => {
+    let url = '/api/community/logout';
+    let fetchObj = { method: 'get' };
+    let outputObj = { };
+    myFetch(url, fetchObj, outputObj, dispatch);
+  };
+}

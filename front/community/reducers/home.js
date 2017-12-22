@@ -12,7 +12,7 @@ const defaultStatus = {
 
 export function home(state = defaultStatus, action) {
   switch (action.type) {
-    case types.GET_ARTICLE_LIST: {
+    case types.GET_ARTICLE_RECENT: {
       let stateObj = { };
       if (action.payload.code == 10000) {
         stateObj = { recentList: action.payload.msg };

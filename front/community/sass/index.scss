@@ -15,6 +15,11 @@ img {
   border-style: none;
 }
 
+a {
+  text-decoration: none;
+  cursor: pointer;
+}
+
 @import './head';
 @import './foot';
 @import './container';
@@ -22,3 +27,4 @@ img {
 @import './showArticle';
 @import './personalPage';
 @import './settingPage';
+@import './home';

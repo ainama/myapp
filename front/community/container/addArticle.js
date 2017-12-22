@@ -21,7 +21,8 @@ class AddArticle extends React.Component {
     };
   }
 
-  componentDidMount() {}
+  componentDidMount() {
+  }
 
   _addBanner() {
     this.refs.file.click();
@@ -47,21 +48,23 @@ class AddArticle extends React.Component {
   }
 
   _upload() {
+    let user_id = this.props.header.user.id;
+    console.log('header', this.props.header.user.id);
     const { article } = this.props;
 
     let data = {
       id: article.article_id,
       title: this.state.title,
-      user_id: 3,
+      user_id: user_id,
       content: this.state.content,
       banner: article.banner,
       create_time: '',
       update_time: ''
     };
 
-    // console.log('upload', data);
+    console.log('upload', data);
     this.props.actions.uploadArticle(data);
-    this.props.history.push('/community/home');
+    // this.props.history.push('/community/home');
   }
 
   render() {
@@ -117,7 +120,8 @@ class AddArticle extends React.Component {
 const mapStateToProps = (store) => {
   return {
     test: store.test,
-    article: store.article
+    article: store.article,
+    header: store.header
   };
 };
 

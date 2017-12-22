@@ -1,20 +1,20 @@
 import * as types from '../actions/action-types';
 import { myFetch } from '../../tools';
 
-export function getUserBase() {
+export function getArticleRecent() {
   return (dispatch) => {
-    let url = '/api/community/user/base';
+    let url = '/api/community/article/recent';
     let fetchObj = { method: 'get' };
-    let outputObj = { type: types.GET_USER_BASE };
+    let outputObj = { type: types.GET_ARTICLE_RECENT };
     myFetch(url, fetchObj, outputObj, dispatch);
   };
 }
 
-export function logout() {
+export function getArticleHot() {
   return (dispatch) => {
-    let url = '/api/community/logout';
+    let url = '/api/community/article/hot';
     let fetchObj = { method: 'get' };
-    let outputObj = { };
+    let outputObj = { type: types.GET_ARTICLE_HOT };
     myFetch(url, fetchObj, outputObj, dispatch);
   };
 }

@@ -135,7 +135,7 @@ router.get('/user/base', function (req, res) {
  * @method /api/community/article/recent
  */
 router.get('/article/recent', function (req, res) {
-  var sql = 'SELECT * FROM t_article ORDER BY create_time DESC limit 10';
+  var sql = 'SELECT t_article.id,t_article.title,t_article.content,t_article.banner,t_article.create_time,t_user.name,t_user.head_img FROM t_article,t_user WHERE t_article.user_id=t_user.id ORDER BY create_time DESC limit 10';
   query(sql, null, function (error, results, fields) {
     if (error) throw error;
     res.send({ code: 10000, msg: results });
@@ -147,7 +147,7 @@ router.get('/article/recent', function (req, res) {
  * @method /api/community/article/hot
  */
 router.get('/article/hot', function (req, res) {
-  var sql = 'select * from t_article;';
+  var sql = 'SELECT t_article.banner,t_article.title,t_article.create_time FROM t_article,t_praise WHERE t_article.id=t_praise.article_id ORDER BY t_praise.praise DESC limit 10;';
   query(sql, null, function (error, results, fields) {
     if (error) throw error;
     res.send({ code: 10000, msg: results });

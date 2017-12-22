@@ -811,6 +811,7 @@ var TEST = exports.TEST = 'TEST';
 var ADD_ARTICLE_IMG = exports.ADD_ARTICLE_IMG = 'ADD_ARTICLE_IMG'; // add/edit页上传图片
 var GET_USER_BASE = exports.GET_USER_BASE = 'GET_USER_BASE';
 var GET_ARTICLE_RECENT = exports.GET_ARTICLE_RECENT = 'GET_ARTICLE_RECENT';
+var GET_ARTICLE_HOT = exports.GET_ARTICLE_HOT = 'GET_ARTICLE_HOT';
 
 /***/ }),
 /* 13 */
@@ -27387,7 +27388,11 @@ var Index = function (_React$Component) {
         _react2.default.createElement(
           'div',
           { className: 'container' },
-          this.props.children
+          _react2.default.createElement(
+            'div',
+            { className: 'body' },
+            this.props.children
+          )
         ),
         _react2.default.createElement(_footer2.default, null)
       );
@@ -28033,23 +28038,82 @@ var Home = function (_React$Component) {
   _createClass(Home, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      this.props.actions.getArticleList();
+      this.props.actions.getArticleRecent();
+      this.props.actions.getArticleHot();
+    }
+  }, {
+    key: 'tagString',
+    value: function tagString(content) {
+      var div = document.createElement('div');
+      div.innerHTML = content;
+      var tagArray = div.getElementsByTagName('p');
+      var tagString = '';
+      for (var i = 0; i < tagArray.length; i++) {
+        tagString = tagString + tagArray[i].innerHTML;
+      }
+      tagString = tagString.substring(0, 84);
+      if (tagString.length > 83) tagString = tagString + '...';
+      return tagString;
     }
   }, {
     key: 'render',
     value: function render() {
-      console.log(this.props.home);
+      var _this2 = this;
+
       return _react2.default.createElement(
-        _react2.default.Fragment,
-        null,
+        'div',
+        { className: 'home-page' },
         _react2.default.createElement(
           'div',
-          null,
-          'left'
+          { className: 'recent' },
+          this.props.home.recentList.map(function (item, index) {
+            var head = item.head_img != null ? item.head_img : '/images/community/header_default_avatar.png';
+            var tagString = _this2.tagString(item.content);
+            return _react2.default.createElement(
+              'div',
+              { key: index, className: 'item' },
+              _react2.default.createElement(
+                'div',
+                { className: 'user' },
+                _react2.default.createElement('img', { className: 'head', src: head }),
+                _react2.default.createElement(
+                  'div',
+                  { className: 'name' },
+                  item.name
+                ),
+                _react2.default.createElement(
+                  'div',
+                  null,
+                  '\u65F6\u95F4'
+                )
+              ),
+              _react2.default.createElement(
+                'div',
+                { className: 'article' },
+                _react2.default.createElement(
+                  'div',
+                  { className: 'left' },
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'title' },
+                    item.title
+                  ),
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'content' },
+                    tagString
+                  )
+                ),
+                _react2.default.createElement('img', {
+                  className: 'right banner',
+                  src: item.banner })
+              )
+            );
+          })
         ),
         _react2.default.createElement(
           'div',
-          null,
+          { className: 'hot' },
           'right'
         )
       );
@@ -28083,7 +28147,8 @@ exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.getArticleList = getArticleList;
+exports.getArticleRecent = getArticleRecent;
+exports.getArticleHot = getArticleHot;
 
 var _actionTypes = __webpack_require__(12);
 
@@ -28093,11 +28158,20 @@ var _tools = __webpack_require__(69);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
-function getArticleList() {
+function getArticleRecent() {
   return function (dispatch) {
     var url = '/api/community/article/recent';
     var fetchObj = { method: 'get' };
     var outputObj = { type: types.GET_ARTICLE_RECENT };
+    (0, _tools.myFetch)(url, fetchObj, outputObj, dispatch);
+  };
+}
+
+function getArticleHot() {
+  return function (dispatch) {
+    var url = '/api/community/article/hot';
+    var fetchObj = { method: 'get' };
+    var outputObj = { type: types.GET_ARTICLE_HOT };
     (0, _tools.myFetch)(url, fetchObj, outputObj, dispatch);
   };
 }
@@ -29226,7 +29300,7 @@ exports = module.exports = __webpack_require__(26)(undefined);
 
 
 // module
-exports.push([module.i, "body, ul, li, h1, h2, h3, h4, h5, h6, p, form, dl, dt, dd, div {\n  margin: 0px;\n  padding: 0px;\n  font-size: 14px;\n  font-weight: normal;\n  -webkit-tap-highlight-color: transparent;\n  width: max-content; }\n\nul {\n  list-style: none; }\n\nimg {\n  border-style: none; }\n\na {\n  text-decoration: none;\n  cursor: pointer; }\n\n.header {\n  width: 100vw;\n  height: 60px;\n  background-color: #fff;\n  border-bottom: 1px solid #d5d5d5;\n  display: flex;\n  flex-direction: row;\n  justify-content: center; }\n  .header .body {\n    display: flex;\n    flex-direction: row;\n    align-items: center;\n    width: 1000px; }\n  .header .logo {\n    width: 96px;\n    height: 24px;\n    background-image: url(/images/community/header_logo.png);\n    background-position: center;\n    background-repeat: no-repeat;\n    background-size: 96px 24px;\n    margin-right: 26px;\n    cursor: pointer; }\n  .header .group {\n    flex: 1; }\n    .header .group .home {\n      width: 60px;\n      height: 59px;\n      border-bottom: 2px solid #4a90e2;\n      line-height: 59px;\n      text-align: center;\n      font-size: 16px;\n      color: #555;\n      cursor: pointer; }\n  .header .write {\n    width: 114px;\n    height: 36px;\n    background-image: url(/images/community/header_write.png);\n    background-position: center;\n    background-repeat: no-repeat;\n    background-size: 114px 36px;\n    margin-right: 30px;\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    align-items: center;\n    cursor: pointer; }\n    .header .write .icon {\n      width: 16px;\n      height: 16px;\n      background-image: url(/images/community/header_write_icon.png);\n      background-position: center;\n      background-repeat: no-repeat;\n      background-size: 16px 16px;\n      margin-right: 9px; }\n    .header .write span {\n      font-size: 16px;\n      color: #fff; }\n  .header .user {\n    display: flex;\n    flex-direction: row;\n    position: relative; }\n    .header .user .logon {\n      font-size: 16px;\n      color: #555;\n      margin-right: 30px;\n      cursor: pointer; }\n    .header .user .register {\n      font-size: 16px;\n      color: #555;\n      cursor: pointer; }\n    .header .user .img {\n      width: 32px;\n      height: 32px;\n      cursor: pointer; }\n  .header .expand {\n    position: absolute;\n    top: 46px;\n    left: -30px;\n    width: 92px;\n    padding-top: 10px;\n    padding-bottom: 10px;\n    background-color: #fff;\n    border: 1px solid #d5d5d5;\n    box-shadow: 1px 2px 8px 0 rgba(44, 64, 88, 0.2); }\n    .header .expand .item {\n      width: 100%;\n      height: 34px;\n      text-align: center;\n      line-height: 34px;\n      font-size: 14px;\n      cursor: pointer;\n      color: #bbb; }\n    .header .expand .item:hover {\n      background-color: #f9f9f9;\n      color: #969696; }\n\n.footer {\n  width: 100vw;\n  height: 45px;\n  background-color: #4a90e2;\n  text-align: center;\n  line-height: 45px; }\n\n.container {\n  width: 100vw;\n  min-height: calc(100vh - 90px); }\n\n.addArticle-layout {\n  margin: 50px auto 0;\n  padding: 0px 0px 20px 0px;\n  width: 600px;\n  z-index: 1;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n  -ms-flex-direction: column;\n  flex-direction: column;\n  -webkit-box-align: stretch;\n  -ms-flex-align: stretch;\n  align-items: stretch;\n  -ms-flex-negative: 0;\n  flex-shrink: 0;\n  overflow: hidden; }\n\n.fake-wrapper {\n  position: relative;\n  width: 600px;\n  height: 260px;\n  background: #f7f8f9;\n  line-height: 192px;\n  color: gray;\n  text-align: center; }\n\n.fake-banner {\n  height: 100%;\n  width: 100%; }\n\n.addArticle-banner {\n  position: absolute;\n  display: block;\n  top: 0;\n  left: 0;\n  height: 100%;\n  width: 100%;\n  opacity: 0;\n  cursor: pointer;\n  z-index: 2; }\n\n.addArticle-title {\n  margin: 20px auto; }\n\n.addArticle-input {\n  display: block;\n  width: 600px;\n  height: 60px;\n  box-sizing: border-box;\n  border: none;\n  border-radius: 2px;\n  font-size: 28px;\n  color: #888;\n  line-height: 16px;\n  padding: 6px 8px 2px 0px; }\n  .addArticle-input:focus {\n    outline: none;\n    border: none; }\n  .addArticle-input::placeholder {\n    font-size: 28px;\n    color: #999999; }\n\n.addArticle-upload {\n  border-radius: 4px;\n  text-align: center;\n  border: 1px solid #b3b3b3;\n  color: gray;\n  width: 82px;\n  height: 32px;\n  line-height: 30px;\n  padding: 0;\n  cursor: pointer; }\n\n/*simditor*/\n.simditor {\n  border: none !important;\n  border-top: 1px solid #c9d8db !important;\n  margin: 0 auto; }\n  .simditor .simditor-toolbar {\n    border-bottom: none !important; }\n\n.ShowArticle-layout {\n  padding: 0;\n  margin: 0;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n  -ms-flex-direction: column;\n  flex-direction: column;\n  -webkit-box-align: stretch;\n  -ms-flex-align: stretch;\n  align-items: stretch;\n  -ms-flex-negative: 0;\n  flex-shrink: 0;\n  overflow: hidden; }\n\n.showArticle-show {\n  position: relative; }\n\n.showArticle-banner {\n  width: 100vw; }\n\n.showArticle-title {\n  position: absolute;\n  margin: 0 auto;\n  left: 0;\n  right: 0;\n  bottom: 80px;\n  color: #fff;\n  z-index: 1;\n  font-size: 36px; }\n\n.showArticle-info {\n  position: absolute;\n  margin: 0 auto;\n  left: 0;\n  right: 0;\n  bottom: 20px;\n  color: #fff;\n  z-index: 1;\n  font-size: 20px;\n  width: 660px; }\n\n.showArticle-content {\n  margin: 47px auto 0;\n  padding: 0;\n  width: 660px;\n  z-index: 1; }\n\n.showArticle-footer {\n  margin: 47px auto 0;\n  padding: 0;\n  width: 660px;\n  z-index: 1; }\n\n.personal-page {\n  width: 1000px;\n  margin: 0 auto; }\n\n.personal-info {\n  z-index: 2;\n  position: relative;\n  padding: 0 20px 24px;\n  height: 110px;\n  background-color: #fff;\n  width: 100%;\n  box-sizing: border-box;\n  margin-top: -3px; }\n  .personal-info .personal-info-img {\n    float: left;\n    margin-top: -50px; }\n  .personal-info .personal-info-msg {\n    float: left;\n    margin-left: 20px; }\n    .personal-info .personal-info-msg p {\n      font-size: 26px;\n      font-weight: 600;\n      margin-bottom: 15px; }\n    .personal-info .personal-info-msg div {\n      font-size: 14px;\n      color: #8590a6; }\n\n.setting-page {\n  width: 1000px;\n  margin: 0 auto; }\n  .setting-page .setting-page-div {\n    margin-top: 15px; }\n  .setting-page .setting-input {\n    width: 180px;\n    padding: 8px 10px;\n    margin-left: 10px; }\n  .setting-page .setting-image {\n    margin-left: 10px; }\n  .setting-page .setting-page-btn {\n    padding: 8px 10px;\n    background-color: #0865c2;\n    color: #fff;\n    border-radius: 3px;\n    margin-top: 20px; }\n", ""]);
+exports.push([module.i, "body, ul, li, h1, h2, h3, h4, h5, h6, p, form, dl, dt, dd, div {\n  margin: 0px;\n  padding: 0px;\n  font-size: 14px;\n  font-weight: normal;\n  -webkit-tap-highlight-color: transparent;\n  width: max-content; }\n\nul {\n  list-style: none; }\n\nimg {\n  border-style: none; }\n\na {\n  text-decoration: none;\n  cursor: pointer; }\n\n.header {\n  width: 100vw;\n  height: 60px;\n  background-color: #fff;\n  border-bottom: 1px solid #d5d5d5;\n  display: flex;\n  flex-direction: row;\n  justify-content: center; }\n  .header .body {\n    display: flex;\n    flex-direction: row;\n    align-items: center;\n    width: 1000px; }\n  .header .logo {\n    width: 96px;\n    height: 24px;\n    background-image: url(/images/community/header_logo.png);\n    background-position: center;\n    background-repeat: no-repeat;\n    background-size: 96px 24px;\n    margin-right: 26px;\n    cursor: pointer; }\n  .header .group {\n    flex: 1; }\n    .header .group .home {\n      width: 60px;\n      height: 59px;\n      border-bottom: 2px solid #4a90e2;\n      line-height: 59px;\n      text-align: center;\n      font-size: 16px;\n      color: #555;\n      cursor: pointer; }\n  .header .write {\n    width: 114px;\n    height: 36px;\n    background-image: url(/images/community/header_write.png);\n    background-position: center;\n    background-repeat: no-repeat;\n    background-size: 114px 36px;\n    margin-right: 30px;\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    align-items: center;\n    cursor: pointer; }\n    .header .write .icon {\n      width: 16px;\n      height: 16px;\n      background-image: url(/images/community/header_write_icon.png);\n      background-position: center;\n      background-repeat: no-repeat;\n      background-size: 16px 16px;\n      margin-right: 9px; }\n    .header .write span {\n      font-size: 16px;\n      color: #fff; }\n  .header .user {\n    display: flex;\n    flex-direction: row;\n    position: relative; }\n    .header .user .logon {\n      font-size: 16px;\n      color: #555;\n      margin-right: 30px;\n      cursor: pointer; }\n    .header .user .register {\n      font-size: 16px;\n      color: #555;\n      cursor: pointer; }\n    .header .user .img {\n      width: 32px;\n      height: 32px;\n      cursor: pointer; }\n  .header .expand {\n    position: absolute;\n    top: 46px;\n    left: -30px;\n    width: 92px;\n    padding-top: 10px;\n    padding-bottom: 10px;\n    background-color: #fff;\n    border: 1px solid #d5d5d5;\n    box-shadow: 1px 2px 8px 0 rgba(44, 64, 88, 0.2); }\n    .header .expand .item {\n      width: 100%;\n      height: 34px;\n      text-align: center;\n      line-height: 34px;\n      font-size: 14px;\n      cursor: pointer;\n      color: #bbb; }\n    .header .expand .item:hover {\n      background-color: #f9f9f9;\n      color: #969696; }\n\n.footer {\n  width: 100vw;\n  height: 45px;\n  background-color: #4a90e2;\n  text-align: center;\n  line-height: 45px; }\n\n.container {\n  width: 100vw;\n  display: flex;\n  flex-direction: row;\n  justify-content: center; }\n  .container .body {\n    width: 1000px;\n    min-height: calc(100vh - 90px); }\n\n.addArticle-layout {\n  margin: 50px auto 0;\n  padding: 0px 0px 20px 0px;\n  width: 600px;\n  z-index: 1;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n  -ms-flex-direction: column;\n  flex-direction: column;\n  -webkit-box-align: stretch;\n  -ms-flex-align: stretch;\n  align-items: stretch;\n  -ms-flex-negative: 0;\n  flex-shrink: 0;\n  overflow: hidden; }\n\n.fake-wrapper {\n  position: relative;\n  width: 600px;\n  height: 260px;\n  background: #f7f8f9;\n  line-height: 192px;\n  color: gray;\n  text-align: center; }\n\n.fake-banner {\n  height: 100%;\n  width: 100%; }\n\n.addArticle-banner {\n  position: absolute;\n  display: block;\n  top: 0;\n  left: 0;\n  height: 100%;\n  width: 100%;\n  opacity: 0;\n  cursor: pointer;\n  z-index: 2; }\n\n.addArticle-title {\n  margin: 20px auto; }\n\n.addArticle-input {\n  display: block;\n  width: 600px;\n  height: 60px;\n  box-sizing: border-box;\n  border: none;\n  border-radius: 2px;\n  font-size: 28px;\n  color: #888;\n  line-height: 16px;\n  padding: 6px 8px 2px 0px; }\n  .addArticle-input:focus {\n    outline: none;\n    border: none; }\n  .addArticle-input::placeholder {\n    font-size: 28px;\n    color: #999999; }\n\n.addArticle-upload {\n  border-radius: 4px;\n  text-align: center;\n  border: 1px solid #b3b3b3;\n  color: gray;\n  width: 82px;\n  height: 32px;\n  line-height: 30px;\n  padding: 0;\n  cursor: pointer; }\n\n/*simditor*/\n.simditor {\n  border: none !important;\n  border-top: 1px solid #c9d8db !important;\n  margin: 0 auto; }\n  .simditor .simditor-toolbar {\n    border-bottom: none !important; }\n\n.ShowArticle-layout {\n  padding: 0;\n  margin: 0;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n  -ms-flex-direction: column;\n  flex-direction: column;\n  -webkit-box-align: stretch;\n  -ms-flex-align: stretch;\n  align-items: stretch;\n  -ms-flex-negative: 0;\n  flex-shrink: 0;\n  overflow: hidden; }\n\n.showArticle-show {\n  position: relative; }\n\n.showArticle-banner {\n  width: 100vw; }\n\n.showArticle-title {\n  position: absolute;\n  margin: 0 auto;\n  left: 0;\n  right: 0;\n  bottom: 80px;\n  color: #fff;\n  z-index: 1;\n  font-size: 36px; }\n\n.showArticle-info {\n  position: absolute;\n  margin: 0 auto;\n  left: 0;\n  right: 0;\n  bottom: 20px;\n  color: #fff;\n  z-index: 1;\n  font-size: 20px;\n  width: 660px; }\n\n.showArticle-content {\n  margin: 47px auto 0;\n  padding: 0;\n  width: 660px;\n  z-index: 1; }\n\n.showArticle-footer {\n  margin: 47px auto 0;\n  padding: 0;\n  width: 660px;\n  z-index: 1; }\n\n.personal-page {\n  width: 1000px;\n  margin: 0 auto; }\n\n.personal-info {\n  z-index: 2;\n  position: relative;\n  padding: 0 20px 24px;\n  height: 110px;\n  background-color: #fff;\n  width: 100%;\n  box-sizing: border-box;\n  margin-top: -3px; }\n  .personal-info .personal-info-img {\n    float: left;\n    margin-top: -50px; }\n  .personal-info .personal-info-msg {\n    float: left;\n    margin-left: 20px; }\n    .personal-info .personal-info-msg p {\n      font-size: 26px;\n      font-weight: 600;\n      margin-bottom: 15px; }\n    .personal-info .personal-info-msg div {\n      font-size: 14px;\n      color: #8590a6; }\n\n.setting-page {\n  width: 1000px;\n  margin: 0 auto; }\n  .setting-page .setting-page-div {\n    margin-top: 15px; }\n  .setting-page .setting-input {\n    width: 180px;\n    padding: 8px 10px;\n    margin-left: 10px; }\n  .setting-page .setting-image {\n    margin-left: 10px; }\n  .setting-page .setting-page-btn {\n    padding: 8px 10px;\n    background-color: #0865c2;\n    color: #fff;\n    border-radius: 3px;\n    margin-top: 20px; }\n\n.home-page {\n  width: 100%;\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between; }\n  .home-page .recent {\n    width: 640px;\n    padding-top: 10px;\n    padding-bottom: 10px; }\n    .home-page .recent .item {\n      width: 100%;\n      padding-top: 20px;\n      padding-bottom: 20px;\n      border-bottom: 1px solid #f0f0f0; }\n      .home-page .recent .item .user {\n        display: flex;\n        flex-direction: row;\n        align-items: center; }\n        .home-page .recent .item .user .head {\n          width: 32px;\n          height: 32px;\n          margin-right: 10px; }\n        .home-page .recent .item .user .name {\n          font-size: 12px;\n          color: #555;\n          margin-right: 10px; }\n      .home-page .recent .item .article {\n        width: 100%;\n        display: flex;\n        flex-direction: row;\n        justify-content: space-between; }\n      .home-page .recent .item .title {\n        font-size: 18px;\n        color: #555;\n        margin-top: 6px;\n        margin-bottom: 6px;\n        width: 450px;\n        height: 25px;\n        overflow: hidden;\n        white-space: nowrap;\n        text-overflow: ellipsis; }\n      .home-page .recent .item .content {\n        width: 420px;\n        overflow: hidden;\n        display: -webkit-box;\n        -webkit-box-orient: vertical;\n        -webkit-line-clamp: 3;\n        font-size: 12px;\n        color: #555;\n        line-height: 22px; }\n        .home-page .recent .item .content p {\n          width: 420px; }\n      .home-page .recent .item .banner {\n        width: 176px;\n        height: 92px;\n        margin-top: 6px; }\n    .home-page .recent .item:last-child {\n      border-bottom: 0px; }\n  .home-page .hot {\n    width: 320px; }\n", ""]);
 
 // exports
 
@@ -29793,7 +29867,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @param {int} status 0 请求中，1 未登录，2 已登录
  */
 var defaultStatus = {
-  recentList: []
+  recentList: [],
+  hostList: []
 };
 
 function home() {
@@ -29808,6 +29883,15 @@ function home() {
           stateObj = { recentList: action.payload.msg };
         }
         return (0, _lodash2.default)({}, state, stateObj);
+      }
+
+    case types.GET_ARTICLE_HOT:
+      {
+        var _stateObj = {};
+        if (action.payload.code == 10000) {
+          _stateObj = { hotList: action.payload.msg };
+        }
+        return (0, _lodash2.default)({}, state, _stateObj);
       }
 
     default:

@@ -10,23 +10,61 @@ class Home extends React.Component {
   }
 
   componentDidMount() {
-    this.props.actions.getArticleList();
+    this.props.actions.getArticleRecent();
+    this.props.actions.getArticleHot();
+  }
+
+  tagString(content) {
+    let div = document.createElement('div');
+    div.innerHTML = content;
+    let tagArray = div.getElementsByTagName('p');
+    let tagString = '';
+    for (let i = 0; i < tagArray.length; i++) {
+      tagString = tagString + tagArray[i].innerHTML;
+    }
+    tagString = tagString.substring(0, 84);
+    if (tagString.length > 83) tagString = tagString + '...';
+    return tagString;
   }
 
   render() {
-    console.log(this.props.home);
     return (
-      <React.Fragment>
+      <div className = 'home-page'>
 
         {/* 最近文章 */}
-        <div>
-          left
+        <div className = 'recent'>
+          {
+            this.props.home.recentList.map((item, index) => {
+              let head = item.head_img != null ? item.head_img : '/images/community/header_default_avatar.png';
+              let tagString = this.tagString(item.content);
+              return (
+                <div key = { index } className = 'item'>
+                  <div className = 'user'>
+                    <img className = 'head' src = { head } />
+                    <div className = 'name'>{ item.name }</div>
+                    <div>时间</div>
+                  </div>
+                  <div className = 'article'>
+                    <div className = 'left'>
+                      <div className = 'title'>{ item.title }</div>
+                      <div className = 'content'>{ tagString }</div>
+                    </div>
+                    <img
+                      className = 'right banner'
+                      src = { item.banner } />
+                  </div>
+                </div>
+              );
+            })
+          }
         </div>
 
         {/* 热门文章 */}
-        <div>right</div>
+        <div className = 'hot'>
+          right
+        </div>
 
-      </React.Fragment>
+      </div>
     );
   }
 }

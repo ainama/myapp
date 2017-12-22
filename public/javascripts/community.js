@@ -810,7 +810,9 @@ var TEST = exports.TEST = 'TEST';
 
 var ADD_ARTICLE_IMG = exports.ADD_ARTICLE_IMG = 'ADD_ARTICLE_IMG'; // add/edit页上传图片
 var SHOW_ARTICLE = exports.SHOW_ARTICLE = 'SHOW_ARTICLE'; // 展示文章
-var SHOW_LIKE = exports.SHOW_LIKE = 'SHOW_LIKE'; // 展示like
+var SHOW_LIKE = exports.SHOW_LIKE = 'SHOW_LIKE'; // 文章详情页展示like
+var SHOW_AUTHOR_INFO = exports.SHOW_AUTHOR_INFO = 'SHOW_AUTHOR_INFO'; // 文章详情页展示作者信息
+var SHOW_LATEST_AETICLE = exports.SHOW_LATEST_AETICLE = 'SHOW_LATEST_AETICLE'; // 文章详情页展示作者最新文章
 var GET_USER_BASE = exports.GET_USER_BASE = 'GET_USER_BASE';
 var GET_ARTICLE_RECENT = exports.GET_ARTICLE_RECENT = 'GET_ARTICLE_RECENT';
 var GET_ARTICLE_HOT = exports.GET_ARTICLE_HOT = 'GET_ARTICLE_HOT';
@@ -12336,6 +12338,10 @@ exports.showArticle = showArticle;
 exports.getLike = getLike;
 exports.showLike = showLike;
 exports.editLike = editLike;
+exports.getAuthorInfo = getAuthorInfo;
+exports.showAuthorInfo = showAuthorInfo;
+exports.getLatestArticle = getLatestArticle;
+exports.showLatestArticle = showLatestArticle;
 
 var _jquery = __webpack_require__(71);
 
@@ -12410,7 +12416,6 @@ function getArticle(id) {
       success: function success(res) {
         // console.log('getArticle action => ', res.msg[0]);
         dispatch(showArticle(res.msg[0])); // 展示文章信息
-        // dispatch(showLike(res.like[0]));  // 展示文章like
       }
     });
   };
@@ -12433,7 +12438,6 @@ function getLike(id) {
       data: { id: id },
       success: function success(res) {
         // console.log('getLike action => ', res.like[0]);
-        // dispatch(showArticle(res.msg[0]));  // 展示文章信息
         dispatch(showLike(res.like[0])); // 展示文章like
       }
     });
@@ -12456,10 +12460,55 @@ function editLike(data) {
       type: 'POST',
       data: data,
       success: function success(res) {
-        console.log('editLike action => ', res);
-        // dispatch(showArticle(res.msg[0]));
+        // console.log('editLike action => ', res);
       }
     });
+  };
+}
+
+// 获取作者信息
+function getAuthorInfo(id) {
+  return function (dispatch) {
+    _jquery2.default.ajax({
+      url: '/api/community/article/author',
+      type: 'POST',
+      data: { id: id },
+      success: function success(res) {
+        // console.log('getAuthorInfo action => ', res.msg[0]);
+        dispatch(showAuthorInfo(res.msg[0])); // 展示文章like
+      }
+    });
+  };
+}
+
+// 展示作者信息
+function showAuthorInfo(data) {
+  return {
+    type: types.SHOW_AUTHOR_INFO,
+    payload: data
+  };
+}
+
+// 获取LatestArticle
+function getLatestArticle(id) {
+  return function (dispatch) {
+    _jquery2.default.ajax({
+      url: '/api/community/article/latest',
+      type: 'POST',
+      data: { id: id },
+      success: function success(res) {
+        // console.log('getLatestArticle action => ', res.msg[0]);
+        dispatch(showLatestArticle(res.msg[0])); // 展示文章like
+      }
+    });
+  };
+}
+
+// 展示LatestArticle
+function showLatestArticle(data) {
+  return {
+    type: types.SHOW_LATEST_AETICLE,
+    payload: data
   };
 }
 
@@ -28431,23 +28480,23 @@ var AddArticle = function (_React$Component) {
     key: '_upload',
     value: function _upload() {
       var user_id = this.props.header.user.id;
-      console.log('header', this.props.header.user.id);
+      // console.log('header', this.props.header.user.id);
       var article = this.props.article;
 
 
       var data = {
         id: article.article_id,
         title: this.state.title,
-        user_id: user_id,
+        author_id: user_id,
         content: this.state.content,
         banner: article.banner,
-        create_time: '',
-        update_time: ''
+        create_time: ''
+        // update_time: ''
       };
 
-      console.log('upload', data);
+      // console.log('upload', data);
       this.props.actions.uploadArticle(data);
-      // this.props.history.push('/community/home');
+      this.props.history.push('/community/home');
     }
   }, {
     key: 'render',
@@ -28957,8 +29006,9 @@ var ShowArticle = function (_React$Component) {
 
     _this._addLike = _this._addLike.bind(_this);
     _this._goEdit = _this._goEdit.bind(_this);
+    _this._showLatest = _this._showLatest.bind(_this);
+    _this._createMarkup = _this._createMarkup.bind(_this);
     _this.state = {
-      user: 3, // 当前登录用户与页面文章作者id
       status: false
     };
     return _this;
@@ -28967,21 +29017,29 @@ var ShowArticle = function (_React$Component) {
   _createClass(ShowArticle, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
+      // console.log(111);
       var article_id = this.props.match.params.article;
       this.props.actions.getArticle(article_id); // 获取文章信息
       this.props.actions.getLike(article_id); // 获取文章点赞信息
+      this.props.actions.getAuthorInfo(article_id); // 获取作者信息
+      this.props.actions.getLatestArticle(article_id); // 获取最新文章信息
     }
   }, {
     key: '_addLike',
     value: function _addLike() {
-      this.setState({ status: true });
-      var article_id = this.props.match.params.article;
-      var data = {
-        article_id: this.props.article.article_id,
-        user_id: this.state.user
-      };
-      this.props.actions.editLike(data);
-      this.props.actions.getLike(article_id); // 获取文章信息
+      if (this.props.header.user) {
+        this.setState({ status: true });
+        var article_id = this.props.match.params.article;
+        var user_id = this.props.header.user.id;
+        var data = {
+          article_id: this.props.article.article_id,
+          user_id: user_id
+        };
+        this.props.actions.editLike(data);
+        this.props.actions.getLike(article_id); // 获取文章信息
+      } else {
+        alert('请登陆');
+      }
     }
   }, {
     key: '_goEdit',
@@ -28990,13 +29048,26 @@ var ShowArticle = function (_React$Component) {
       this.props.history.push('/community/addArticle/edit');
     }
   }, {
+    key: '_showLatest',
+    value: function _showLatest() {
+      // console.log('_showLatest => ', this.props.article.latest_article_id);
+      var article_id = this.props.article.latest_article_id;
+      this.props.history.push('/community/showArticle/' + article_id);
+    }
+
+    // 文字转换
+
+  }, {
+    key: '_createMarkup',
+    value: function _createMarkup(data) {
+      return { __html: data };
+    }
+  }, {
     key: 'render',
     value: function render() {
 
       var article = this.props.article;
-      var _state = this.state,
-          user = _state.user,
-          status = _state.status;
+      var status = this.state.status;
 
 
       return _react2.default.createElement(
@@ -29004,10 +29075,7 @@ var ShowArticle = function (_React$Component) {
         { className: 'showArticle-layout' },
         _react2.default.createElement(
           'div',
-          { className: 'showArticle-show' },
-          _react2.default.createElement('img', {
-            src: article.banner,
-            className: 'showArticle-banner' }),
+          { className: 'showArticle-left' },
           _react2.default.createElement(
             'div',
             { className: 'showArticle-title' },
@@ -29016,34 +29084,62 @@ var ShowArticle = function (_React$Component) {
           _react2.default.createElement(
             'div',
             { className: 'showArticle-info' },
-            article.user_id,
-            ' . ',
-            article.update_time
-          )
-        ),
-        _react2.default.createElement(
-          'div',
-          { className: 'showArticle-content' },
-          article.content
-        ),
-        _react2.default.createElement(
-          'div',
-          { className: 'showArticle-footer' },
+            article.author_name,
+            _react2.default.createElement(
+              'span',
+              { className: 'showArticle-time' },
+              article.create_time
+            )
+          ),
+          _react2.default.createElement('div', {
+            className: 'showArticle-content',
+            dangerouslySetInnerHTML: this._createMarkup(article.content) }),
           _react2.default.createElement(
             'button',
             {
               disabled: status,
-              className: 'showArticle-like',
+              className: !status ? 'showArticle-like' : 'showArticle-dislike',
               onClick: this._addLike },
-            '\u70B9\u8D5E',
-            article.like
-          ),
-          user == article.user_id && _react2.default.createElement(
-            'button',
-            {
-              className: 'showArticle-edit',
-              onClick: this._goEdit },
-            '\u7F16\u8F91'
+            !status ? '\u8D5E(' + article.like + ')' : '\u611F\u8C22(' + article.like + ')'
+          )
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'showArticle-right' },
+          _react2.default.createElement(
+            'div',
+            { className: 'showArticle-curInfo' },
+            _react2.default.createElement('img', {
+              src: '/images/community/header_default_avatar.png'
+              // src = { article.head_img }
+              , className: 'showArticle-headImg' }),
+            _react2.default.createElement(
+              'div',
+              { className: 'showArticle-authorName' },
+              article.author_name
+            ),
+            _react2.default.createElement(
+              'div',
+              { className: 'showArticle-authorInfo' },
+              '\u4F5C\u8005\u7B80\u4ECB\uFF1A\u6B64\u6A21\u5757\u6682\u672A\u5F00\u901A\uFF0C\u656C\u8BF7\u671F\u5F85\u3002'
+            ),
+            _react2.default.createElement(
+              'div',
+              { className: 'showArticle-latest' },
+              '\u6700\u8FD1\u6587\u7AE0'
+            ),
+            _react2.default.createElement(
+              'div',
+              {
+                className: 'showArticle-latestTitle',
+                onClick: this._showLatest },
+              article.latest_article_title
+            ),
+            _react2.default.createElement(
+              'div',
+              { className: 'showArticle-latestTime' },
+              article.latest_article_time
+            )
           )
         )
       );
@@ -29060,7 +29156,8 @@ ShowArticle.propTypes = {
 var mapStateToProps = function mapStateToProps(store) {
   return {
     test: store.test,
-    article: store.article
+    article: store.article,
+    header: store.header
   };
 };
 
@@ -29342,7 +29439,7 @@ exports = module.exports = __webpack_require__(25)(undefined);
 
 
 // module
-exports.push([module.i, "body, ul, li, h1, h2, h3, h4, h5, h6, p, form, dl, dt, dd, div {\n  margin: 0px;\n  padding: 0px;\n  font-size: 14px;\n  font-weight: normal;\n  -webkit-tap-highlight-color: transparent;\n  width: max-content; }\n\nul {\n  list-style: none; }\n\nimg {\n  border-style: none; }\n\na {\n  text-decoration: none;\n  cursor: pointer; }\n\n.header {\n  width: 100vw;\n  height: 60px;\n  background-color: #fff;\n  border-bottom: 1px solid #d5d5d5;\n  display: flex;\n  flex-direction: row;\n  justify-content: center; }\n  .header .body {\n    display: flex;\n    flex-direction: row;\n    align-items: center;\n    width: 1000px; }\n  .header .logo {\n    width: 96px;\n    height: 24px;\n    background-image: url(/images/community/header_logo.png);\n    background-position: center;\n    background-repeat: no-repeat;\n    background-size: 96px 24px;\n    margin-right: 26px;\n    cursor: pointer; }\n  .header .group {\n    flex: 1; }\n    .header .group .home {\n      width: 60px;\n      height: 59px;\n      border-bottom: 2px solid #4a90e2;\n      line-height: 59px;\n      text-align: center;\n      font-size: 16px;\n      color: #555;\n      cursor: pointer; }\n  .header .write {\n    width: 114px;\n    height: 36px;\n    background-image: url(/images/community/header_write.png);\n    background-position: center;\n    background-repeat: no-repeat;\n    background-size: 114px 36px;\n    margin-right: 30px;\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    align-items: center;\n    cursor: pointer; }\n    .header .write .icon {\n      width: 16px;\n      height: 16px;\n      background-image: url(/images/community/header_write_icon.png);\n      background-position: center;\n      background-repeat: no-repeat;\n      background-size: 16px 16px;\n      margin-right: 9px; }\n    .header .write span {\n      font-size: 16px;\n      color: #fff; }\n  .header .user {\n    display: flex;\n    flex-direction: row;\n    position: relative; }\n    .header .user .logon {\n      font-size: 16px;\n      color: #555;\n      margin-right: 30px;\n      cursor: pointer; }\n    .header .user .register {\n      font-size: 16px;\n      color: #555;\n      cursor: pointer; }\n    .header .user .img {\n      width: 32px;\n      height: 32px;\n      cursor: pointer; }\n  .header .expand {\n    position: absolute;\n    top: 46px;\n    left: -30px;\n    width: 92px;\n    padding-top: 10px;\n    padding-bottom: 10px;\n    background-color: #fff;\n    border: 1px solid #d5d5d5;\n    box-shadow: 1px 2px 8px 0 rgba(44, 64, 88, 0.2); }\n    .header .expand .item {\n      width: 100%;\n      height: 34px;\n      text-align: center;\n      line-height: 34px;\n      font-size: 14px;\n      cursor: pointer;\n      color: #bbb; }\n    .header .expand .item:hover {\n      background-color: #f9f9f9;\n      color: #969696; }\n\n.footer {\n  width: 100vw;\n  height: 45px;\n  background-color: #4a90e2;\n  text-align: center;\n  line-height: 45px; }\n\n.container {\n  width: 100vw;\n  display: flex;\n  flex-direction: row;\n  justify-content: center; }\n  .container .body {\n    width: 1000px;\n    min-height: calc(100vh - 90px); }\n\n.addArticle-layout {\n  margin: 50px auto 0;\n  padding: 0px 0px 20px 0px;\n  width: 600px;\n  z-index: 1;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n  -ms-flex-direction: column;\n  flex-direction: column;\n  -webkit-box-align: stretch;\n  -ms-flex-align: stretch;\n  align-items: stretch;\n  -ms-flex-negative: 0;\n  flex-shrink: 0;\n  overflow: hidden; }\n\n.fake-wrapper {\n  position: relative;\n  width: 600px;\n  height: 260px;\n  background: #f7f8f9;\n  line-height: 192px;\n  color: gray;\n  text-align: center; }\n\n.fake-banner {\n  height: 100%;\n  width: 100%; }\n\n.addArticle-banner {\n  position: absolute;\n  display: block;\n  top: 0;\n  left: 0;\n  height: 100%;\n  width: 100%;\n  opacity: 0;\n  cursor: pointer;\n  z-index: 2; }\n\n.addArticle-title {\n  margin: 20px auto; }\n\n.addArticle-input {\n  display: block;\n  width: 600px;\n  height: 60px;\n  box-sizing: border-box;\n  border: none;\n  border-radius: 2px;\n  font-size: 28px;\n  color: #888;\n  line-height: 16px;\n  padding: 6px 8px 2px 0px; }\n  .addArticle-input:focus {\n    outline: none;\n    border: none; }\n  .addArticle-input::placeholder {\n    font-size: 28px;\n    color: #999999; }\n\n.addArticle-upload {\n  border-radius: 4px;\n  text-align: center;\n  border: 1px solid #b3b3b3;\n  color: gray;\n  width: 82px;\n  height: 32px;\n  line-height: 30px;\n  padding: 0;\n  cursor: pointer; }\n\n/*simditor*/\n.simditor {\n  border: none !important;\n  border-top: 1px solid #c9d8db !important;\n  margin: 0 auto; }\n  .simditor .simditor-toolbar {\n    border-bottom: none !important; }\n\n.ShowArticle-layout {\n  padding: 0;\n  margin: 0;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n  -ms-flex-direction: column;\n  flex-direction: column;\n  -webkit-box-align: stretch;\n  -ms-flex-align: stretch;\n  align-items: stretch;\n  -ms-flex-negative: 0;\n  flex-shrink: 0;\n  overflow: hidden; }\n\n.showArticle-show {\n  position: relative; }\n\n.showArticle-banner {\n  width: 100vw; }\n\n.showArticle-title {\n  position: absolute;\n  margin: 0 auto;\n  left: 0;\n  right: 0;\n  bottom: 80px;\n  color: #fff;\n  z-index: 1;\n  font-size: 36px; }\n\n.showArticle-info {\n  position: absolute;\n  margin: 0 auto;\n  left: 0;\n  right: 0;\n  bottom: 20px;\n  color: #fff;\n  z-index: 1;\n  font-size: 20px;\n  width: 660px; }\n\n.showArticle-content {\n  margin: 47px auto 0;\n  padding: 0;\n  width: 660px;\n  z-index: 1; }\n\n.showArticle-footer {\n  margin: 47px auto 0;\n  padding: 0;\n  width: 660px;\n  z-index: 1; }\n\n.personal-page {\n  width: 1000px;\n  margin: 0 auto; }\n\n.personal-info {\n  z-index: 2;\n  position: relative;\n  padding: 0 20px 24px;\n  height: 110px;\n  background-color: #fff;\n  width: 100%;\n  box-sizing: border-box;\n  margin-top: -3px; }\n  .personal-info .personal-info-img {\n    float: left;\n    margin-top: -50px; }\n  .personal-info .personal-info-msg {\n    float: left;\n    margin-left: 20px; }\n    .personal-info .personal-info-msg p {\n      font-size: 26px;\n      font-weight: 600;\n      margin-bottom: 15px; }\n    .personal-info .personal-info-msg div {\n      font-size: 14px;\n      color: #8590a6; }\n\n.setting-page {\n  width: 1000px;\n  margin: 0 auto; }\n  .setting-page .setting-page-div {\n    margin-top: 15px; }\n  .setting-page .setting-input {\n    width: 180px;\n    padding: 8px 10px;\n    margin-left: 10px; }\n  .setting-page .setting-image {\n    margin-left: 10px; }\n  .setting-page .setting-page-btn {\n    padding: 8px 10px;\n    background-color: #0865c2;\n    color: #fff;\n    border-radius: 3px;\n    margin-top: 20px; }\n\n.home-page {\n  width: 100%;\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between; }\n  .home-page .recent {\n    width: 640px;\n    padding-top: 10px;\n    padding-bottom: 10px; }\n    .home-page .recent .item {\n      width: 100%;\n      padding-top: 20px;\n      padding-bottom: 20px;\n      border-bottom: 1px solid #f0f0f0;\n      cursor: pointer; }\n      .home-page .recent .item .user {\n        display: flex;\n        flex-direction: row;\n        align-items: center; }\n        .home-page .recent .item .user .head {\n          width: 32px;\n          height: 32px;\n          margin-right: 10px; }\n        .home-page .recent .item .user .name {\n          font-size: 12px;\n          color: #555;\n          margin-right: 10px; }\n      .home-page .recent .item .article {\n        width: 100%;\n        display: flex;\n        flex-direction: row;\n        justify-content: space-between; }\n      .home-page .recent .item .title {\n        font-size: 18px;\n        color: #555;\n        margin-top: 6px;\n        margin-bottom: 6px;\n        width: 450px;\n        height: 25px;\n        overflow: hidden;\n        white-space: nowrap;\n        text-overflow: ellipsis; }\n      .home-page .recent .item .content {\n        width: 420px;\n        overflow: hidden;\n        display: -webkit-box;\n        -webkit-box-orient: vertical;\n        -webkit-line-clamp: 3;\n        font-size: 12px;\n        color: #555;\n        line-height: 22px; }\n        .home-page .recent .item .content p {\n          width: 420px; }\n      .home-page .recent .item .banner {\n        width: 176px;\n        height: 92px;\n        margin-top: 6px; }\n    .home-page .recent .item:last-child {\n      border-bottom: 0px; }\n  .home-page .hot {\n    width: 320px; }\n", ""]);
+exports.push([module.i, "body, ul, li, h1, h2, h3, h4, h5, h6, p, form, dl, dt, dd, div {\n  margin: 0px;\n  padding: 0px;\n  font-size: 14px;\n  font-weight: normal;\n  -webkit-tap-highlight-color: transparent;\n  width: max-content; }\n\nul {\n  list-style: none; }\n\nimg {\n  border-style: none; }\n\na {\n  text-decoration: none;\n  cursor: pointer; }\n\n.header {\n  width: 100vw;\n  height: 60px;\n  background-color: #fff;\n  border-bottom: 1px solid #d5d5d5;\n  display: flex;\n  flex-direction: row;\n  justify-content: center; }\n  .header .body {\n    display: flex;\n    flex-direction: row;\n    align-items: center;\n    width: 1000px; }\n  .header .logo {\n    width: 96px;\n    height: 24px;\n    background-image: url(/images/community/header_logo.png);\n    background-position: center;\n    background-repeat: no-repeat;\n    background-size: 96px 24px;\n    margin-right: 26px;\n    cursor: pointer; }\n  .header .group {\n    flex: 1; }\n    .header .group .home {\n      width: 60px;\n      height: 59px;\n      border-bottom: 2px solid #4a90e2;\n      line-height: 59px;\n      text-align: center;\n      font-size: 16px;\n      color: #555;\n      cursor: pointer; }\n  .header .write {\n    width: 114px;\n    height: 36px;\n    background-image: url(/images/community/header_write.png);\n    background-position: center;\n    background-repeat: no-repeat;\n    background-size: 114px 36px;\n    margin-right: 30px;\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    align-items: center;\n    cursor: pointer; }\n    .header .write .icon {\n      width: 16px;\n      height: 16px;\n      background-image: url(/images/community/header_write_icon.png);\n      background-position: center;\n      background-repeat: no-repeat;\n      background-size: 16px 16px;\n      margin-right: 9px; }\n    .header .write span {\n      font-size: 16px;\n      color: #fff; }\n  .header .user {\n    display: flex;\n    flex-direction: row;\n    position: relative; }\n    .header .user .logon {\n      font-size: 16px;\n      color: #555;\n      margin-right: 30px;\n      cursor: pointer; }\n    .header .user .register {\n      font-size: 16px;\n      color: #555;\n      cursor: pointer; }\n    .header .user .img {\n      width: 32px;\n      height: 32px;\n      cursor: pointer; }\n  .header .expand {\n    position: absolute;\n    top: 46px;\n    left: -30px;\n    width: 92px;\n    padding-top: 10px;\n    padding-bottom: 10px;\n    background-color: #fff;\n    border: 1px solid #d5d5d5;\n    box-shadow: 1px 2px 8px 0 rgba(44, 64, 88, 0.2); }\n    .header .expand .item {\n      width: 100%;\n      height: 34px;\n      text-align: center;\n      line-height: 34px;\n      font-size: 14px;\n      cursor: pointer;\n      color: #bbb; }\n    .header .expand .item:hover {\n      background-color: #f9f9f9;\n      color: #969696; }\n\n.footer {\n  width: 100vw;\n  height: 45px;\n  background-color: #4a90e2;\n  text-align: center;\n  line-height: 45px; }\n\n.container {\n  width: 100vw;\n  display: flex;\n  flex-direction: row;\n  justify-content: center; }\n  .container .body {\n    width: 1000px;\n    min-height: calc(100vh - 90px); }\n\n.addArticle-layout {\n  margin: 50px auto 0;\n  padding: 0px 0px 20px 0px;\n  width: 600px;\n  z-index: 1;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n  -ms-flex-direction: column;\n  flex-direction: column;\n  -webkit-box-align: stretch;\n  -ms-flex-align: stretch;\n  align-items: stretch;\n  -ms-flex-negative: 0;\n  flex-shrink: 0;\n  overflow: hidden; }\n\n.fake-wrapper {\n  position: relative;\n  width: 600px;\n  height: 260px;\n  background: #f7f8f9;\n  line-height: 192px;\n  color: gray;\n  text-align: center; }\n\n.fake-banner {\n  height: 100%;\n  width: 100%; }\n\n.addArticle-banner {\n  position: absolute;\n  display: block;\n  top: 0;\n  left: 0;\n  height: 100%;\n  width: 100%;\n  opacity: 0;\n  cursor: pointer;\n  z-index: 2; }\n\n.addArticle-title {\n  margin: 20px auto; }\n\n.addArticle-input {\n  display: block;\n  width: 600px;\n  height: 60px;\n  box-sizing: border-box;\n  border: none;\n  border-radius: 2px;\n  font-size: 28px;\n  color: #888;\n  line-height: 16px;\n  padding: 6px 8px 2px 0px; }\n  .addArticle-input:focus {\n    outline: none;\n    border: none; }\n  .addArticle-input::placeholder {\n    font-size: 28px;\n    color: #999999; }\n\n.addArticle-upload {\n  border-radius: 4px;\n  text-align: center;\n  border: 1px solid #b3b3b3;\n  color: gray;\n  width: 82px;\n  height: 32px;\n  line-height: 30px;\n  padding: 0;\n  cursor: pointer; }\n\n/*simditor*/\n.simditor {\n  width: 600px !important;\n  border: none !important;\n  border-top: 1px solid #c9d8db !important;\n  margin: 0 auto; }\n  .simditor p {\n    width: 560px !important; }\n  .simditor .simditor-toolbar {\n    border-bottom: none !important; }\n\n.showArticle-layout {\n  padding: 30px 0;\n  margin: 0 auto;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  overflow: hidden; }\n\n.showArticle-left {\n  width: 650px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n  -ms-flex-direction: column;\n  flex-direction: column;\n  -webkit-box-align: stretch;\n  -ms-flex-align: stretch;\n  align-items: stretch;\n  -ms-flex-negative: 0;\n  flex-shrink: 0; }\n\n.showArticle-title {\n  width: 650px;\n  line-height: 30px;\n  font-size: 26px;\n  color: #3d464d;\n  margin-bottom: 30px; }\n\n.showArticle-info {\n  font-size: 12px;\n  color: #4a90e2;\n  line-height: 12px; }\n  .showArticle-info .showArticle-time {\n    font-size: 12px;\n    color: #bbbbbb;\n    line-height: 12px;\n    margin-left: 20px; }\n\n.showArticle-content {\n  margin: 30px auto;\n  padding: 0;\n  width: 640px;\n  z-index: 1;\n  font-size: 16px;\n  color: #3d464d;\n  line-height: 20px; }\n  .showArticle-content p {\n    width: 640px;\n    text-indent: 16px; }\n\n.showArticle-like, .showArticle-dislike {\n  margin: 0 auto;\n  background: #4a90e2;\n  border-radius: 4px;\n  width: 135px;\n  height: 40px;\n  color: #fff;\n  font-size: 16px;\n  line-height: 18px; }\n\n.showArticle-dislike {\n  background: #bbbbbb;\n  cursor: not-allowed; }\n\n.showArticle-right {\n  width: 320px;\n  margin-left: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n  -ms-flex-direction: column;\n  flex-direction: column;\n  -webkit-box-align: stretch;\n  -ms-flex-align: stretch;\n  align-items: stretch;\n  -ms-flex-negative: 0;\n  flex-shrink: 0; }\n\n.showArticle-curInfo {\n  background: #ffffff;\n  border: 1px solid #d5d5d5;\n  width: 278px;\n  height: 204px;\n  margin-top: 42px;\n  padding: 46px 20px 20px;\n  position: relative; }\n\n.showArticle-headImg {\n  box-shadow: 1px 3px 12px 0 rgba(44, 64, 88, 0.4);\n  border-radius: 4px;\n  width: 70px;\n  height: 70px;\n  position: absolute;\n  left: 20px;\n  top: -44px; }\n\n.showArticle-authorName, .showArticle-latest, .showArticle-latestTitle {\n  font-family: PingFangSC-Regular;\n  font-size: 14px;\n  color: #555555;\n  line-height: 14px;\n  margin-bottom: 12px; }\n\n.showArticle-authorInfo {\n  width: 280px;\n  height: 44px;\n  font-family: PingFangSC-Regular;\n  font-size: 12px;\n  color: #999999;\n  line-height: 20px;\n  padding-bottom: 20px;\n  border-bottom: 1px solid #d5d5d5;\n  margin-bottom: 20px; }\n\n.showArticle-latestTitle {\n  width: 280px;\n  line-height: 20px;\n  margin-top: 20px;\n  cursor: pointer; }\n\n.showArticle-latestTime {\n  font-family: PingFangSC-Regular;\n  font-size: 12px;\n  color: #bbbbbb;\n  line-height: 12px; }\n\n.personal-page {\n  width: 1000px;\n  margin: 0 auto; }\n\n.personal-info {\n  z-index: 2;\n  position: relative;\n  padding: 0 20px 24px;\n  height: 110px;\n  background-color: #fff;\n  width: 100%;\n  box-sizing: border-box;\n  margin-top: -3px; }\n  .personal-info .personal-info-img {\n    float: left;\n    margin-top: -50px; }\n  .personal-info .personal-info-msg {\n    float: left;\n    margin-left: 20px; }\n    .personal-info .personal-info-msg p {\n      font-size: 26px;\n      font-weight: 600;\n      margin-bottom: 15px; }\n    .personal-info .personal-info-msg div {\n      font-size: 14px;\n      color: #8590a6; }\n\n.setting-page {\n  width: 1000px;\n  margin: 0 auto; }\n  .setting-page .setting-page-div {\n    margin-top: 15px; }\n  .setting-page .setting-input {\n    width: 180px;\n    padding: 8px 10px;\n    margin-left: 10px; }\n  .setting-page .setting-image {\n    margin-left: 10px; }\n  .setting-page .setting-page-btn {\n    padding: 8px 10px;\n    background-color: #0865c2;\n    color: #fff;\n    border-radius: 3px;\n    margin-top: 20px; }\n\n.home-page {\n  width: 100%;\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between; }\n  .home-page .recent {\n    width: 640px;\n    padding-top: 10px;\n    padding-bottom: 10px; }\n    .home-page .recent .item {\n      width: 100%;\n      padding-top: 20px;\n      padding-bottom: 20px;\n      border-bottom: 1px solid #f0f0f0;\n      cursor: pointer; }\n      .home-page .recent .item .user {\n        display: flex;\n        flex-direction: row;\n        align-items: center; }\n        .home-page .recent .item .user .head {\n          width: 32px;\n          height: 32px;\n          margin-right: 10px; }\n        .home-page .recent .item .user .name {\n          font-size: 12px;\n          color: #555;\n          margin-right: 10px; }\n      .home-page .recent .item .article {\n        width: 100%;\n        display: flex;\n        flex-direction: row;\n        justify-content: space-between; }\n      .home-page .recent .item .title {\n        font-size: 18px;\n        color: #555;\n        margin-top: 6px;\n        margin-bottom: 6px;\n        width: 450px;\n        height: 25px;\n        overflow: hidden;\n        white-space: nowrap;\n        text-overflow: ellipsis; }\n      .home-page .recent .item .content {\n        width: 420px;\n        overflow: hidden;\n        display: -webkit-box;\n        -webkit-box-orient: vertical;\n        -webkit-line-clamp: 3;\n        font-size: 12px;\n        color: #555;\n        line-height: 22px; }\n        .home-page .recent .item .content p {\n          width: 420px; }\n      .home-page .recent .item .banner {\n        width: 176px;\n        height: 92px;\n        margin-top: 6px; }\n    .home-page .recent .item:last-child {\n      border-bottom: 0px; }\n  .home-page .hot {\n    width: 320px; }\n", ""]);
 
 // exports
 
@@ -29800,14 +29897,20 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  */
 
 var defaultStatus = {
+  author_id: 0,
   article_id: 0,
   title: '',
-  user_id: 0,
   content: '',
   banner: '',
   create_time: '',
-  update_time: '',
-  like: 0
+  // update_time: '',
+  user_id: 0,
+  like: 0,
+  author_name: '',
+  head_img: '',
+  latest_article_id: '',
+  latest_article_title: '',
+  latest_article_time: ''
   // isChange: false,
 };
 
@@ -29833,6 +29936,22 @@ function article() {
       {
         // console.log('SHOW_LIKE reducer => ', action.payload);
         return (0, _lodash2.default)({}, state, { like: action.payload.count });
+      }
+
+    case types.SHOW_AUTHOR_INFO:
+      {
+        // console.log('SHOW_AUTHOR_INFO reducer => ', action.payload);
+        return (0, _lodash2.default)({}, state, action.payload, { author_id: action.payload.id, author_name: action.payload.name });
+      }
+
+    case types.SHOW_LATEST_AETICLE:
+      {
+        // console.log('SHOW_LATEST_AETICLE reducer => ', action.payload);
+        return (0, _lodash2.default)({}, state, {
+          latest_article_id: action.payload.id,
+          latest_article_title: action.payload.title,
+          latest_article_time: action.payload.create_time
+        });
       }
 
     default:

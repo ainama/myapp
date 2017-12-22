@@ -135,7 +135,7 @@ router.get('/user/base', function (req, res) {
  * @method /api/community/article/recent
  */
 router.get('/article/recent', function (req, res) {
-  var sql = 'SELECT t_article.id,t_article.title,t_article.content,t_article.banner,t_article.create_time,t_user.name,t_user.head_img FROM t_article,t_user WHERE t_article.user_id=t_user.id ORDER BY create_time DESC limit 10';
+  var sql = 'SELECT t_article.id,t_article.title,t_article.content,t_article.banner,t_article.create_time,t_user.name,t_user.head_img FROM t_article,t_user WHERE t_article.author_id=t_user.id ORDER BY create_time DESC limit 10';
   query(sql, null, function (error, results, fields) {
     if (error) throw error;
     res.send({ code: 10000, msg: results });
@@ -217,7 +217,7 @@ router.post('/article/upload', function(req, res) {
 
   // console.log('req => ', req.body.id)
   if (req.body.id == 0) {
-    var sql = 'INSERT INTO t_article(id, title, user_id, content, banner) VALUES(0, ?, ?, ?, ?)';
+    var sql = 'INSERT INTO t_article(id, title, author_id, content, banner) VALUES(0, ?, ?, ?, ?)';
     var data = req.body;
     var params = [];
     for(var k in data) {
@@ -239,9 +239,9 @@ router.post('/article/upload', function(req, res) {
     });
   } else {
     var article_id = req.body.id;
-    var sql = 'UPDATE t_article SET title = ?, user_id = ?, content = ?, banner = ?, create_time = ? WHERE id = ?';
+    var sql = 'UPDATE t_article SET title = ?, author_id = ?, content = ?, banner = ?, create_time = ? WHERE id = ?';
     var data = req.body;
-    var params = [data.title, data.user_id, data.content, data.banner, data.create_time, article_id];
+    var params = [data.title, data.author_id, data.content, data.banner, data.create_time, article_id];
     // for(var k in data) {
     //   params.push(data[k]);
     // };
@@ -317,6 +317,54 @@ router.post('/article/like', function(req, res) {
       } else {
         res.send({ code: 10001, msg: '发布失败' });
       }
+    }
+  });
+});
+
+/**
+ * get authorInfo
+ * @method /api/community/article/author
+ */
+router.post('/article/author', function(req, res) {
+  var data = req.body;
+  var sql = 'SELECT author_id FROM t_article WHERE id = ' + data.id;
+  query(sql, function(error, results, fields) {
+    if (error) {
+      throw error;
+    } else {
+      var author_id = results[0].author_id;
+      var sql = 'SELECT * FROM t_user WHERE id = ' + author_id;
+      query(sql, function(error, results, fields) {
+        if (error) {
+          throw error;
+        } else {
+          res.send({ code: 10000, msg: results });
+        }
+      });
+    }
+  });
+});
+
+/**
+ * 最近文章列表
+ * @method /api/community/article/latest
+ */
+router.post('/article/latest', function (req, res) {
+  var data = req.body;
+  var sql = 'SELECT author_id FROM t_article WHERE id = ' + data.id;
+  query(sql, function(error, results, fields) {
+    if (error) {
+      throw error;
+    } else {
+      var author_id = results[0].author_id;
+      var sql = 'SELECT t_article.id,t_article.title,t_article.create_time FROM t_article WHERE t_article.author_id = ' + author_id + ' ORDER BY create_time DESC limit 1';
+      query(sql, function(error, results, fields) {
+        if (error) {
+          throw error;
+        } else {
+          res.send({ code: 10000, msg: results });
+        }
+      });
     }
   });
 });

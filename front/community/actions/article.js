@@ -63,7 +63,6 @@ export function getArticle(id) {
      success: function(res) {
        // console.log('getArticle action => ', res.msg[0]);
        dispatch(showArticle(res.msg[0]));  // 展示文章信息
-       // dispatch(showLike(res.like[0]));  // 展示文章like
      }
    });
  };
@@ -86,7 +85,6 @@ export function getLike(id) {
      data: { id: id },
      success: function(res) {
        // console.log('getLike action => ', res.like[0]);
-       // dispatch(showArticle(res.msg[0]));  // 展示文章信息
        dispatch(showLike(res.like[0]));  // 展示文章like
      }
    });
@@ -109,9 +107,54 @@ export function editLike(data) {
      type: 'POST',
      data: data,
      success: function(res) {
-       console.log('editLike action => ', res);
-       // dispatch(showArticle(res.msg[0]));
+       // console.log('editLike action => ', res);
      }
    });
  };
+}
+
+// 获取作者信息
+export function getAuthorInfo(id) {
+ return (dispatch) => {
+   $.ajax({
+     url: '/api/community/article/author',
+     type: 'POST',
+     data: { id: id },
+     success: function(res) {
+       // console.log('getAuthorInfo action => ', res.msg[0]);
+       dispatch(showAuthorInfo(res.msg[0]));  // 展示文章like
+     }
+   });
+ };
+}
+
+// 展示作者信息
+export function showAuthorInfo(data) {
+  return {
+    type: types.SHOW_AUTHOR_INFO,
+    payload: data
+  };
+}
+
+// 获取LatestArticle
+export function getLatestArticle(id) {
+ return (dispatch) => {
+   $.ajax({
+     url: '/api/community/article/latest',
+     type: 'POST',
+     data: { id: id },
+     success: function(res) {
+       // console.log('getLatestArticle action => ', res.msg[0]);
+       dispatch(showLatestArticle(res.msg[0]));  // 展示文章like
+     }
+   });
+ };
+}
+
+// 展示LatestArticle
+export function showLatestArticle(data) {
+  return {
+    type: types.SHOW_LATEST_AETICLE,
+    payload: data
+  };
 }

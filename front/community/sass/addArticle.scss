@@ -88,10 +88,13 @@
 
 /*simditor*/
 .simditor{
+  width: 600px !important;
   border: none !important;
   border-top: 1px solid #c9d8db !important;
   margin: 0 auto;
-
+  p {
+    width: 560px !important;
+  }
   .simditor-toolbar {
     border-bottom: none !important
   }

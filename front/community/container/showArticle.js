@@ -9,27 +9,36 @@ class ShowArticle extends React.Component {
     super(props);
     this._addLike = this._addLike.bind(this);
     this._goEdit = this._goEdit.bind(this);
+    this._showLatest = this._showLatest.bind(this);
+    this._createMarkup = this._createMarkup.bind(this);
     this.state = {
-      user: 3,  // 当前登录用户与页面文章作者id
       status: false,
     };
   }
 
   componentDidMount() {
+    // console.log(111);
     let article_id = this.props.match.params.article;
     this.props.actions.getArticle(article_id);  // 获取文章信息
     this.props.actions.getLike(article_id);  // 获取文章点赞信息
+    this.props.actions.getAuthorInfo(article_id);  // 获取作者信息
+    this.props.actions.getLatestArticle(article_id);  // 获取最新文章信息
   }
 
   _addLike() {
-    this.setState({ status: true});
-    let article_id = this.props.match.params.article;
-    let data = {
-      article_id: this.props.article.article_id,
-      user_id: this.state.user
-    };
-    this.props.actions.editLike(data);
-    this.props.actions.getLike(article_id);  // 获取文章信息
+    if(this.props.header.user) {
+      this.setState({ status: true});
+      let article_id = this.props.match.params.article;
+      let user_id = this.props.header.user.id;
+      let data = {
+        article_id: this.props.article.article_id,
+        user_id: user_id
+      };
+      this.props.actions.editLike(data);
+      this.props.actions.getLike(article_id);  // 获取文章信息
+    } else {
+      alert('请登陆');
+    }
   }
 
   _goEdit() {
@@ -37,60 +46,106 @@ class ShowArticle extends React.Component {
     this.props.history.push('/community/addArticle/edit');
   }
 
+  _showLatest() {
+    // console.log('_showLatest => ', this.props.article.latest_article_id);
+    let article_id = this.props.article.latest_article_id;
+    this.props.history.push('/community/showArticle/' + article_id);
+  }
+
+  // 文字转换
+  _createMarkup(data) {
+    return { __html: data };
+  }
+
   render() {
 
     const article = this.props.article;
-    const { user, status } = this.state;
+    const { status } = this.state;
 
     return (
       <div className = 'showArticle-layout'>
 
-        {/*banner&title*/}
-        <div className = 'showArticle-show'>
-
-          {/*bg*/}
-          <img
-            src = { article.banner }
-            className = 'showArticle-banner'/>
+        {/*left article info*/}
+        <div className = 'showArticle-left'>
 
           {/*title*/}
           <div className = 'showArticle-title'>{ article.title }</div>
 
           {/*info*/}
           <div className = 'showArticle-info'>
-            { article.user_id } . { article.update_time }
+            { article.author_name }
+            <span className = 'showArticle-time'>
+              { article.create_time }
+            </span>
           </div>
 
-        </div>
-
-        {/*content*/}
-        <div className = 'showArticle-content'>
-          { article.content }
-        </div>
-
-        {/*footer*/}
-        <div className = 'showArticle-footer'>
+          {/*content*/}
+          <div
+            className = 'showArticle-content'
+            dangerouslySetInnerHTML = { this._createMarkup(article.content) } />
 
           {/*like*/}
           <button
             disabled = { status }
-            className = 'showArticle-like'
+            className = {!status ?'showArticle-like' : 'showArticle-dislike'}
             onClick = { this._addLike }>
-            点赞{ article.like }
+            {
+              !status
+              ? `赞(${ article.like })`
+              : `感谢(${ article.like })`
+            }
           </button>
-
-          {/*eidt*/}
-          {
-            user == article.user_id &&
-            <button
-              className = 'showArticle-edit'
-              onClick = { this._goEdit }>
-              编辑
-            </button>
-          }
 
         </div>
 
+        {/*right author info*/}
+        <div className = 'showArticle-right'>
+
+          {/*当前信息和最近文章*/}
+          <div className = 'showArticle-curInfo'>
+
+            {/*head_img*/}
+            <img
+              src = '/images/community/header_default_avatar.png'
+              // src = { article.head_img }
+              className = 'showArticle-headImg'/>
+
+            {/*author info*/}
+            <div className = 'showArticle-authorName'>
+              { article.author_name }
+            </div>
+            <div  className = 'showArticle-authorInfo'>
+              作者简介：此模块暂未开通，敬请期待。
+            </div>
+
+            {/*latest article*/}
+            <div className = 'showArticle-latest'>
+              最近文章
+            </div>
+
+            <div
+              className = 'showArticle-latestTitle'
+              onClick = { this._showLatest }>
+              { article.latest_article_title }
+            </div>
+
+            <div className = 'showArticle-latestTime'>
+              { article.latest_article_time }
+            </div>
+
+          </div>
+        </div>
+
+
+        {/*eidt  暂时关闭编辑接口*/}
+        {
+          // this.props.header.user.id == article.author_id &&
+          // <button
+          //   className = 'showArticle-edit'
+          //   onClick = { this._goEdit }>
+          //   编辑
+          // </button>
+        }
       </div>
     );
   }
@@ -103,7 +158,8 @@ ShowArticle.propTypes = {
 const mapStateToProps = (store) => {
   return {
     test: store.test,
-    article: store.article
+    article: store.article,
+    header: store.header
   };
 };
 

@@ -135,7 +135,9 @@ router.get('/user/base', function (req, res) {
  * @method /api/community/article/recent
  */
 router.get('/article/recent', function (req, res) {
-  var sql = 'SELECT t_article.id,t_article.title,t_article.content,t_article.banner,t_article.create_time,t_user.name,t_user.head_img FROM t_article,t_user WHERE t_article.author_id=t_user.id ORDER BY create_time DESC limit 10';
+  var start = (req.query.page - 1) * 10;
+  var end = req.query.page * 10;
+  var sql = 'SELECT t_article.id,t_article.title,t_article.content,t_article.banner,t_article.create_time,t_user.name,t_user.head_img FROM t_article,t_user WHERE t_article.author_id=t_user.id ORDER BY create_time DESC limit ' + start + ',' + end;
   query(sql, null, function (error, results, fields) {
     if (error) throw error;
     res.send({ code: 10000, msg: results });

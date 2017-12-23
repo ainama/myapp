@@ -2228,7 +2228,7 @@ module.exports = function(list, options) {
 
 	// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
 	// tags it will allow on a page
-	if (!options.singleton && typeof options.singleton !== "boolean") options.singleton = isOldIE();
+	if (!options.singleton) options.singleton = isOldIE();
 
 	// By default, add <style> tags to the <head> element
 	if (!options.insertInto) options.insertInto = "head";
@@ -12298,9 +12298,10 @@ function verifyPlainObject(value, displayName, methodName) {
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
 exports.myFetch = myFetch;
+exports.dateFormat = dateFormat;
 /**
  * fetch封装
  * @method myFetch
@@ -12310,14 +12311,46 @@ exports.myFetch = myFetch;
  * @param {function} dispatch redux dispatch
  */
 function myFetch(url, fetchObj, outputObj, dispatch) {
-  fetchObj.credentials = 'include'; // fetch cookie
-  fetch(url, fetchObj).then(function (response) {
-    return response.json();
-  }).then(function (response) {
-    outputObj.payload = response;
-    dispatch(outputObj);
-    return response;
-  });
+    fetchObj.credentials = 'include'; // fetch cookie
+    fetch(url, fetchObj).then(function (response) {
+        return response.json();
+    }).then(function (response) {
+        outputObj.payload = response;
+        dispatch(outputObj);
+        return response;
+    });
+}
+
+/**
+ * 时间格式化
+ * @method dateForMoment
+ * @param {int} date 时间戳
+ */
+function dateFormat(date) {
+    var data = date;
+    var distanceMillis = new Date().getTime() - data;
+    var seconds = Math.abs(distanceMillis) / 1000;
+    var minutes = seconds / 60;
+    var hours = minutes / 60;
+    var days = hours / 24;
+    var years = days / 365;
+    var month = days / 30;
+    if (seconds < 60) {
+        return '刚刚';
+    } else if (minutes > 1 && minutes < 60) {
+        return Math.round(minutes) + '分钟前';
+    } else if (1 < hours && hours < 24) {
+        return Math.round(hours) + '小时前';
+    } else if (24 <= hours && hours < 48) {
+        return '昨天';
+    } else if (48 <= hours && days < 30) {
+        return Math.floor(days) + '天前';
+    } else if (30 <= days && month < 12) {
+        return Math.round(month) + '个月前';
+    } else if (month >= 12) {
+        return Math.round(years) + '年前';
+    }
+    return;
 }
 
 /***/ }),
@@ -28215,6 +28248,8 @@ var _home = __webpack_require__(132);
 
 var actions = _interopRequireWildcard(_home);
 
+var _tools = __webpack_require__(69);
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -28237,7 +28272,7 @@ var Home = function (_React$Component) {
   _createClass(Home, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      this.props.actions.getArticleRecent();
+      this.props.actions.getArticleRecent('page=1');
       this.props.actions.getArticleHot();
     }
   }, {
@@ -28255,8 +28290,10 @@ var Home = function (_React$Component) {
       return tagString;
     }
   }, {
-    key: 'articleDetail',
-    value: function articleDetail() {}
+    key: 'getMore',
+    value: function getMore() {
+      this.props.actions.getArticleRecent('page=2');
+    }
   }, {
     key: 'render',
     value: function render() {
@@ -28271,50 +28308,62 @@ var Home = function (_React$Component) {
           this.props.home.recentList.map(function (item, index) {
             var head = item.head_img != null ? item.head_img : '/images/community/header_default_avatar.png';
             var tagString = _this2.tagString(item.content);
+            var time = (0, _tools.dateFormat)(new Date(item.create_time).getTime());
             return _react2.default.createElement(
               _reactRouterDom.Link,
-              {
-                key: index,
-                className: 'item',
-                to: '/community/showArticle/' + item.id },
+              { key: index, to: '/community/showArticle/' + item.id },
               _react2.default.createElement(
                 'div',
-                { className: 'user' },
-                _react2.default.createElement('img', { className: 'head', src: head }),
+                { className: 'item' },
                 _react2.default.createElement(
                   'div',
-                  { className: 'name' },
-                  item.name
-                ),
-                _react2.default.createElement(
-                  'div',
-                  null,
-                  '\u65F6\u95F4'
-                )
-              ),
-              _react2.default.createElement(
-                'div',
-                { className: 'article' },
-                _react2.default.createElement(
-                  'div',
-                  { className: 'left' },
+                  { className: 'user' },
+                  _react2.default.createElement('img', { className: 'head', src: head }),
                   _react2.default.createElement(
                     'div',
-                    { className: 'title' },
-                    item.title
+                    { className: 'name' },
+                    item.name
                   ),
                   _react2.default.createElement(
                     'div',
-                    { className: 'content' },
-                    tagString
+                    { className: 'time' },
+                    time
                   )
                 ),
-                _react2.default.createElement('img', {
-                  className: 'right banner',
-                  src: item.banner })
+                _react2.default.createElement(
+                  'div',
+                  { className: 'article' },
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'left' },
+                    _react2.default.createElement(
+                      'div',
+                      { className: 'title' },
+                      item.title
+                    ),
+                    _react2.default.createElement(
+                      'div',
+                      { className: 'content' },
+                      tagString
+                    )
+                  ),
+                  _react2.default.createElement('img', {
+                    className: 'right banner',
+                    src: item.banner })
+                )
               )
             );
-          })
+          }),
+          this.props.home.status == 2 && _react2.default.createElement(
+            'div',
+            {
+              ref: 'load',
+              className: 'load',
+              onClick: function onClick() {
+                _this2.getMore();
+              } },
+            this.props.home.loadText
+          )
         ),
         _react2.default.createElement(
           'div',
@@ -28363,9 +28412,9 @@ var _tools = __webpack_require__(69);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
-function getArticleRecent() {
+function getArticleRecent(data) {
   return function (dispatch) {
-    var url = '/api/community/article/recent';
+    var url = '/api/community/article/recent?' + data;
     var fetchObj = { method: 'get' };
     var outputObj = { type: types.GET_ARTICLE_RECENT };
     (0, _tools.myFetch)(url, fetchObj, outputObj, dispatch);
@@ -29420,8 +29469,8 @@ if(content.locals) module.exports = content.locals;
 if(false) {
 	// When the styles change, update the <style> tags
 	if(!content.locals) {
-		module.hot.accept("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./index.scss", function() {
-			var newContent = require("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./index.scss");
+		module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/sass-loader/lib/loader.js!./index.scss", function() {
+			var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/sass-loader/lib/loader.js!./index.scss");
 			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 			update(newContent);
 		});
@@ -29439,7 +29488,7 @@ exports = module.exports = __webpack_require__(25)(undefined);
 
 
 // module
-exports.push([module.i, "body, ul, li, h1, h2, h3, h4, h5, h6, p, form, dl, dt, dd, div {\n  margin: 0px;\n  padding: 0px;\n  font-size: 14px;\n  font-weight: normal;\n  -webkit-tap-highlight-color: transparent;\n  width: max-content; }\n\nul {\n  list-style: none; }\n\nimg {\n  border-style: none; }\n\na {\n  text-decoration: none;\n  cursor: pointer; }\n\n.header {\n  width: 100vw;\n  height: 60px;\n  background-color: #fff;\n  border-bottom: 1px solid #d5d5d5;\n  display: flex;\n  flex-direction: row;\n  justify-content: center; }\n  .header .body {\n    display: flex;\n    flex-direction: row;\n    align-items: center;\n    width: 1000px; }\n  .header .logo {\n    width: 96px;\n    height: 24px;\n    background-image: url(/images/community/header_logo.png);\n    background-position: center;\n    background-repeat: no-repeat;\n    background-size: 96px 24px;\n    margin-right: 26px;\n    cursor: pointer; }\n  .header .group {\n    flex: 1; }\n    .header .group .home {\n      width: 60px;\n      height: 59px;\n      border-bottom: 2px solid #4a90e2;\n      line-height: 59px;\n      text-align: center;\n      font-size: 16px;\n      color: #555;\n      cursor: pointer; }\n  .header .write {\n    width: 114px;\n    height: 36px;\n    background-image: url(/images/community/header_write.png);\n    background-position: center;\n    background-repeat: no-repeat;\n    background-size: 114px 36px;\n    margin-right: 30px;\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    align-items: center;\n    cursor: pointer; }\n    .header .write .icon {\n      width: 16px;\n      height: 16px;\n      background-image: url(/images/community/header_write_icon.png);\n      background-position: center;\n      background-repeat: no-repeat;\n      background-size: 16px 16px;\n      margin-right: 9px; }\n    .header .write span {\n      font-size: 16px;\n      color: #fff; }\n  .header .user {\n    display: flex;\n    flex-direction: row;\n    position: relative; }\n    .header .user .logon {\n      font-size: 16px;\n      color: #555;\n      margin-right: 30px;\n      cursor: pointer; }\n    .header .user .register {\n      font-size: 16px;\n      color: #555;\n      cursor: pointer; }\n    .header .user .img {\n      width: 32px;\n      height: 32px;\n      cursor: pointer; }\n  .header .expand {\n    position: absolute;\n    top: 46px;\n    left: -30px;\n    width: 92px;\n    padding-top: 10px;\n    padding-bottom: 10px;\n    background-color: #fff;\n    border: 1px solid #d5d5d5;\n    box-shadow: 1px 2px 8px 0 rgba(44, 64, 88, 0.2); }\n    .header .expand .item {\n      width: 100%;\n      height: 34px;\n      text-align: center;\n      line-height: 34px;\n      font-size: 14px;\n      cursor: pointer;\n      color: #bbb; }\n    .header .expand .item:hover {\n      background-color: #f9f9f9;\n      color: #969696; }\n\n.footer {\n  width: 100vw;\n  height: 45px;\n  background-color: #4a90e2;\n  text-align: center;\n  line-height: 45px; }\n\n.container {\n  width: 100vw;\n  display: flex;\n  flex-direction: row;\n  justify-content: center; }\n  .container .body {\n    width: 1000px;\n    min-height: calc(100vh - 90px); }\n\n.addArticle-layout {\n  margin: 50px auto 0;\n  padding: 0px 0px 20px 0px;\n  width: 600px;\n  z-index: 1;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n  -ms-flex-direction: column;\n  flex-direction: column;\n  -webkit-box-align: stretch;\n  -ms-flex-align: stretch;\n  align-items: stretch;\n  -ms-flex-negative: 0;\n  flex-shrink: 0;\n  overflow: hidden; }\n\n.fake-wrapper {\n  position: relative;\n  width: 600px;\n  height: 260px;\n  background: #f7f8f9;\n  line-height: 192px;\n  color: gray;\n  text-align: center; }\n\n.fake-banner {\n  height: 100%;\n  width: 100%; }\n\n.addArticle-banner {\n  position: absolute;\n  display: block;\n  top: 0;\n  left: 0;\n  height: 100%;\n  width: 100%;\n  opacity: 0;\n  cursor: pointer;\n  z-index: 2; }\n\n.addArticle-title {\n  margin: 20px auto; }\n\n.addArticle-input {\n  display: block;\n  width: 600px;\n  height: 60px;\n  box-sizing: border-box;\n  border: none;\n  border-radius: 2px;\n  font-size: 28px;\n  color: #888;\n  line-height: 16px;\n  padding: 6px 8px 2px 0px; }\n  .addArticle-input:focus {\n    outline: none;\n    border: none; }\n  .addArticle-input::placeholder {\n    font-size: 28px;\n    color: #999999; }\n\n.addArticle-upload {\n  border-radius: 4px;\n  text-align: center;\n  border: 1px solid #b3b3b3;\n  color: gray;\n  width: 82px;\n  height: 32px;\n  line-height: 30px;\n  padding: 0;\n  cursor: pointer; }\n\n/*simditor*/\n.simditor {\n  width: 600px !important;\n  border: none !important;\n  border-top: 1px solid #c9d8db !important;\n  margin: 0 auto; }\n  .simditor p {\n    width: 560px !important; }\n  .simditor .simditor-toolbar {\n    border-bottom: none !important; }\n\n.showArticle-layout {\n  padding: 30px 0;\n  margin: 0 auto;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  overflow: hidden; }\n\n.showArticle-left {\n  width: 650px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n  -ms-flex-direction: column;\n  flex-direction: column;\n  -webkit-box-align: stretch;\n  -ms-flex-align: stretch;\n  align-items: stretch;\n  -ms-flex-negative: 0;\n  flex-shrink: 0; }\n\n.showArticle-title {\n  width: 650px;\n  line-height: 30px;\n  font-size: 26px;\n  color: #3d464d;\n  margin-bottom: 30px; }\n\n.showArticle-info {\n  font-size: 12px;\n  color: #4a90e2;\n  line-height: 12px; }\n  .showArticle-info .showArticle-time {\n    font-size: 12px;\n    color: #bbbbbb;\n    line-height: 12px;\n    margin-left: 20px; }\n\n.showArticle-content {\n  margin: 30px auto;\n  padding: 0;\n  width: 640px;\n  z-index: 1;\n  font-size: 16px;\n  color: #3d464d;\n  line-height: 20px; }\n  .showArticle-content p {\n    width: 640px;\n    text-indent: 16px; }\n\n.showArticle-like, .showArticle-dislike {\n  margin: 0 auto;\n  background: #4a90e2;\n  border-radius: 4px;\n  width: 135px;\n  height: 40px;\n  color: #fff;\n  font-size: 16px;\n  line-height: 18px; }\n\n.showArticle-dislike {\n  background: #bbbbbb;\n  cursor: not-allowed; }\n\n.showArticle-right {\n  width: 320px;\n  margin-left: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n  -ms-flex-direction: column;\n  flex-direction: column;\n  -webkit-box-align: stretch;\n  -ms-flex-align: stretch;\n  align-items: stretch;\n  -ms-flex-negative: 0;\n  flex-shrink: 0; }\n\n.showArticle-curInfo {\n  background: #ffffff;\n  border: 1px solid #d5d5d5;\n  width: 278px;\n  height: 204px;\n  margin-top: 42px;\n  padding: 46px 20px 20px;\n  position: relative; }\n\n.showArticle-headImg {\n  box-shadow: 1px 3px 12px 0 rgba(44, 64, 88, 0.4);\n  border-radius: 4px;\n  width: 70px;\n  height: 70px;\n  position: absolute;\n  left: 20px;\n  top: -44px; }\n\n.showArticle-authorName, .showArticle-latest, .showArticle-latestTitle {\n  font-family: PingFangSC-Regular;\n  font-size: 14px;\n  color: #555555;\n  line-height: 14px;\n  margin-bottom: 12px; }\n\n.showArticle-authorInfo {\n  width: 280px;\n  height: 44px;\n  font-family: PingFangSC-Regular;\n  font-size: 12px;\n  color: #999999;\n  line-height: 20px;\n  padding-bottom: 20px;\n  border-bottom: 1px solid #d5d5d5;\n  margin-bottom: 20px; }\n\n.showArticle-latestTitle {\n  width: 280px;\n  line-height: 20px;\n  margin-top: 20px;\n  cursor: pointer; }\n\n.showArticle-latestTime {\n  font-family: PingFangSC-Regular;\n  font-size: 12px;\n  color: #bbbbbb;\n  line-height: 12px; }\n\n.personal-page {\n  width: 1000px;\n  margin: 0 auto; }\n\n.personal-info {\n  z-index: 2;\n  position: relative;\n  padding: 0 20px 24px;\n  height: 110px;\n  background-color: #fff;\n  width: 100%;\n  box-sizing: border-box;\n  margin-top: -3px; }\n  .personal-info .personal-info-img {\n    float: left;\n    margin-top: -50px; }\n  .personal-info .personal-info-msg {\n    float: left;\n    margin-left: 20px; }\n    .personal-info .personal-info-msg p {\n      font-size: 26px;\n      font-weight: 600;\n      margin-bottom: 15px; }\n    .personal-info .personal-info-msg div {\n      font-size: 14px;\n      color: #8590a6; }\n\n.setting-page {\n  width: 1000px;\n  margin: 0 auto; }\n  .setting-page .setting-page-div {\n    margin-top: 15px; }\n  .setting-page .setting-input {\n    width: 180px;\n    padding: 8px 10px;\n    margin-left: 10px; }\n  .setting-page .setting-image {\n    margin-left: 10px; }\n  .setting-page .setting-page-btn {\n    padding: 8px 10px;\n    background-color: #0865c2;\n    color: #fff;\n    border-radius: 3px;\n    margin-top: 20px; }\n\n.home-page {\n  width: 100%;\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between; }\n  .home-page .recent {\n    width: 640px;\n    padding-top: 10px;\n    padding-bottom: 10px; }\n    .home-page .recent .item {\n      width: 100%;\n      padding-top: 20px;\n      padding-bottom: 20px;\n      border-bottom: 1px solid #f0f0f0;\n      cursor: pointer; }\n      .home-page .recent .item .user {\n        display: flex;\n        flex-direction: row;\n        align-items: center; }\n        .home-page .recent .item .user .head {\n          width: 32px;\n          height: 32px;\n          margin-right: 10px; }\n        .home-page .recent .item .user .name {\n          font-size: 12px;\n          color: #555;\n          margin-right: 10px; }\n      .home-page .recent .item .article {\n        width: 100%;\n        display: flex;\n        flex-direction: row;\n        justify-content: space-between; }\n      .home-page .recent .item .title {\n        font-size: 18px;\n        color: #555;\n        margin-top: 6px;\n        margin-bottom: 6px;\n        width: 450px;\n        height: 25px;\n        overflow: hidden;\n        white-space: nowrap;\n        text-overflow: ellipsis; }\n      .home-page .recent .item .content {\n        width: 420px;\n        overflow: hidden;\n        display: -webkit-box;\n        -webkit-box-orient: vertical;\n        -webkit-line-clamp: 3;\n        font-size: 12px;\n        color: #555;\n        line-height: 22px; }\n        .home-page .recent .item .content p {\n          width: 420px; }\n      .home-page .recent .item .banner {\n        width: 176px;\n        height: 92px;\n        margin-top: 6px; }\n    .home-page .recent .item:last-child {\n      border-bottom: 0px; }\n  .home-page .hot {\n    width: 320px; }\n", ""]);
+exports.push([module.i, "body, ul, li, h1, h2, h3, h4, h5, h6, p, form, dl, dt, dd, div {\n  margin: 0px;\n  padding: 0px;\n  font-size: 14px;\n  font-weight: normal;\n  -webkit-tap-highlight-color: transparent;\n  width: max-content; }\n\nul {\n  list-style: none; }\n\nimg {\n  border-style: none; }\n\na {\n  text-decoration: none;\n  cursor: pointer; }\n\n.header {\n  position: fixed;\n  width: 100vw;\n  height: 60px;\n  background-color: #fff;\n  border-bottom: 1px solid #d5d5d5;\n  display: flex;\n  flex-direction: row;\n  justify-content: center; }\n  .header .body {\n    display: flex;\n    flex-direction: row;\n    align-items: center;\n    width: 1000px; }\n  .header .logo {\n    width: 96px;\n    height: 24px;\n    background-image: url(/images/community/header_logo.png);\n    background-position: center;\n    background-repeat: no-repeat;\n    background-size: 96px 24px;\n    margin-right: 26px;\n    cursor: pointer; }\n  .header .group {\n    flex: 1; }\n    .header .group .home {\n      width: 60px;\n      height: 59px;\n      border-bottom: 2px solid #4a90e2;\n      line-height: 59px;\n      text-align: center;\n      font-size: 16px;\n      color: #555;\n      cursor: pointer; }\n  .header .write {\n    width: 114px;\n    height: 36px;\n    background-image: url(/images/community/header_write.png);\n    background-position: center;\n    background-repeat: no-repeat;\n    background-size: 114px 36px;\n    margin-right: 30px;\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    align-items: center;\n    cursor: pointer; }\n    .header .write .icon {\n      width: 16px;\n      height: 16px;\n      background-image: url(/images/community/header_write_icon.png);\n      background-position: center;\n      background-repeat: no-repeat;\n      background-size: 16px 16px;\n      margin-right: 9px; }\n    .header .write span {\n      font-size: 16px;\n      color: #fff; }\n  .header .user {\n    display: flex;\n    flex-direction: row;\n    position: relative; }\n    .header .user .logon {\n      font-size: 16px;\n      color: #555;\n      margin-right: 30px;\n      cursor: pointer; }\n    .header .user .register {\n      font-size: 16px;\n      color: #555;\n      cursor: pointer; }\n    .header .user .img {\n      width: 32px;\n      height: 32px;\n      cursor: pointer; }\n  .header .expand {\n    position: absolute;\n    top: 46px;\n    left: -30px;\n    width: 92px;\n    padding-top: 10px;\n    padding-bottom: 10px;\n    background-color: #fff;\n    border: 1px solid #d5d5d5;\n    box-shadow: 1px 2px 8px 0 rgba(44, 64, 88, 0.2); }\n    .header .expand .item {\n      width: 100%;\n      height: 34px;\n      text-align: center;\n      line-height: 34px;\n      font-size: 14px;\n      cursor: pointer;\n      color: #bbb; }\n    .header .expand .item:hover {\n      background-color: #f9f9f9;\n      color: #969696; }\n\n.footer {\n  width: 100vw;\n  height: 45px;\n  background-color: #4a90e2;\n  text-align: center;\n  line-height: 45px; }\n\n.container {\n  width: 100vw;\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n  padding-top: 60px; }\n  .container .body {\n    width: 1000px;\n    min-height: calc(100vh - 90px); }\n\n.addArticle-layout {\n  margin: 50px auto 0;\n  padding: 0px 0px 20px 0px;\n  width: 600px;\n  z-index: 1;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n  -ms-flex-direction: column;\n  flex-direction: column;\n  -webkit-box-align: stretch;\n  -ms-flex-align: stretch;\n  align-items: stretch;\n  -ms-flex-negative: 0;\n  flex-shrink: 0;\n  overflow: hidden; }\n\n.fake-wrapper {\n  position: relative;\n  width: 600px;\n  height: 260px;\n  background: #f7f8f9;\n  line-height: 192px;\n  color: gray;\n  text-align: center; }\n\n.fake-banner {\n  height: 100%;\n  width: 100%; }\n\n.addArticle-banner {\n  position: absolute;\n  display: block;\n  top: 0;\n  left: 0;\n  height: 100%;\n  width: 100%;\n  opacity: 0;\n  cursor: pointer;\n  z-index: 2; }\n\n.addArticle-title {\n  margin: 20px auto; }\n\n.addArticle-input {\n  display: block;\n  width: 600px;\n  height: 60px;\n  box-sizing: border-box;\n  border: none;\n  border-radius: 2px;\n  font-size: 28px;\n  color: #888;\n  line-height: 16px;\n  padding: 6px 8px 2px 0px; }\n  .addArticle-input:focus {\n    outline: none;\n    border: none; }\n  .addArticle-input::placeholder {\n    font-size: 28px;\n    color: #999999; }\n\n.addArticle-upload {\n  border-radius: 4px;\n  text-align: center;\n  border: 1px solid #b3b3b3;\n  color: gray;\n  width: 82px;\n  height: 32px;\n  line-height: 30px;\n  padding: 0;\n  cursor: pointer; }\n\n/*simditor*/\n.simditor {\n  width: 600px !important;\n  border: none !important;\n  border-top: 1px solid #c9d8db !important;\n  margin: 0 auto; }\n  .simditor p {\n    width: 560px !important; }\n  .simditor .simditor-toolbar {\n    border-bottom: none !important; }\n\n.showArticle-layout {\n  padding: 30px 0;\n  margin: 0 auto;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  overflow: hidden; }\n\n.showArticle-left {\n  width: 650px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n  -ms-flex-direction: column;\n  flex-direction: column;\n  -webkit-box-align: stretch;\n  -ms-flex-align: stretch;\n  align-items: stretch;\n  -ms-flex-negative: 0;\n  flex-shrink: 0; }\n\n.showArticle-title {\n  width: 650px;\n  line-height: 30px;\n  font-size: 26px;\n  color: #3d464d;\n  margin-bottom: 30px; }\n\n.showArticle-info {\n  font-size: 12px;\n  color: #4a90e2;\n  line-height: 12px; }\n  .showArticle-info .showArticle-time {\n    font-size: 12px;\n    color: #bbbbbb;\n    line-height: 12px;\n    margin-left: 20px; }\n\n.showArticle-content {\n  margin: 30px auto;\n  padding: 0;\n  width: 640px;\n  z-index: 1;\n  font-size: 16px;\n  color: #3d464d;\n  line-height: 20px; }\n  .showArticle-content p {\n    width: 640px;\n    text-indent: 16px; }\n\n.showArticle-like, .showArticle-dislike {\n  margin: 0 auto;\n  background: #4a90e2;\n  border-radius: 4px;\n  width: 135px;\n  height: 40px;\n  color: #fff;\n  font-size: 16px;\n  line-height: 18px; }\n\n.showArticle-dislike {\n  background: #bbbbbb;\n  cursor: not-allowed; }\n\n.showArticle-right {\n  width: 320px;\n  margin-left: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n  -ms-flex-direction: column;\n  flex-direction: column;\n  -webkit-box-align: stretch;\n  -ms-flex-align: stretch;\n  align-items: stretch;\n  -ms-flex-negative: 0;\n  flex-shrink: 0; }\n\n.showArticle-curInfo {\n  background: #ffffff;\n  border: 1px solid #d5d5d5;\n  width: 278px;\n  height: 204px;\n  margin-top: 42px;\n  padding: 46px 20px 20px;\n  position: relative; }\n\n.showArticle-headImg {\n  box-shadow: 1px 3px 12px 0 rgba(44, 64, 88, 0.4);\n  border-radius: 4px;\n  width: 70px;\n  height: 70px;\n  position: absolute;\n  left: 20px;\n  top: -44px; }\n\n.showArticle-authorName, .showArticle-latest, .showArticle-latestTitle {\n  font-family: PingFangSC-Regular;\n  font-size: 14px;\n  color: #555555;\n  line-height: 14px;\n  margin-bottom: 12px; }\n\n.showArticle-authorInfo {\n  width: 280px;\n  height: 44px;\n  font-family: PingFangSC-Regular;\n  font-size: 12px;\n  color: #999999;\n  line-height: 20px;\n  padding-bottom: 20px;\n  border-bottom: 1px solid #d5d5d5;\n  margin-bottom: 20px; }\n\n.showArticle-latestTitle {\n  width: 280px;\n  line-height: 20px;\n  margin-top: 20px;\n  cursor: pointer; }\n\n.showArticle-latestTime {\n  font-family: PingFangSC-Regular;\n  font-size: 12px;\n  color: #bbbbbb;\n  line-height: 12px; }\n\n.personal-page {\n  width: 1000px;\n  margin: 0 auto; }\n\n.personal-info {\n  z-index: 2;\n  position: relative;\n  padding: 0 20px 24px;\n  height: 110px;\n  background-color: #fff;\n  width: 100%;\n  box-sizing: border-box;\n  margin-top: -3px; }\n  .personal-info .personal-info-img {\n    float: left;\n    margin-top: -50px; }\n  .personal-info .personal-info-msg {\n    float: left;\n    margin-left: 20px; }\n    .personal-info .personal-info-msg p {\n      font-size: 26px;\n      font-weight: 600;\n      margin-bottom: 15px; }\n    .personal-info .personal-info-msg div {\n      font-size: 14px;\n      color: #8590a6; }\n\n.setting-page {\n  width: 1000px;\n  margin: 0 auto; }\n  .setting-page .setting-page-div {\n    margin-top: 15px; }\n  .setting-page .setting-input {\n    width: 180px;\n    padding: 8px 10px;\n    margin-left: 10px; }\n  .setting-page .setting-image {\n    margin-left: 10px; }\n  .setting-page .setting-page-btn {\n    padding: 8px 10px;\n    background-color: #0865c2;\n    color: #fff;\n    border-radius: 3px;\n    margin-top: 20px; }\n\n.home-page {\n  width: 100%;\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between; }\n  .home-page .recent {\n    width: 640px;\n    padding-top: 10px;\n    padding-bottom: 60px; }\n    .home-page .recent .item {\n      width: 100%;\n      padding-top: 20px;\n      padding-bottom: 20px;\n      border-bottom: 1px solid #f0f0f0;\n      cursor: pointer; }\n      .home-page .recent .item .user {\n        display: flex;\n        flex-direction: row;\n        align-items: center; }\n        .home-page .recent .item .user .head {\n          width: 32px;\n          height: 32px;\n          margin-right: 10px; }\n        .home-page .recent .item .user .name {\n          font-size: 12px;\n          color: #555;\n          margin-right: 10px; }\n        .home-page .recent .item .user .time {\n          font-size: 12px;\n          color: #bbb; }\n      .home-page .recent .item .article {\n        width: 100%;\n        display: flex;\n        flex-direction: row;\n        justify-content: space-between; }\n      .home-page .recent .item .title {\n        font-size: 18px;\n        color: #555;\n        margin-top: 6px;\n        margin-bottom: 6px;\n        width: 450px;\n        height: 25px;\n        overflow: hidden;\n        white-space: nowrap;\n        text-overflow: ellipsis; }\n      .home-page .recent .item .content {\n        width: 420px;\n        overflow: hidden;\n        display: -webkit-box;\n        -webkit-box-orient: vertical;\n        -webkit-line-clamp: 3;\n        font-size: 12px;\n        color: #555;\n        line-height: 22px; }\n        .home-page .recent .item .content p {\n          width: 420px; }\n      .home-page .recent .item .banner {\n        width: 176px;\n        height: 92px;\n        margin-top: 6px; }\n    .home-page .recent .load {\n      width: 640px;\n      height: 50px;\n      border: 1px solid #f0f0f0;\n      margin-top: 30px;\n      font-size: 16px;\n      color: #bbb;\n      line-height: 50px;\n      text-align: center;\n      cursor: pointer; }\n    .home-page .recent .load:hover {\n      color: #4a90e2; }\n  .home-page .hot {\n    width: 320px; }\n", ""]);
 
 // exports
 
@@ -29465,8 +29514,8 @@ if(content.locals) module.exports = content.locals;
 if(false) {
 	// When the styles change, update the <style> tags
 	if(!content.locals) {
-		module.hot.accept("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./login.scss", function() {
-			var newContent = require("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./login.scss");
+		module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/sass-loader/lib/loader.js!./login.scss", function() {
+			var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/sass-loader/lib/loader.js!./login.scss");
 			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 			update(newContent);
 		});
@@ -30042,11 +30091,12 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 /**
  * 默认数据
  * @method defaultStatus
- * @param {int} status 0 请求中，1 未登录，2 已登录
+ * @param {int} status 0 请求中，1 不足10条不展示load，2 等于10条展示load
  */
 var defaultStatus = {
   recentList: [],
-  hostList: []
+  hostList: [],
+  status: 0
 };
 
 function home() {
@@ -30058,7 +30108,13 @@ function home() {
       {
         var stateObj = {};
         if (action.payload.code == 10000) {
-          stateObj = { recentList: action.payload.msg };
+          var list = state.recentList;
+          list = list.concat(action.payload.msg);
+          stateObj = {
+            recentList: list,
+            status: action.payload.msg.length != 10 ? 1 : 2,
+            loadText: action.payload.msg.length == 10 && '阅读更多'
+          };
         }
         return (0, _lodash2.default)({}, state, stateObj);
       }

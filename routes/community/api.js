@@ -30,6 +30,9 @@ router.use('/user/:id', function(req, res, next) {
     console.log('没有登录');
     res.send({ code: 10008, msg: '未登录' });
   }
+}, function (req, res, next) {
+  console.log('Request Type:', req.method);
+  next();
 });
 
 /**
@@ -75,7 +78,7 @@ router.post('/login', function (req, res) {
       var bool = results[0].pwd == data.pwd;
       if (bool) {
         req.session.sessionId = results[0].id; // 登录成功，设置 session
-        console.log('req9999', req.session);
+        // console.log('req9999', req.session);
         res.send({ code: 10000, msg: '登录成功'});
       } else {
         res.send({ code: 10001, msg: '密码错误'});
@@ -89,13 +92,13 @@ router.post('/login', function (req, res) {
  * 用户信息查询
  * @method /api/community/user/userInfo
  */
-router.get('/user/userInfo/ssss', function (req, res) {
+router.get('/user/userInfo', function (req, res) {
   // if (req.session.sessionId) {
 
     var data = req.query;
     var sql = 'SELECT * FROM t_user where id=' + data.id;
     query(sql, null, function (error, results, fields) {
-      console.log('req.session.6666666', req.session);
+      // console.log('req.session.6666666', req.session);
       if (error) {
         throw error;
       } else {
@@ -122,7 +125,7 @@ router.get('/logout', function (req, res) {
  * @method /api/community/user/base
  */
 router.get('/user/base', function (req, res) {
-  let sid = req.session.sessionId;
+  var sid = req.session.sessionId;
   var sql = 'SELECT * FROM t_user WHERE id=' + sid + ';';
   query(sql, null, function (error, results, fields) {
     if (error) throw error;

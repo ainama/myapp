@@ -14,7 +14,7 @@ class PersonalPage extends React.Component {
 
     // 获取用户信息
     $.ajax({
-      url: '/api/community/user/userInfo/ssss',
+      url: '/api/community/user/userInfo',
       type: 'get',
       data: {id: 3},
       success: function(res) {

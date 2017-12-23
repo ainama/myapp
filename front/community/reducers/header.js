@@ -15,7 +15,7 @@ export function header(state = defaultStatus, action) {
     case types.GET_USER_BASE: {
       let stateObj = { };
       if (action.payload.code == 10000) {
-        stateObj = { status: 2 };
+        stateObj = { status: 2, user: action.payload.msg };
       } else if (action.payload.code == 10008) {
         stateObj = { status: 1 };
       }

@@ -1,135 +1,165 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import * as actions from '../actions/test';
+import * as actions from '../actions/article';
 
 class ShowArticle extends React.Component {
   constructor(props) {
     super(props);
-    this._getInfo = this._getInfo.bind(this);
-    this._getLike = this._getLike.bind(this);
     this._addLike = this._addLike.bind(this);
     this._goEdit = this._goEdit.bind(this);
-    // console.log(this.props);
+    this._showLatest = this._showLatest.bind(this);
+    this._createMarkup = this._createMarkup.bind(this);
     this.state = {
-      data: {},
-      status: false,  // 当前登录用户与页面文章作者id
+      status: false,
     };
   }
 
   componentDidMount() {
-    this._getInfo();
-    this._getLike();
-  }
-
-  // setZ() {
-  //   this.props.actions.testfunc();
-  // }
-
-  _getInfo() {
-    // console.log('_getInfo');
-    //ajax 获取data
-    const data = {
-      user_id: 'lynn',
-      update_time: '2天前',
-      banner: '../images/banner.jpeg',
-      title: '蛙鸣社区的第一篇文章标题',
-      content: '文章内容，假装很长，特别特别长'
-    };
-
-    // let user = localStorage.getItem('user');
-    let user = 'lynn';
-    if (user == data.user_id) {
-      this.setState({
-        data: data,
-        status: true,
-      })
-    } else {
-      this.setState({
-        data: data,
-        status: false,
-      })
-    }
-  }
-
-  _getLike() {
-    //ajax 获取like
-    let like = 8;
-    this.setState({
-      like: like
-    })
+    // console.log(111);
+    let article_id = this.props.match.params.article;
+    this.props.actions.getArticle(article_id);  // 获取文章信息
+    this.props.actions.getLike(article_id);  // 获取文章点赞信息
+    this.props.actions.getAuthorInfo(article_id);  // 获取作者信息
+    this.props.actions.getLatestArticle(article_id);  // 获取最新文章信息
   }
 
   _addLike() {
-    this.setState({
-      like: ++ this.state.like
-    })
+    if(this.props.header.user) {
+      this.setState({ status: true});
+      let article_id = this.props.match.params.article;
+      let user_id = this.props.header.user.id;
+      let data = {
+        article_id: this.props.article.article_id,
+        user_id: user_id
+      };
+      this.props.actions.editLike(data);
+      this.props.actions.getLike(article_id);  // 获取文章信息
+    } else {
+      alert('请登陆');
+    }
   }
 
   _goEdit() {
-    this.props.history.push('/community/addArticle');
+    // console.log('showArticle => ', this.props.article);
+    this.props.history.push('/community/addArticle/edit');
+  }
+
+  _showLatest() {
+    // console.log('_showLatest => ', this.props.article.latest_article_id);
+    let article_id = this.props.article.latest_article_id;
+    this.props.history.push('/community/showArticle/' + article_id);
+  }
+
+  // 文字转换
+  _createMarkup(data) {
+    return { __html: data };
   }
 
   render() {
 
-    const {
-      data,
-      status,
-      like
-    } = this.state;
+    const article = this.props.article;
+    const { status } = this.state;
 
     return (
       <div className = 'showArticle-layout'>
 
-        {/*banner&title*/}
-        <div className = 'showArticle-show'>
-
-          {/*bg*/}
-          <img
-            src = { data.banner }
-            className = 'showArticle-banner'/>
+        {/*left article info*/}
+        <div className = 'showArticle-left'>
 
           {/*title*/}
-          <div className = 'showArticle-title'>{ data.title }</div>
+          <div className = 'showArticle-title'>{ article.title }</div>
 
           {/*info*/}
           <div className = 'showArticle-info'>
-            { data.user_id } . { data.update_time }
+            { article.author_name }
+            <span className = 'showArticle-time'>
+              { article.create_time }
+            </span>
           </div>
 
-        </div>
-
-        {/*content*/}
-        <div className = 'showArticle-content'>
-          { data.content }
-        </div>
-
-        {/*footer*/}
-        <div className = 'showArticle-footer'>
+          {/*content*/}
+          <div
+            className = 'showArticle-content'
+            dangerouslySetInnerHTML = { this._createMarkup(article.content) } />
 
           {/*like*/}
-          <div className = 'showArticle-like' onClick = { this._addLike }>
-            点赞{ like }
-          </div>
-
-          {/*eidt*/}
-          {
-            status &&
-            <div className = 'showArticle-edit' onClick = { this._goEdit }>
-              评论
-            </div>
-          }
+          <button
+            disabled = { status }
+            className = {!status ?'showArticle-like' : 'showArticle-dislike'}
+            onClick = { this._addLike }>
+            {
+              !status
+              ? `赞(${ article.like })`
+              : `感谢(${ article.like })`
+            }
+          </button>
 
         </div>
 
+        {/*right author info*/}
+        <div className = 'showArticle-right'>
+
+          {/*当前信息和最近文章*/}
+          <div className = 'showArticle-curInfo'>
+
+            {/*head_img*/}
+            <img
+              src = '/images/community/header_default_avatar.png'
+              // src = { article.head_img }
+              className = 'showArticle-headImg'/>
+
+            {/*author info*/}
+            <div className = 'showArticle-authorName'>
+              { article.author_name }
+            </div>
+            <div  className = 'showArticle-authorInfo'>
+              作者简介：此模块暂未开通，敬请期待。
+            </div>
+
+            {/*latest article*/}
+            <div className = 'showArticle-latest'>
+              最近文章
+            </div>
+
+            <div
+              className = 'showArticle-latestTitle'
+              onClick = { this._showLatest }>
+              { article.latest_article_title }
+            </div>
+
+            <div className = 'showArticle-latestTime'>
+              { article.latest_article_time }
+            </div>
+
+          </div>
+        </div>
+
+
+        {/*eidt  暂时关闭编辑接口*/}
+        {
+          // this.props.header.user.id == article.author_id &&
+          // <button
+          //   className = 'showArticle-edit'
+          //   onClick = { this._goEdit }>
+          //   编辑
+          // </button>
+        }
       </div>
     );
   }
 }
 
+ShowArticle.propTypes = {
+  params: PropTypes.object,
+};
+
 const mapStateToProps = (store) => {
   return {
-    test: store.test
+    test: store.test,
+    article: store.article,
+    header: store.header
   };
 };
 

@@ -14,10 +14,23 @@ html
           h2 有话你就说！说错话不要钱的亲民社区！
           div.index-login-box
             div.index-login-tabs
-              a.active 登录
-              a 注册
-            div.index-login-login
+              span.login-btn#loginBtn.active-btn 登录
+              a.separate
+              span.login-btn#registerBtn 注册
+            div#index-login-login
               div.input-cell-group
-                input.input-cell(type='text', placeholder='请输入手机号码')
-                input.input-cell(type='password', placeholder='请输入密码')
-              div#index-login-button 登录
+                input#login-tel.input-cell(type='tel', placeholder='手机号')
+                p#login-tel-error 
+                input#login-pwd.input-cell(type='password', placeholder='密码')
+                p#login-pwd-error 
+              div#index-login-button.submit-btn 登录
+
+            div#index-login-register
+              div.input-cell-group
+                input#register-name.input-cell(placeholder = '姓名')
+                p#register-name-error 
+                input#register-tel.input-cell(placeholder = '手机号')
+                p#register-tel-error
+                input#register-pwd.input-cell(type = 'password',placeholder = '密码(不少于8位)')
+                p#register-pwd-error
+              div#index-register-button.submit-btn 注册

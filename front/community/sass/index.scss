@@ -17,6 +17,7 @@ img {
 
 a {
   text-decoration: none;
+  cursor: pointer;
 }
 
 @import './head';
@@ -26,3 +27,4 @@ a {
 @import './showArticle';
 @import './personalPage';
 @import './settingPage';
+@import './home';

@@ -98,7 +98,7 @@ const styles = {
   card: {
     // border: '1px dashed #d7d8d9',
     borderRadius: 2,
-    width: 800,
+    width: 600,
     height: 260,
     background: '#f7f8f9',
     position: 'relative',
@@ -130,7 +130,7 @@ const styles = {
     backgroundColor: 'red',
     top: 0,
     left: 0,
-    width: 800,
+    width: 600,
     height: 260,
     opacity: 0,
     cursor: 'pointer'
@@ -144,7 +144,7 @@ const styles = {
 
   floor: {
     position: 'relative',
-    width: 800,
+    width: 600,
     height: 260,
   },
 

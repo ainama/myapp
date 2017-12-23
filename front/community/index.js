@@ -11,15 +11,13 @@ class Index extends React.Component {
   render() {
     return (
       <div>
-
         <Header />
-
         <div className = 'container'>
-          { this.props.children }
+          <div className = 'body'>
+            { this.props.children }
+          </div>
         </div>
-
         <Footer />
-
       </div>
     );
   }

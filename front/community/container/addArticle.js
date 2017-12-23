@@ -9,36 +9,20 @@ import UploadImg from '../component/addArticle/uploadImg.js';
 class AddArticle extends React.Component {
   constructor(props) {
     super(props);
-    this._getInfo = this._getInfo.bind(this);
     this._addBanner = this._addBanner.bind(this);
     this._getContent = this._getContent.bind(this);
     this._uploadImage = this._uploadImage.bind(this);
     this._upload = this._upload.bind(this);
     // console.log(this.props);
     this.state = {
-      value: this.props.article.content,
-      title: this.props.article.title
+      content: this.props.article.content,
+      title: this.props.article.title,
+      type: this.props.match.params.type
     };
   }
 
   componentDidMount() {
-    this._getInfo();
   }
-
-  _getInfo() {
-    //ajax 获取data
-    // const data = {
-    //   user_id: 'lynn',
-    //   update_time: '2天前',
-    //   banner: '../images/banner.jpeg',
-    //   title: '蛙鸣社区的第一篇文章标题',
-    //   content: '文章内容，假装很长，特别特别长'
-    // };
-  }
-
-  // setZ() {
-  //   this.props.actions.testfunc();
-  // }
 
   _addBanner() {
     this.refs.file.click();
@@ -51,7 +35,7 @@ class AddArticle extends React.Component {
 
   _getContent(e) {
     // console.log('getContent => ', e);
-    this.setState({value: e})
+    this.setState({content: e})
   }
 
   _uploadImage(data) {
@@ -60,27 +44,33 @@ class AddArticle extends React.Component {
   }
 
   _deleteImage() {
-    // console.log('deleteImage => ', this.props.article.imgUrl);
+    // console.log('deleteImage => ', this.props.article.banner);
   }
 
   _upload() {
+    let user_id = this.props.header.user.id;
+    // console.log('header', this.props.header.user.id);
     const { article } = this.props;
-    const { title, value } = this.state;
 
     let data = {
-      title: title,
-      user_id: 12,
-      content: value,
-      banner: article.imgUrl,
+      id: article.article_id,
+      title: this.state.title,
+      author_id: user_id,
+      content: this.state.content,
+      banner: article.banner,
+      create_time: '',
+      // update_time: ''
     };
 
     // console.log('upload', data);
     this.props.actions.uploadArticle(data);
+    this.props.history.push('/community/home');
   }
 
   render() {
 
     const { article } = this.props;
+    const { title, content, type } = this.state;
 
     return (
       <div className = 'addArticle-layout'>
@@ -89,14 +79,14 @@ class AddArticle extends React.Component {
         <div className = 'fake-wrapper'>
           <UploadImg
             upload = { (data) => { this._uploadImage(data); } }
-            imageUrl = { article.imgUrl }
+            imageUrl = { article.banner }
             delete = { () => { this._deleteImage(); } } />
         </div>
 
         {/*title*/}
         <div className = 'addArticle-title'>
           <input
-            value = { this.state.title }
+            value = { title }
             onChange = { (e) => {this._getTitle(e); } }
             className = 'addArticle-input'
             placeholder = '请输入标题'/>
@@ -106,7 +96,7 @@ class AddArticle extends React.Component {
         <div>
           <SimditorTextarea
             id = "content"
-            value = { this.state.value }
+            value = { content }
             onChange = { (e) => {this._getContent(e); } }
             placeholder = '请开始你的表演'/>
         </div>
@@ -115,7 +105,11 @@ class AddArticle extends React.Component {
         <button
           onClick = { this._upload }
           className = 'addArticle-upload'>
-          发布
+          {
+            type == 'edit'
+            ? '更新'
+            : '发布'
+          }
         </button>
 
       </div>
@@ -126,7 +120,8 @@ class AddArticle extends React.Component {
 const mapStateToProps = (store) => {
   return {
     test: store.test,
-    article: store.article
+    article: store.article,
+    header: store.header
   };
 };
 

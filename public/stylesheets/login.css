@@ -23,6 +23,7 @@ h1 {
 	color: #0f88eb;
 	text-align: center;
 	font-weight: 600;
+  margin-bottom: 30px;
 }
 h2 {
 	width: 100%;
@@ -45,31 +46,45 @@ h2 {
   margin-bottom: 20px;
 }
 
-a {
+.login-btn {
 	width: 50px;
 	line-height: 35px;
 	display: inline-block;
 	text-decoration: none;
 	margin: 0 10px;
+  font-size: 18px;
+  cursor: pointer;
+  color: #7d7d7d;
 }
 
-.active {
-	border-bottom: 3px solid #0f88eb;
-	color: #0f88eb;
+.separate {
+  display: inline-block;
+  width: 2px;
+  height: 2px;
+  border-radius: 2px;
+  background-color: #4a90e2;
+  margin-bottom: 5px;
 }
 
-.index-login-login {
+.active-btn {
+	border-bottom: 2px solid #4a90e2;
+	color: #4a90e2;
+}
+
+#index-login-login {
 	height: 200px;
 }
 
-.index-login-register {
+#index-login-register {
 	height: 200px;
+  display: none;
 }
 
 .input-cell-group {
 	border: 1px solid #d5d5d5;
 	border-radius: 3px;
   overflow: hidden;
+  position: relative;
 }
 
 input {
@@ -78,7 +93,7 @@ input {
   background-color: #fff;
   border: 0px solid #cccccc;
   border-radius: 0px;
-  width: 298px;
+  width: 100%;
   display: block;
   padding: 14px 10px;
   box-sizing: border-box;
@@ -88,11 +103,56 @@ input:last-child {
   margin-bottom: -1px;
 }
 
-#index-login-button {
+#login-tel-error {
+  font-size: 14px;
+  color: #cc3333;
+  line-height: 14px;
+  position: absolute;
+  top: 0px;
+  right: 10px;
+}
+
+#login-pwd-error {
+  font-size: 14px;
+  color: #cc3333;
+  line-height: 14px;
+  position: absolute;
+  top: 42px;
+  right: 10px;
+}
+
+#register-name-error {
+  font-size: 14px;
+  color: #cc3333;
+  line-height: 14px;
+  position: absolute;
+  top: 0px;
+  right: 10px;
+}
+#register-tel-error {
+  font-size: 14px;
+  color: #cc3333;
+  line-height: 14px;
+  position: absolute;
+  top: 42px;
+  right: 10px;
+}
+
+#register-pwd-error {
+  font-size: 14px;
+  color: #cc3333;
+  line-height: 14px;
+  position: absolute;
+  top: 84px;
+  right: 10px;
+}
+
+.submit-btn {
 	background: #0f88eb;
   border-radius: 3px;
   line-height: 41px;
   color: #fff;
   width: 300px;
   margin-top: 18px;
+  cursor: pointer;
 }

@@ -7,6 +7,7 @@
  * @param {function} dispatch redux dispatch
  */
 export function myFetch(url, fetchObj, outputObj, dispatch) {
+  fetchObj.credentials = 'include';  // fetch cookie
   fetch(url, fetchObj).then((response) => {
     return response.json();
   }).then((response) => {

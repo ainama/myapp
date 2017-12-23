@@ -32,6 +32,7 @@ class Header extends React.Component {
     this.setState({
       expandStatus: false
     });
+    scrollTo(0, 0);
   }
 
   render() {

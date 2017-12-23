@@ -629,7 +629,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.compose = exports.applyMiddleware = exports.bindActionCreators = exports.combineReducers = exports.createStore = undefined;
 
-var _createStore = __webpack_require__(62);
+var _createStore = __webpack_require__(63);
 
 var _createStore2 = _interopRequireDefault(_createStore);
 
@@ -645,11 +645,11 @@ var _applyMiddleware = __webpack_require__(120);
 
 var _applyMiddleware2 = _interopRequireDefault(_applyMiddleware);
 
-var _compose = __webpack_require__(66);
+var _compose = __webpack_require__(67);
 
 var _compose2 = _interopRequireDefault(_compose);
 
-var _warning = __webpack_require__(65);
+var _warning = __webpack_require__(66);
 
 var _warning2 = _interopRequireDefault(_warning);
 
@@ -781,7 +781,7 @@ var _Provider = __webpack_require__(102);
 
 var _Provider2 = _interopRequireDefault(_Provider);
 
-var _connectAdvanced = __webpack_require__(61);
+var _connectAdvanced = __webpack_require__(62);
 
 var _connectAdvanced2 = _interopRequireDefault(_connectAdvanced);
 
@@ -1994,11 +1994,11 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.locationsAreEqual = exports.createLocation = undefined;
 
-var _resolvePathname = __webpack_require__(52);
+var _resolvePathname = __webpack_require__(53);
 
 var _resolvePathname2 = _interopRequireDefault(_resolvePathname);
 
-var _valueEqual = __webpack_require__(53);
+var _valueEqual = __webpack_require__(54);
 
 var _valueEqual2 = _interopRequireDefault(_valueEqual);
 
@@ -2215,7 +2215,7 @@ var singleton = null;
 var	singletonCounter = 0;
 var	stylesInsertedAtTop = [];
 
-var	fixUrls = __webpack_require__(51);
+var	fixUrls = __webpack_require__(52);
 
 module.exports = function(list, options) {
 	if (typeof DEBUG !== "undefined" && DEBUG) {
@@ -9277,7 +9277,7 @@ var _HashRouter2 = __webpack_require__(79);
 
 var _HashRouter3 = _interopRequireDefault(_HashRouter2);
 
-var _Link2 = __webpack_require__(55);
+var _Link2 = __webpack_require__(56);
 
 var _Link3 = _interopRequireDefault(_Link2);
 
@@ -9297,7 +9297,7 @@ var _Redirect2 = __webpack_require__(89);
 
 var _Redirect3 = _interopRequireDefault(_Redirect2);
 
-var _Route2 = __webpack_require__(56);
+var _Route2 = __webpack_require__(57);
 
 var _Route3 = _interopRequireDefault(_Route2);
 
@@ -9941,11 +9941,11 @@ var _extends = Object.assign || function (target) {
   }return target;
 };
 
-var _resolvePathname = __webpack_require__(52);
+var _resolvePathname = __webpack_require__(53);
 
 var _resolvePathname2 = _interopRequireDefault(_resolvePathname);
 
-var _valueEqual = __webpack_require__(53);
+var _valueEqual = __webpack_require__(54);
 
 var _valueEqual2 = _interopRequireDefault(_valueEqual);
 
@@ -10609,6 +10609,69 @@ module.exports = g;
 
 
 Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.myFetch = myFetch;
+exports.dateFormat = dateFormat;
+/**
+ * fetch封装
+ * @method myFetch
+ * @param {string} url 路由地址
+ * @param {object} fetchObj fetch请求对象
+ * @param {object} outputObj 输出给reducers的对象
+ * @param {function} dispatch redux dispatch
+ */
+function myFetch(url, fetchObj, outputObj, dispatch) {
+    fetchObj.credentials = 'include'; // fetch cookie
+    fetch(url, fetchObj).then(function (response) {
+        return response.json();
+    }).then(function (response) {
+        outputObj.payload = response;
+        dispatch(outputObj);
+        return response;
+    });
+}
+
+/**
+ * 时间格式化
+ * @method dateForMoment
+ * @param {int} date 时间戳
+ */
+function dateFormat(date) {
+    var data = date;
+    var distanceMillis = new Date().getTime() - data;
+    var seconds = Math.abs(distanceMillis) / 1000;
+    var minutes = seconds / 60;
+    var hours = minutes / 60;
+    var days = hours / 24;
+    var years = days / 365;
+    var month = days / 30;
+    if (seconds < 60) {
+        return '刚刚';
+    } else if (minutes > 1 && minutes < 60) {
+        return Math.round(minutes) + '分钟前';
+    } else if (1 < hours && hours < 24) {
+        return Math.round(hours) + '小时前';
+    } else if (24 <= hours && hours < 48) {
+        return '昨天';
+    } else if (48 <= hours && days < 30) {
+        return Math.floor(days) + '天前';
+    } else if (30 <= days && month < 12) {
+        return Math.round(month) + '个月前';
+    } else if (month >= 12) {
+        return Math.round(years) + '年前';
+    }
+    return;
+}
+
+/***/ }),
+/* 51 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.testfunc = testfunc;
@@ -10628,7 +10691,7 @@ function testfunc() {
 }
 
 /***/ }),
-/* 51 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10723,7 +10786,7 @@ module.exports = function (css) {
 };
 
 /***/ }),
-/* 52 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10804,7 +10867,7 @@ function resolvePathname(to) {
 exports.default = resolvePathname;
 
 /***/ }),
-/* 53 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10860,7 +10923,7 @@ function valueEqual(a, b) {
 exports.default = valueEqual;
 
 /***/ }),
-/* 54 */
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10921,7 +10984,7 @@ var isExtraneousPopstateEvent = exports.isExtraneousPopstateEvent = function isE
 };
 
 /***/ }),
-/* 55 */
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11065,7 +11128,7 @@ Link.contextTypes = {
 exports.default = Link;
 
 /***/ }),
-/* 56 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11075,7 +11138,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _Route = __webpack_require__(57);
+var _Route = __webpack_require__(58);
 
 var _Route2 = _interopRequireDefault(_Route);
 
@@ -11084,7 +11147,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 exports.default = _Route2.default; // Written in this round about way for babel-transform-imports
 
 /***/ }),
-/* 57 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11267,7 +11330,7 @@ Route.childContextTypes = {
 exports.default = Route;
 
 /***/ }),
-/* 58 */
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11330,7 +11393,7 @@ var isExtraneousPopstateEvent = exports.isExtraneousPopstateEvent = function isE
 };
 
 /***/ }),
-/* 59 */
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11403,7 +11466,7 @@ module.exports = function hoistNonReactStatics(targetComponent, sourceComponent,
 };
 
 /***/ }),
-/* 60 */
+/* 61 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11434,7 +11497,7 @@ var storeShape = exports.storeShape = _propTypes2.default.shape({
 });
 
 /***/ }),
-/* 61 */
+/* 62 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11448,7 +11511,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 exports.default = connectAdvanced;
 
-var _hoistNonReactStatics = __webpack_require__(59);
+var _hoistNonReactStatics = __webpack_require__(60);
 
 var _hoistNonReactStatics2 = _interopRequireDefault(_hoistNonReactStatics);
 
@@ -11462,7 +11525,7 @@ var _Subscription = __webpack_require__(103);
 
 var _Subscription2 = _interopRequireDefault(_Subscription);
 
-var _PropTypes = __webpack_require__(60);
+var _PropTypes = __webpack_require__(61);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -11775,7 +11838,7 @@ selectorFactory) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 62 */
+/* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12047,7 +12110,7 @@ var ActionTypes = exports.ActionTypes = {
 }
 
 /***/ }),
-/* 63 */
+/* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12069,7 +12132,7 @@ var _Symbol = _root2.default.Symbol;
 exports.default = _Symbol;
 
 /***/ }),
-/* 64 */
+/* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12099,7 +12162,7 @@ module.exports = function (module) {
 };
 
 /***/ }),
-/* 65 */
+/* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12132,7 +12195,7 @@ function warning(message) {
 }
 
 /***/ }),
-/* 66 */
+/* 67 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12176,7 +12239,7 @@ function compose() {
 }
 
 /***/ }),
-/* 67 */
+/* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12189,7 +12252,7 @@ exports.wrapMapToPropsConstant = wrapMapToPropsConstant;
 exports.getDependsOnOwnProps = getDependsOnOwnProps;
 exports.wrapMapToPropsFunc = wrapMapToPropsFunc;
 
-var _verifyPlainObject = __webpack_require__(68);
+var _verifyPlainObject = __webpack_require__(69);
 
 var _verifyPlainObject2 = _interopRequireDefault(_verifyPlainObject);
 
@@ -12263,7 +12326,7 @@ function wrapMapToPropsFunc(mapToProps, methodName) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 68 */
+/* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12288,69 +12351,6 @@ function verifyPlainObject(value, displayName, methodName) {
   if (!(0, _isPlainObject2.default)(value)) {
     (0, _warning2.default)(methodName + '() in ' + displayName + ' must return a plain object. Instead received ' + value + '.');
   }
-}
-
-/***/ }),
-/* 69 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.myFetch = myFetch;
-exports.dateFormat = dateFormat;
-/**
- * fetch封装
- * @method myFetch
- * @param {string} url 路由地址
- * @param {object} fetchObj fetch请求对象
- * @param {object} outputObj 输出给reducers的对象
- * @param {function} dispatch redux dispatch
- */
-function myFetch(url, fetchObj, outputObj, dispatch) {
-    fetchObj.credentials = 'include'; // fetch cookie
-    fetch(url, fetchObj).then(function (response) {
-        return response.json();
-    }).then(function (response) {
-        outputObj.payload = response;
-        dispatch(outputObj);
-        return response;
-    });
-}
-
-/**
- * 时间格式化
- * @method dateForMoment
- * @param {int} date 时间戳
- */
-function dateFormat(date) {
-    var data = date;
-    var distanceMillis = new Date().getTime() - data;
-    var seconds = Math.abs(distanceMillis) / 1000;
-    var minutes = seconds / 60;
-    var hours = minutes / 60;
-    var days = hours / 24;
-    var years = days / 365;
-    var month = days / 30;
-    if (seconds < 60) {
-        return '刚刚';
-    } else if (minutes > 1 && minutes < 60) {
-        return Math.round(minutes) + '分钟前';
-    } else if (1 < hours && hours < 24) {
-        return Math.round(hours) + '小时前';
-    } else if (24 <= hours && hours < 48) {
-        return '昨天';
-    } else if (48 <= hours && days < 30) {
-        return Math.floor(days) + '天前';
-    } else if (30 <= days && month < 12) {
-        return Math.round(month) + '个月前';
-    } else if (month >= 12) {
-        return Math.round(years) + '年前';
-    }
-    return;
 }
 
 /***/ }),
@@ -22379,7 +22379,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 	return jQuery;
 });
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(64)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(65)(module)))
 
 /***/ }),
 /* 72 */
@@ -22954,7 +22954,7 @@ var _createTransitionManager = __webpack_require__(42);
 
 var _createTransitionManager2 = _interopRequireDefault(_createTransitionManager);
 
-var _DOMUtils = __webpack_require__(54);
+var _DOMUtils = __webpack_require__(55);
 
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
@@ -23364,7 +23364,7 @@ var _createTransitionManager = __webpack_require__(42);
 
 var _createTransitionManager2 = _interopRequireDefault(_createTransitionManager);
 
-var _DOMUtils = __webpack_require__(54);
+var _DOMUtils = __webpack_require__(55);
 
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
@@ -23992,11 +23992,11 @@ var _propTypes = __webpack_require__(2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _Route = __webpack_require__(56);
+var _Route = __webpack_require__(57);
 
 var _Route2 = _interopRequireDefault(_Route);
 
-var _Link = __webpack_require__(55);
+var _Link = __webpack_require__(56);
 
 var _Link2 = _interopRequireDefault(_Link);
 
@@ -24901,7 +24901,7 @@ var _createTransitionManager = __webpack_require__(46);
 
 var _createTransitionManager2 = _interopRequireDefault(_createTransitionManager);
 
-var _DOMUtils = __webpack_require__(58);
+var _DOMUtils = __webpack_require__(59);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -25225,7 +25225,7 @@ var _createTransitionManager = __webpack_require__(46);
 
 var _createTransitionManager2 = _interopRequireDefault(_createTransitionManager);
 
-var _DOMUtils = __webpack_require__(58);
+var _DOMUtils = __webpack_require__(59);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -26162,11 +26162,11 @@ var _propTypes = __webpack_require__(2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _hoistNonReactStatics = __webpack_require__(59);
+var _hoistNonReactStatics = __webpack_require__(60);
 
 var _hoistNonReactStatics2 = _interopRequireDefault(_hoistNonReactStatics);
 
-var _Route = __webpack_require__(57);
+var _Route = __webpack_require__(58);
 
 var _Route2 = _interopRequireDefault(_Route);
 
@@ -26233,7 +26233,7 @@ var _propTypes = __webpack_require__(2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _PropTypes = __webpack_require__(60);
+var _PropTypes = __webpack_require__(61);
 
 var _warning = __webpack_require__(47);
 
@@ -26444,7 +26444,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 exports.createConnect = createConnect;
 
-var _connectAdvanced = __webpack_require__(61);
+var _connectAdvanced = __webpack_require__(62);
 
 var _connectAdvanced2 = _interopRequireDefault(_connectAdvanced);
 
@@ -26643,7 +26643,7 @@ exports.whenMapDispatchToPropsIsObject = whenMapDispatchToPropsIsObject;
 
 var _redux = __webpack_require__(8);
 
-var _wrapMapToProps = __webpack_require__(67);
+var _wrapMapToProps = __webpack_require__(68);
 
 function whenMapDispatchToPropsIsFunction(mapDispatchToProps) {
   return typeof mapDispatchToProps === 'function' ? (0, _wrapMapToProps.wrapMapToPropsFunc)(mapDispatchToProps, 'mapDispatchToProps') : undefined;
@@ -26674,7 +26674,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _Symbol2 = __webpack_require__(63);
+var _Symbol2 = __webpack_require__(64);
 
 var _Symbol3 = _interopRequireDefault(_Symbol2);
 
@@ -26768,7 +26768,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _Symbol2 = __webpack_require__(63);
+var _Symbol2 = __webpack_require__(64);
 
 var _Symbol3 = _interopRequireDefault(_Symbol2);
 
@@ -26987,7 +26987,7 @@ if (typeof self !== 'undefined') {
 
 var result = (0, _ponyfill2['default'])(root);
 exports['default'] = result;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(49), __webpack_require__(64)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(49), __webpack_require__(65)(module)))
 
 /***/ }),
 /* 117 */
@@ -27030,13 +27030,13 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = combineReducers;
 
-var _createStore = __webpack_require__(62);
+var _createStore = __webpack_require__(63);
 
 var _isPlainObject = __webpack_require__(48);
 
 var _isPlainObject2 = _interopRequireDefault(_isPlainObject);
 
-var _warning = __webpack_require__(65);
+var _warning = __webpack_require__(66);
 
 var _warning2 = _interopRequireDefault(_warning);
 
@@ -27244,7 +27244,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = applyMiddleware;
 
-var _compose = __webpack_require__(66);
+var _compose = __webpack_require__(67);
 
 var _compose2 = _interopRequireDefault(_compose);
 
@@ -27318,7 +27318,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.whenMapStateToPropsIsFunction = whenMapStateToPropsIsFunction;
 exports.whenMapStateToPropsIsMissing = whenMapStateToPropsIsMissing;
 
-var _wrapMapToProps = __webpack_require__(67);
+var _wrapMapToProps = __webpack_require__(68);
 
 function whenMapStateToPropsIsFunction(mapStateToProps) {
   return typeof mapStateToProps === 'function' ? (0, _wrapMapToProps.wrapMapToPropsFunc)(mapStateToProps, 'mapStateToProps') : undefined;
@@ -27347,7 +27347,7 @@ exports.wrapMergePropsFunc = wrapMergePropsFunc;
 exports.whenMergePropsIsFunction = whenMergePropsIsFunction;
 exports.whenMergePropsIsOmitted = whenMergePropsIsOmitted;
 
-var _verifyPlainObject = __webpack_require__(68);
+var _verifyPlainObject = __webpack_require__(69);
 
 var _verifyPlainObject2 = _interopRequireDefault(_verifyPlainObject);
 
@@ -27709,6 +27709,7 @@ var Header = function (_React$Component) {
       this.setState({
         expandStatus: false
       });
+      scrollTo(0, 0);
     }
   }, {
     key: 'render',
@@ -27877,7 +27878,7 @@ var _actionTypes = __webpack_require__(12);
 
 var types = _interopRequireWildcard(_actionTypes);
 
-var _tools = __webpack_require__(69);
+var _tools = __webpack_require__(50);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -27920,7 +27921,7 @@ var _redux = __webpack_require__(8);
 
 var _reactRedux = __webpack_require__(11);
 
-var _test = __webpack_require__(50);
+var _test = __webpack_require__(51);
 
 var actions = _interopRequireWildcard(_test);
 
@@ -27992,7 +27993,7 @@ var _redux = __webpack_require__(8);
 
 var _reactRedux = __webpack_require__(11);
 
-var _test = __webpack_require__(50);
+var _test = __webpack_require__(51);
 
 var actions = _interopRequireWildcard(_test);
 
@@ -28139,7 +28140,7 @@ var _redux = __webpack_require__(8);
 
 var _reactRedux = __webpack_require__(11);
 
-var _test = __webpack_require__(50);
+var _test = __webpack_require__(51);
 
 var actions = _interopRequireWildcard(_test);
 
@@ -28248,7 +28249,7 @@ var _home = __webpack_require__(132);
 
 var actions = _interopRequireWildcard(_home);
 
-var _tools = __webpack_require__(69);
+var _tools = __webpack_require__(50);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -28408,7 +28409,7 @@ var _actionTypes = __webpack_require__(12);
 
 var types = _interopRequireWildcard(_actionTypes);
 
-var _tools = __webpack_require__(69);
+var _tools = __webpack_require__(50);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 

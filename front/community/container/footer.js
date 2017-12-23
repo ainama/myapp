@@ -12,7 +12,16 @@ class Footer extends React.Component {
   render() {
     return (
       <div className = 'footer'>
-        Footer
+        <div className = 'body'>
+          <div className = 'row1'>
+            <a>关于AINAMA</a>
+            <a>联系我们</a>
+            <a>加入我们</a>
+          </div>
+          <div className = 'row2'>
+            <a>©2017 京ICP备16042859号</a>
+          </div>
+        </div>
       </div>
     );
   }

@@ -17,7 +17,27 @@ img {
 
 a {
   text-decoration: none;
-  cursor: pointer;
+}
+
+::-webkit-scrollbar
+{
+	width: 6px;
+  height: 6px;
+	background-color: #9b9b9b;
+	padding: 2px;
+}
+
+/*定义滚动条轨道 内阴影+圆角*/
+::-webkit-scrollbar-track
+{
+	background-color: #fafafa;
+}
+
+/*定义滑块 内阴影+圆角*/
+::-webkit-scrollbar-thumb
+{
+	border-radius: 2px;
+	background-color: #bbb;
 }
 
 @import './head';

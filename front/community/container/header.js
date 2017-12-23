@@ -15,7 +15,15 @@ class Header extends React.Component {
   }
 
   componentDidMount() {
+    let _this = this;
     this.props.actions.getUserBase();
+    window.addEventListener('click', (e) => {
+      if (e.target.id != 'header') {
+        _this.setState({
+          expandStatus: false
+        });
+      }
+    });
   }
 
   logout() {
@@ -28,13 +36,6 @@ class Header extends React.Component {
     });
   }
 
-  putAway() {
-    this.setState({
-      expandStatus: false
-    });
-    scrollTo(0, 0);
-  }
-
   render() {
     return (
       <div className = 'header'>
@@ -44,24 +45,35 @@ class Header extends React.Component {
           <Link
             className = 'logo'
             to = '/community/home'
-            onClick = { () => { this.putAway(); } } />
+            onClick = { () => { scrollTo(0, 0); } } />
 
           {/* 预留区 */}
           <div className = 'group'>
             <Link
+              className = 'home'
               to = '/community/home'
-              onClick = { () => { this.putAway(); } }>
-              <div className = 'home'>首页</div>
+              onClick = { () => { scrollTo(0, 0); } }>
+              <div>首页</div>
             </Link>
           </div>
 
           {/* 写文章 */}
           {
-            this.props.header.status != 0 &&
+            this.props.header.status == 1 &&
+            <a
+              className = 'write'
+              href = '/login'
+              onClick = { () => { scrollTo(0, 0); } }>
+              <div className = 'icon'></div>
+              <span>写文章</span>
+            </a>
+          }
+          {
+            this.props.header.status == 2 &&
             <Link
               className = 'write'
               to = '/community/addArticle'
-              onClick = { () => { this.putAway(); } }>
+              onClick = { () => { scrollTo(0, 0); } }>
               <div className = 'icon'></div>
               <span>写文章</span>
             </Link>
@@ -72,18 +84,19 @@ class Header extends React.Component {
             {
               this.props.header.status == 1 &&
               <React.Fragment>
-                <a href = '/login'>
-                  <div className = 'logon'>登录</div>
-                </a>
-                <a href = '/login'>
-                  <div className = 'register'>注册</div>
-                </a>
+                <div className = 'login'>
+                  <a href = '/login'>登录</a>
+                </div>
+                <div className = 'register'>
+                  <a href = '/login'>注册</a>
+                </div>
               </React.Fragment>
             }
             {
               this.props.header.status == 2 &&
               <React.Fragment>
                 <img
+                  id = 'header'
                   className = 'img'
                   src = {
                     this.props.header.user.head_img != null
@@ -99,17 +112,17 @@ class Header extends React.Component {
               <div className = 'expand'>
                 <Link
                   to = '/community/personal'
-                  onClick = { () => { this.putAway(); } }>
+                  onClick = { () => { scrollTo(0, 0); } }>
                   <div className = 'item'>我的主页</div>
                 </Link>
                 <Link
                   to = '/community/setting'
-                  onClick = { () => { this.putAway(); } }>
+                  onClick = { () => { scrollTo(0, 0); } }>
                   <div className = 'item'>设置</div>
                 </Link>
                 <a
                   href = '/login'
-                  onClick = { () => { this.logout(); } }>
+                  onClick = { () => { scrollTo(0, 0); } }>
                   <div className = 'item'>退出</div>
                 </a>
 

@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import * as actions from '../actions/home';
+import { dateFormat } from '../../tools';
 
 class Home extends React.Component {
   constructor(props) {
@@ -11,7 +12,7 @@ class Home extends React.Component {
   }
 
   componentDidMount() {
-    this.props.actions.getArticleRecent();
+    this.props.actions.getArticleRecent('page=1');
     this.props.actions.getArticleHot();
   }
 
@@ -28,8 +29,8 @@ class Home extends React.Component {
     return tagString;
   }
 
-  articleDetail() {
-
+  getMore() {
+    this.props.actions.getArticleRecent('page=2');
   }
 
   render() {
@@ -42,28 +43,37 @@ class Home extends React.Component {
             this.props.home.recentList.map((item, index) => {
               let head = item.head_img != null ? item.head_img : '/images/community/header_default_avatar.png';
               let tagString = this.tagString(item.content);
+              let time = dateFormat(new Date(item.create_time).getTime());
               return (
-                <Link
-                  key = { index }
-                  className = 'item'
-                  to = { '/community/showArticle/' + item.id }>
-                  <div className = 'user'>
-                    <img className = 'head' src = { head } />
-                    <div className = 'name'>{ item.name }</div>
-                    <div>时间</div>
-                  </div>
-                  <div className = 'article'>
-                    <div className = 'left'>
-                      <div className = 'title'>{ item.title }</div>
-                      <div className = 'content'>{ tagString }</div>
+                <Link key = { index } to = { '/community/showArticle/' + item.id }>
+                  <div className = 'item'>
+                    <div className = 'user'>
+                      <img className = 'head' src = { head } />
+                      <div className = 'name'>{ item.name }</div>
+                      <div className = 'time'>{ time }</div>
                     </div>
-                    <img
-                      className = 'right banner'
-                      src = { item.banner } />
+                    <div className = 'article'>
+                      <div className = 'left'>
+                        <div className = 'title'>{ item.title }</div>
+                        <div className = 'content'>{ tagString }</div>
+                      </div>
+                      <img
+                        className = 'right banner'
+                        src = { item.banner } />
+                    </div>
                   </div>
                 </Link>
               );
             })
+          }
+          {
+            this.props.home.status == 2 &&
+            <div
+              ref = 'load'
+              className = 'load'
+              onClick = { () => { this.getMore(); } }>
+              { this.props.home.loadText }
+            </div>
           }
         </div>
 

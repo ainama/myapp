@@ -1,10 +1,24 @@
 # myapp
 
-frog社区
 
-后端使用：node.js + express + mysql
-前端使用：react + react-router + redux
-使用插件：simditor
+  * 后端使用：express + mysql
+  * 前端使用：react + react-router + redux + fetch
+
+  * 关于我们
+    * frogshealth 前端团队成立于2014年夏，主打微信智能硬件设备-微信相框。
+    * 技术架构
+      * 沈阳
+        * 运维
+        * 移动端
+      * 广州
+        * 后端
+      * 北京
+        * UED
+        * 前端技术部
+        * 测试部
+    * frogshealth 团队前端相框后台小组
+      * 成员：丽敏、超群、Ainama-/*[Mr.Zhang]
+    * 设计：frogshealth 团队UED-晨阳
 
 
 # use

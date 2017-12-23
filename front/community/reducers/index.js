@@ -5,12 +5,16 @@ import { test } from './test';
 import { article } from './article';
 import { header } from './header';
 import { home } from './home';
+import { userInfo, userArticles, userLikes } from './personal.js';
 
 const rootReducer = combineReducers({
   test,
   article,
   header,
-  home
+  home,
+  userInfo,
+  userArticles,
+  userLikes
 });
 
 export default rootReducer;

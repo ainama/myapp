@@ -30,19 +30,23 @@ router.use('/user/:id', function(req, res, next) {
     console.log('没有登录');
     res.send({ code: 10008, msg: '未登录' });
   }
+}, function (req, res, next) {
+  console.log('Request Type:', req.method);
+  next();
 });
 
 /**
  * 注册
- * @method /user/register
+ * @method /api/community/user/register
  */
 router.post('/register', function (req, res) {
-  var sql = 'INSERT INTO t_user(id, name, tel, pwd) VALUES (0, ?, ?, ?)';
+  var sql = 'INSERT INTO t_user(id, name, tel, pwd, head_img) VALUES (0, ?, ?, ?, ?)';
   var data = req.body;
   var params = [];
   for(var k in data) {
     params.push(data[k]);
   }
+  params.push('/images/userImg.png');
   query(sql, params, function (error, results, fields) {
 
     if (error) {
@@ -61,7 +65,7 @@ router.post('/register', function (req, res) {
 
 /**
  * 登录
- * @method /user/login
+ * @method /api/community/user/login
  */
 router.post('/login', function (req, res) {
   var data = req.body;
@@ -75,7 +79,7 @@ router.post('/login', function (req, res) {
       var bool = results[0].pwd == data.pwd;
       if (bool) {
         req.session.sessionId = results[0].id; // 登录成功，设置 session
-        console.log('req9999', req.session);
+        // console.log('req9999', req.session);
         res.send({ code: 10000, msg: '登录成功'});
       } else {
         res.send({ code: 10001, msg: '密码错误'});
@@ -87,39 +91,65 @@ router.post('/login', function (req, res) {
 
 /**
  * 用户信息查询
- * @method /user/userInfo
+ * @method /api/community/user/userInfo
  */
-router.get('/user/userInfo/ssss', function (req, res) {
-  // if (req.session.sessionId) {
+router.get('/user/userInfo', function (req, res) {
+  var uid = req.session.sessionId;
+  var sql = 'SELECT * FROM t_user where id=' + uid;
+  query(sql, null, function (error, results, fields) {
+    if (error) {
+      throw error;
+    } else {
+      res.send({ code: 10000, msg: results });
+    }
+  });
+});
 
-    var data = req.query;
-    var sql = 'SELECT * FROM t_user where id=' + data.id;
-    query(sql, null, function (error, results, fields) {
-      console.log('req.session.6666666', req.session);
-      if (error) {
-        throw error;
-      } else {
-        res.send({ code: 10000, msg: results });
-      }
-    });
-  // } else {
-  //   res.redirect('/community');
-  // }
+/**
+ * 用户发表的文章查询
+ * @method /api/community/user/articles
+ */
+router.get('/user/articles', function (req, res) {
+  var uid = req.session.sessionId;
+  var sql = 'SELECT * FROM t_article where author_id=' + uid;
+  query(sql, null, function (error, results, fields) {
+    if (error) {
+      throw error;
+    } else {
+      res.send({ code: 10000, msg: results });
+    }
+  });
+});
+
+/**
+ * 用户点赞的文章查询
+ * @method /api/community/user/likes
+ */
+router.get('/user/likes', function (req, res) {
+  var uid = req.session.sessionId;
+  var sql = 'SELECT * FROM t_like where user_id=' + uid;
+  query(sql, null, function (error, results, fields) {
+    if (error) {
+      throw error;
+    } else {
+      res.send({ code: 10000, msg: results });
+    }
+  });
 });
 
 /**
  * 退出
- * @method /user/logout
+ * @method /api/community/user/logout
  */
 router.get('/logout', function (req, res) {
     req.session.sessionId = null; // 删除session
     res.redirect('/login');
 });
 
-/* zhangning */
 /**
  * 获取用户信息（顶导）
  * @method /api/community/user/base
+ * @author Ainama-/*[Mr.Zhang]
  */
 router.get('/user/base', function (req, res) {
   var sid = req.session.sessionId;
@@ -133,6 +163,7 @@ router.get('/user/base', function (req, res) {
 /**
  * 最近文章列表
  * @method /api/community/article/recent
+ * @author Ainama-/*[Mr.Zhang]
  */
 router.get('/article/recent', function (req, res) {
   console.log('article');
@@ -148,6 +179,7 @@ router.get('/article/recent', function (req, res) {
 /**
  * 热门文章列表
  * @method /api/community/article/hot
+ * @author Ainama-/*[Mr.Zhang]
  */
 router.get('/article/hot', function (req, res) {
   console.log('article');

@@ -1,10 +1,12 @@
 /**
  * fetch封装
  * @method myFetch
+ * @author Ainama-/*[Mr.Zhang]
  * @param {string} url 路由地址
  * @param {object} fetchObj fetch请求对象
  * @param {object} outputObj 输出给reducers的对象
  * @param {function} dispatch redux dispatch
+ * @author Ainama-/*[Mr.Zhang]
  */
 export function myFetch(url, fetchObj, outputObj, dispatch) {
   fetchObj.credentials = 'include';  // fetch cookie
@@ -22,6 +24,7 @@ export function myFetch(url, fetchObj, outputObj, dispatch) {
  * 时间格式化
  * @method dateForMoment
  * @param {int} date 时间戳
+ * @author Ainama-/*[Mr.Zhang]
  */
 export function dateFormat(date) {
   var data = date;

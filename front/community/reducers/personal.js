@@ -21,6 +21,7 @@ export function userInfo(state = defaultState.userInfo, action) {
         stateObj = { status: 2, msg: action.payload.msg[0] };
       } else if (action.payload.code == 10008) {
         stateObj = { status: 1 };
+        location.href = '/login';
       }
       return assign({}, state, stateObj);
     }

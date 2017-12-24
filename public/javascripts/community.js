@@ -31714,6 +31714,7 @@ function userInfo() {
           stateObj = { status: 2, msg: action.payload.msg[0] };
         } else if (action.payload.code == 10008) {
           stateObj = { status: 1 };
+          location.href = '/login';
         }
         return (0, _lodash2.default)({}, state, stateObj);
       }

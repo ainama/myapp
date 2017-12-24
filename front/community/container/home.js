@@ -5,10 +5,15 @@ import { Link } from 'react-router-dom';
 
 import * as actions from '../actions/home';
 import { dateFormat } from '../../tools';
+import HotList from '../component/home/hotList';
+import Advert from '../component/home/advert';
 
 class Home extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      advert: { src: '/images/community/home_advert.png', href: 'https://www.audi.cn/cn/web/zh.html' }
+    };
   }
 
   componentDidMount() {
@@ -30,7 +35,9 @@ class Home extends React.Component {
   }
 
   getMore() {
-    this.props.actions.getArticleRecent('page=2');
+    let len = this.props.home.recentList.length;
+    let page = Math.round(len/10) + 1;
+    this.props.actions.getArticleRecent('page='+page);
   }
 
   render() {
@@ -45,7 +52,7 @@ class Home extends React.Component {
               let tagString = this.tagString(item.content);
               let time = dateFormat(new Date(item.create_time).getTime());
               return (
-                <Link key = { index } to = { '/community/showArticle/' + item.id }>
+                <div key = { index }>
                   <div className = 'item'>
                     <div className = 'user'>
                       <img className = 'head' src = { head } />
@@ -54,15 +61,17 @@ class Home extends React.Component {
                     </div>
                     <div className = 'article'>
                       <div className = 'left'>
-                        <div className = 'title'>{ item.title }</div>
+                        <Link to = { '/community/showArticle/' + item.id }>
+                          <div className = 'title'>{ item.title }</div>
+                        </Link>
                         <div className = 'content'>{ tagString }</div>
                       </div>
-                      <img
-                        className = 'right banner'
-                        src = { item.banner } />
+                      <Link to = { '/community/showArticle/' + item.id }>
+                        <img className = 'right banner' src = { item.banner } />
+                      </Link>
                     </div>
                   </div>
-                </Link>
+                </div>
               );
             })
           }
@@ -79,7 +88,10 @@ class Home extends React.Component {
 
         {/* 热门文章 */}
         <div className = 'hot'>
-          right
+          {/* 热门文章列表 */}
+          <HotList data = { this.props.home.hotList } />
+          {/* 广告位 */}
+          <Advert data = { this.state.advert } />
         </div>
 
       </div>

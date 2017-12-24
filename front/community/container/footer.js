@@ -1,6 +1,7 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 import * as actions from '../actions/test';
 
@@ -14,12 +15,18 @@ class Footer extends React.Component {
       <div className = 'footer'>
         <div className = 'body'>
           <div className = 'row1'>
-            <a>关于AINAMA</a>
-            <a>联系我们</a>
-            <a>加入我们</a>
+            <div className = 'div' onClick = { () => { scrollTo(0, 0); } }>
+              <Link to = '/community/home'>关于AINAMA</Link>
+            </div>
+            <div className = 'div' onClick = { () => { scrollTo(0, 0); } }>
+              <Link to = '/community/home'>联系我们</Link>
+            </div>
+            <div className = 'div' onClick = { () => { scrollTo(0, 0); } }>
+              <Link to = '/community/home'>加入我们</Link>
+            </div>
           </div>
-          <div className = 'row2'>
-            <a>©2017 京ICP备16042859号</a>
+          <div className = 'row2' onClick = { () => { scrollTo(0, 0); } }>
+            <Link to = '/community/home'>©2017 京ICP备16042859号</Link>
           </div>
         </div>
       </div>

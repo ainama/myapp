@@ -146,15 +146,14 @@ router.get('/logout', function (req, res) {
     res.redirect('/login');
 });
 
-/* zhangning */
 /**
  * 获取用户信息（顶导）
  * @method /api/community/user/base
+ * @author Ainama-/*[Mr.Zhang]
  */
 router.get('/user/base', function (req, res) {
   var sid = req.session.sessionId;
-  // var sql = 'SELECT * FROM t_user WHERE id=' + sid + ';';
-  var sql = 'SELECT id,head_img FROM t_user WHERE id=' + sid;
+  var sql = 'SELECT id, head_img FROM t_user WHERE id=' + sid;
   query(sql, null, function (error, results, fields) {
     if (error) throw error;
     res.send({ code: 10000, msg: results[0] });
@@ -164,11 +163,13 @@ router.get('/user/base', function (req, res) {
 /**
  * 最近文章列表
  * @method /api/community/article/recent
+ * @author Ainama-/*[Mr.Zhang]
  */
 router.get('/article/recent', function (req, res) {
+  console.log('article');
   var start = (req.query.page - 1) * 10;
   var end = req.query.page * 10;
-  var sql = 'SELECT t_article.id,t_article.title,t_article.content,t_article.banner,t_article.create_time,t_user.name,t_user.head_img FROM t_article,t_user WHERE t_article.author_id=t_user.id ORDER BY create_time DESC limit ' + start + ',' + end;
+  var sql = 'SELECT t_article.id, t_article.title, t_article.content, t_article.banner, t_article.create_time, t_user.name, t_user.head_img FROM t_article, t_user WHERE t_article.author_id=t_user.id ORDER BY create_time DESC limit ' + start + ',' + end;
   query(sql, null, function (error, results, fields) {
     if (error) throw error;
     res.send({ code: 10000, msg: results });
@@ -178,9 +179,11 @@ router.get('/article/recent', function (req, res) {
 /**
  * 热门文章列表
  * @method /api/community/article/hot
+ * @author Ainama-/*[Mr.Zhang]
  */
 router.get('/article/hot', function (req, res) {
-  var sql = 'SELECT t_article.banner,t_article.title,t_article.create_time FROM t_article,t_praise WHERE t_article.id=t_praise.article_id ORDER BY t_praise.praise DESC limit 10;';
+  console.log('article');
+  var sql = 'SELECT id, title, banner, create_time FROM t_article ORDER BY praise DESC limit 10';
   query(sql, null, function (error, results, fields) {
     if (error) throw error;
     res.send({ code: 10000, msg: results });

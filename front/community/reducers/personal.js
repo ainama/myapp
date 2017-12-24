@@ -9,8 +9,8 @@ const defaultState = {
 			head_img: '/images/userImg.png'
 		}
 	},
-	articles: [],
-	likes: [],
+	articles: { msg: [] },
+	likes: { msg: [] },
 }
 
 export function userInfo(state = defaultState.userInfo, action) {

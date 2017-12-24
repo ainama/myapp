@@ -138,6 +138,89 @@ router.get('/user/likes', function (req, res) {
 });
 
 /**
+ * 用户修改姓名
+ * @method /api/community/user/updateName
+ */
+router.post('/user/updateName', function(req, res){
+  updateInfo(req, res, 'name');
+});
+
+/**
+ * 用户修改密码
+ * @method /api/community/user/updatePwd
+ */
+router.post('/user/updatePwd', function(req, res){
+  updateInfo(req, res, 'pwd');
+});
+
+/**
+ * 用户修改手机号
+ * @method /api/community/user/updateTel
+ */
+router.post('/user/updateTel', function(req, res){
+  var uid = req.session.sessionId;
+  var data = req.body;
+  var params = [data.tel, uid]
+  var telSql = 'SELECT t_user.tel FROM t_user';
+  var sql = 'UPDATE t_user SET tel=? where id=?';
+  query(telSql, null, function (error, results, fields) {
+    console.log('oooooo', results);
+    if (error) {
+      throw error;
+    } else {
+      var bool = true;
+      if (results) {
+        for (var i = 0;i < results.length;i++) {
+          if (results[i].tel == data.tel) {
+            bool = false;
+            res.send({ code: 10002, msg: '电话号码已存在！' });
+          }
+        }
+
+        if (bool) {
+          query(sql, params, function (error, results, fields) {
+            console.log('update', results);
+            if (error) {
+              throw error;
+            } else {
+              if (results.serverStatus == 2) {
+                res.send({ code: 10000, msg: '修改成功！' });
+              }
+            }
+          });
+        }
+      }
+    }
+  });
+
+});
+
+/**
+ * 用户修改头像
+ * @method /api/community/user/updateImg
+ */
+router.post('/user/updateImg', function(req, res){
+  updateInfo(req, res, 'head_img');
+});
+
+function updateInfo(req, res, type) {
+  var uid = req.session.sessionId;
+  var data = req.body;
+  var params = [data[type], uid]
+  var sql = 'UPDATE t_user SET '+ type +'=? where id=?';
+  query(sql, params, function (error, results, fields) {
+    console.log('update', results);
+    if (error) {
+      throw error;
+    } else {
+      if (results.serverStatus == 2) {
+        res.send({ code: 10000, msg: '修改成功！' });
+      }
+    }
+  });
+}
+
+/**
  * 退出
  * @method /api/community/user/logout
  */

@@ -18,6 +18,7 @@ class PersonalPage extends React.Component {
   componentWillMount() {
     // 获取用户信息
     this.props.actions.getUserInfo();
+    // 默认首先获取文章列表获取
     this.props.actions.getArticles();
     // $.ajax({
     //   url: '/api/community/user/userInfo',
@@ -35,7 +36,6 @@ class PersonalPage extends React.Component {
 
   }
 
-
   tagString(content) {
     let div = document.createElement('div');
     div.innerHTML = content;
@@ -49,6 +49,7 @@ class PersonalPage extends React.Component {
     return tagString;
   }
 
+  // 点击tab签获取相应内容列表
   _tabsChange(type) {
     this.setState({
       active: type
@@ -57,29 +58,9 @@ class PersonalPage extends React.Component {
     if (type == 'article') {
       // 获取用户发表文章列表
       this.props.actions.getArticles();
-      // $.ajax({
-      //   url: '/api/community/user/articles',
-      //   type: 'get',
-      //   success: function(res) {
-      //     console.log('00000', res);
-      //     if (res.code == 10008) {
-      //       location.href = '/login';
-      //     }
-      //   }
-      // });
-    } else if(type == 'like') {
-       // 获取用户点赞文章列表
-       this.props.actions.getLikes();
-      // $.ajax({
-      //   url: '/api/community/user/likes',
-      //   type: 'get',
-      //   success: function(res) {
-      //     console.log('00000', res);
-      //     if (res.code == 10008) {
-      //       location.href = '/login';
-      //     }
-      //   }
-      // });     
+    } else if (type == 'like') {
+      // 获取用户点赞文章列表
+      this.props.actions.getLikes();   
     } 
   }
 
@@ -87,6 +68,7 @@ class PersonalPage extends React.Component {
     let { userInfo, userArticles, userLikes } = this.props;
     let active = this.state.active;
     let list = active == 'article' ? userArticles : userLikes;
+    console.log('list', list)
     return (
       <div className = 'personal-page'>
         {/*个人资料*/}
@@ -122,8 +104,8 @@ class PersonalPage extends React.Component {
               onClick = {() => this._tabsChange('like')}>已赞</p>
           </div>
           <div className = 'personal-content-list'>
-            { list &&
-              list.map(function(item, k){
+            { list.length
+              ? list.map(function(item, k){
                 let tagString = this.tagString(item.content);
                 return (
                   <Link
@@ -136,10 +118,10 @@ class PersonalPage extends React.Component {
                       <div className = 'like'>
                         <img
                           className = 'hot'
-                          src = '/images/hot_icon.png'/><span>23</span>
+                          src = '/images/hot_icon.png'/><span>{ item.praise }</span>
                         <img  
                           className = 'thumb-up'
-                          src = '/images/thumb_icon.png'/><span>32</span>
+                          src = '/images/thumb_icon.png'/><span>{ item.like }</span>
                       </div>
                     </div>
                     <img
@@ -149,6 +131,11 @@ class PersonalPage extends React.Component {
 
                 )
               }.bind(this))
+              : <div className = 'personal-content-none'>
+                  { this.state.active == 'article'
+                    ? '您很懒哦！还没有发表过文章！'
+                    : '您很不够意思哦！还没有赞过文章！'}
+                </div>
             }
           </div>
         </div>

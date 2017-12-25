@@ -101,7 +101,8 @@ input {
 }
 
 input:last-child {
-  margin-bottom: -1px;
+  // margin-bottom: -1px;
+  border-bottom: 0px solid #eeeeee;
 }
 
 #login-tel-error {

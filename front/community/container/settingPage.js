@@ -127,14 +127,29 @@ class SettingPage extends React.Component {
     }
   }
 
+  // 左侧导航锚点
+  _anchor(e, type) {
+    let list = e.target.parentNode.childNodes;
+    // console.log(list);
+    for (let i = 0; i < list.length; i++ ) {
+      list[i].className = '';
+    }
+    e.target.className = 'active';
+    if (type == 'safe') {
+      $('.setting-content')[0].style.marginTop = '-284px';
+    } else {
+      $('.setting-content')[0].style.marginTop = '0px';
+    }
+  }
+
   render() {
     let { userInfo } = this.props;
     return (
       <div>
         <div className = 'setting-page'>
           <div className = 'setting-nav'>
-            <p className = 'active'>基本信息</p>
-            <p>账户安全</p>
+            <p className = 'active' onClick = {e => this._anchor(e, 'base')}>基本信息</p>
+            <p onClick = {e => this._anchor(e, 'safe')}>账户安全</p>
           </div>
           <div className = 'setting-content'>
             <div className = 'setting-content-detail'>

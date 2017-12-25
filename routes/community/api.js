@@ -127,7 +127,7 @@ router.get('/user/articles', function (req, res) {
  */
 router.get('/user/likes', function (req, res) {
   var uid = req.session.sessionId;
-  var sql = 'SELECT * FROM t_like where user_id=' + uid;
+  var sql = 'SELECT t_article.* FROM t_like JOIN t_article ON t_article.id=t_like.article_id WHERE t_like.user_id=' + uid;
   query(sql, null, function (error, results, fields) {
     if (error) {
       throw error;

@@ -10,7 +10,6 @@ class HotItem extends React.Component {
 
   render() {
     let data = this.props.data;
-    let i = this.props.index;
     let time = dateFormat(new Date(data.create_time).getTime());
     return (
       <Link className = 'item' to = { '/community/showArticle/' + data.id }>

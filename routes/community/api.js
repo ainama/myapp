@@ -232,7 +232,7 @@ router.get('/logout', function (req, res) {
 /**
  * 获取用户信息（顶导）
  * @method /api/community/user/base
- * @author Ainama-/*[Mr.Zhang]
+ * @author zhangning
  */
 router.get('/user/base', function (req, res) {
   var sid = req.session.sessionId;
@@ -246,7 +246,7 @@ router.get('/user/base', function (req, res) {
 /**
  * 最近文章列表
  * @method /api/community/article/recent
- * @author Ainama-/*[Mr.Zhang]
+ * @author zhangning
  */
 router.get('/article/recent', function (req, res) {
   var start = (req.query.page - 1) * 10;
@@ -261,7 +261,7 @@ router.get('/article/recent', function (req, res) {
 /**
  * 热门文章列表
  * @method /api/community/article/hot
- * @author Ainama-/*[Mr.Zhang]
+ * @author zhangning
  */
 router.get('/article/hot', function (req, res) {
   var sql = 'SELECT id, title, banner, create_time FROM t_article ORDER BY praise DESC limit 10';
@@ -383,6 +383,7 @@ router.post('/article/upload', function(req, res) {
 /**
  * 读文章
  * @method /api/community/article/read
+ * @author chaoqun zhangning
  */
 router.post('/article/read', function(req, res) {
   var data = req.body;
@@ -407,7 +408,7 @@ router.post('/article/read', function(req, res) {
 router.post('/article/getlike', function(req, res) {
   var data = req.body;
   var sql = 'SELECT COUNT(*) AS count FROM t_like WHERE article_id = ' + data.id;
-  query(sql, function(error, results, fields) {
+  query(sql, null, function(error, results, fields) {
     if (error) {
       throw error;
     } else {
@@ -429,12 +430,14 @@ router.post('/article/like', function(req, res) {
   };
   console.log('add => ', params)
   query(sql, params, function(error, results, fields) {
-    if (error) {
-      res.send({ code: 10002, msg: '发布失败', error: error.sqlMessage });
-      // throw error;
-    } else {
+    if (error) throw error;
+    else {
       if (results.serverStatus == 2) {
         res.send({ code: 10000, msg: '发布成功' });
+        var sql = 'UPDATE t_article SET count_like=count_like+1 WHERE id = ' + data.article_id;
+        query(sql, null, function (error, results, fields) {
+          if (error) throw error;
+        });
       } else {
         res.send({ code: 10001, msg: '发布失败' });
       }
@@ -449,13 +452,13 @@ router.post('/article/like', function(req, res) {
 router.post('/article/author', function(req, res) {
   var data = req.body;
   var sql = 'SELECT author_id FROM t_article WHERE id = ' + data.id;
-  query(sql, function(error, results, fields) {
+  query(sql, null, function(error, results, fields) {
     if (error) {
       throw error;
     } else {
       var author_id = results[0].author_id;
       var sql = 'SELECT * FROM t_user WHERE id = ' + author_id;
-      query(sql, function(error, results, fields) {
+      query(sql, null, function(error, results, fields) {
         if (error) {
           throw error;
         } else {
@@ -473,13 +476,13 @@ router.post('/article/author', function(req, res) {
 router.post('/article/latest', function (req, res) {
   var data = req.body;
   var sql = 'SELECT author_id FROM t_article WHERE id = ' + data.id;
-  query(sql, function(error, results, fields) {
+  query(sql, null, function(error, results, fields) {
     if (error) {
       throw error;
     } else {
       var author_id = results[0].author_id;
       var sql = 'SELECT t_article.id,t_article.title,t_article.create_time FROM t_article WHERE t_article.author_id = ' + author_id + ' ORDER BY create_time DESC limit 1';
-      query(sql, function(error, results, fields) {
+      query(sql, null, function(error, results, fields) {
         if (error) {
           throw error;
         } else {

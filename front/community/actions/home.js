@@ -10,6 +10,10 @@ export function getArticleRecent(data) {
   };
 }
 
+export function setLoadText() {
+  return { type: types.SET_LOAD_TEXT };
+}
+
 export function getArticleHot() {
   return (dispatch) => {
     let url = '/api/community/article/hot';

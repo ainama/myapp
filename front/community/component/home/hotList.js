@@ -24,7 +24,7 @@ class HotList extends React.Component {
             } else {
               return (
                 <React.Fragment key = { index }>
-                  <HotItem data = { item } index = { index } />
+                  <HotItem data = { item } />
                 </React.Fragment>
               );
             }

@@ -4,7 +4,8 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import * as actions from '../actions/home';
-import { dateFormat } from '../../tools';
+import RecentList from '../component/home/recentList';
+import LoadButton from '../component/home/loadButton';
 import HotList from '../component/home/hotList';
 import Advert from '../component/home/advert';
 
@@ -21,22 +22,10 @@ class Home extends React.Component {
     this.props.actions.getArticleHot();
   }
 
-  tagString(content) {
-    let div = document.createElement('div');
-    div.innerHTML = content;
-    let tagArray = div.getElementsByTagName('p');
-    let tagString = '';
-    for (let i = 0; i < tagArray.length; i++) {
-      tagString = tagString + tagArray[i].innerHTML;
-    }
-    tagString = tagString.substring(0, 84);
-    if (tagString.length > 83) tagString = tagString + '...';
-    return tagString;
-  }
-
   getMore() {
     let len = this.props.home.recentList.length;
     let page = Math.round(len/10) + 1;
+    this.props.actions.setLoadText();
     this.props.actions.getArticleRecent('page='+page);
   }
 
@@ -46,43 +35,14 @@ class Home extends React.Component {
 
         {/* 最近文章 */}
         <div className = 'recent'>
-          {
-            this.props.home.recentList.map((item, index) => {
-              let head = item.head_img != null ? item.head_img : '/images/community/header_default_avatar.png';
-              let tagString = this.tagString(item.content);
-              let time = dateFormat(new Date(item.create_time).getTime());
-              return (
-                <React.Fragment key = { index }>
-                  <div className = 'item'>
-                    <div className = 'user'>
-                      <img className = 'head' src = { head } />
-                      <div className = 'name'>{ item.name }</div>
-                      <div className = 'time'>{ time }</div>
-                    </div>
-                    <div className = 'article'>
-                      <div className = 'left'>
-                        <Link to = { '/community/showArticle/' + item.id }>
-                          <div className = 'title'>{ item.title }</div>
-                        </Link>
-                        <div className = 'content'>{ tagString }</div>
-                      </div>
-                      <Link to = { '/community/showArticle/' + item.id }>
-                        <img className = 'right banner' src = { item.banner } />
-                      </Link>
-                    </div>
-                  </div>
-                </React.Fragment>
-              );
-            })
-          }
+          {/* 最近文章列表 */}
+          <RecentList data = { this.props.home.recentList } />
+          {/* 加载更多按钮 */}
           {
             this.props.home.status == 2 &&
-            <div
-              ref = 'load'
-              className = 'load'
-              onClick = { () => { this.getMore(); } }>
-              { this.props.home.loadText }
-            </div>
+            <LoadButton
+              text = { this.props.home.loadText }
+              click = { () => { this.getMore(); } } />
           }
         </div>
 

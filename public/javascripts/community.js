@@ -12442,7 +12442,7 @@ function uploadArticle(data) {
       type: 'POST',
       data: data,
       success: function success(res) {
-        // console.log('uploadArticle action => ', res);
+        console.log('uploadArticle action => ', res);
       }
     });
   };
@@ -22867,7 +22867,7 @@ _reactDom2.default.render(_react2.default.createElement(
       _react2.default.createElement(_reactRouterDom.Route, { exact: true, strict: true, path: '/community/page2', component: _page4.default }),
       _react2.default.createElement(_reactRouterDom.Route, { exact: true, strict: true, path: '/community/home', component: _home2.default }),
       _react2.default.createElement(_reactRouterDom.Route, { exact: true, strict: true, path: '/community/addArticle', component: _addArticle2.default }),
-      _react2.default.createElement(_reactRouterDom.Route, { exact: true, strict: true, path: '/community/addArticle/:type', component: _addArticle2.default }),
+      _react2.default.createElement(_reactRouterDom.Route, { exact: true, strict: true, path: '/community/addArticle/:article', component: _addArticle2.default }),
       _react2.default.createElement(_reactRouterDom.Route, { exact: true, strict: true, path: '/community/showArticle/:article', component: _showArticle2.default }),
       _react2.default.createElement(_reactRouterDom.Route, { exact: true, strict: true, path: '/community/personal', component: _PersonalPage2.default }),
       _react2.default.createElement(_reactRouterDom.Route, { exact: true, strict: true, path: '/community/setting', component: _SettingPage2.default })
@@ -29091,14 +29091,16 @@ var AddArticle = function (_React$Component) {
     _this.state = {
       content: _this.props.article.content,
       title: _this.props.article.title,
-      type: _this.props.match.params.type
+      article_id: _this.props.match.params.article || 0
     };
     return _this;
   }
 
   _createClass(AddArticle, [{
     key: 'componentDidMount',
-    value: function componentDidMount() {}
+    value: function componentDidMount() {
+      // if()
+    }
   }, {
     key: '_addBanner',
     value: function _addBanner() {
@@ -29158,7 +29160,7 @@ var AddArticle = function (_React$Component) {
       var _state = this.state,
           title = _state.title,
           content = _state.content,
-          type = _state.type;
+          article_id = _state.article_id;
 
 
       return _react2.default.createElement(
@@ -29203,7 +29205,7 @@ var AddArticle = function (_React$Component) {
           {
             onClick: this._upload,
             className: 'addArticle-upload' },
-          type == 'edit' ? '更新' : '发布'
+          article_id == 0 ? '发布' : '更新'
         )
       );
     }
@@ -29287,7 +29289,10 @@ var SimditorTextarea = function (_React$Component) {
     key: 'componentDidMount',
     value: function componentDidMount() {
       this._initEditor();
-      // this.editor.focus();
+      // $(this.refs.textarea).onpaste = function() { return false };
+      this.editor.onpaste = function () {
+        return false;
+      };
     }
   }, {
     key: '_initEditor',

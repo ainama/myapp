@@ -47,7 +47,7 @@ export function uploadArticle(data) {
      type: 'POST',
      data: data,
      success: function(res) {
-       // console.log('uploadArticle action => ', res);
+       console.log('uploadArticle action => ', res);
      }
    });
  };

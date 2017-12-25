@@ -21,7 +21,8 @@ class SimditorTextarea extends React.Component {
 
   componentDidMount() {
     this._initEditor();
-    // this.editor.focus();
+    // $(this.refs.textarea).onpaste = function() { return false };
+    this.editor.onpaste = function() { return false };
   };
 
   _initEditor() {

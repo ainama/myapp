@@ -232,7 +232,7 @@ router.get('/logout', function (req, res) {
 /**
  * 获取用户信息（顶导）
  * @method /api/community/user/base
- * @author zhangning
+ * @author Ainama-/*[Mr.Zhang]
  */
 router.get('/user/base', function (req, res) {
   var sid = req.session.sessionId;
@@ -246,7 +246,7 @@ router.get('/user/base', function (req, res) {
 /**
  * 最近文章列表
  * @method /api/community/article/recent
- * @author zhangning
+ * @author Ainama-/*[Mr.Zhang]
  */
 router.get('/article/recent', function (req, res) {
   var start = (req.query.page - 1) * 10;
@@ -261,7 +261,7 @@ router.get('/article/recent', function (req, res) {
 /**
  * 热门文章列表
  * @method /api/community/article/hot
- * @author zhangning
+ * @author Ainama-/*[Mr.Zhang]
  */
 router.get('/article/hot', function (req, res) {
   var sql = 'SELECT id, title, banner, create_time FROM t_article ORDER BY praise DESC limit 10';
@@ -348,7 +348,7 @@ router.post('/article/upload', function(req, res) {
         // throw error;
       } else {
         if (results.serverStatus == 2) {
-          res.send({ code: 10000, msg: '发布成功' });
+          res.send({ code: 10000, msg: '发布成功', article_id: results.insertId});
         } else {
           res.send({ code: 10001, msg: '发布失败' });
         }
@@ -383,7 +383,6 @@ router.post('/article/upload', function(req, res) {
 /**
  * 读文章
  * @method /api/community/article/read
- * @author chaoqun zhangning
  */
 router.post('/article/read', function(req, res) {
   var data = req.body;

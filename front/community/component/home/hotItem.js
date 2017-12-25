@@ -13,7 +13,7 @@ class HotItem extends React.Component {
     let i = this.props.index;
     let time = dateFormat(new Date(data.create_time).getTime());
     return (
-      <Link className = 'item' to = { '/community/showArticle/' + data.id }>>
+      <Link className = 'item' to = { '/community/showArticle/' + data.id }>
         <img className = 'banner' src = { data.banner } />
         <div className = 'content'>
           <span>{ data.title }</span>

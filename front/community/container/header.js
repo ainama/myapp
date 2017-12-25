@@ -36,6 +36,10 @@ class Header extends React.Component {
     });
   }
 
+  pushLogin(type) {
+    localStorage.setItem('login', type);
+  }
+
   render() {
     return (
       <div className = 'header'>
@@ -84,10 +88,14 @@ class Header extends React.Component {
             {
               this.props.header.status == 1 &&
               <React.Fragment>
-                <div className = 'login'>
+                <div
+                  className = 'login'
+                  onClick = { () => { this.pushLogin('login'); } }>
                   <a href = '/login'>登录</a>
                 </div>
-                <div className = 'register'>
+                <div
+                  className = 'register'
+                  onClick = { () => { this.pushLogin('register'); } }>
                   <a href = '/login'>注册</a>
                 </div>
               </React.Fragment>

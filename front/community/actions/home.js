@@ -10,6 +10,10 @@ export function getArticleRecent(data) {
   };
 }
 
+export function setLoadText() {
+  return { type: types.SET_LOAD_TEXT };
+}
+
 export function getArticleHot() {
   return (dispatch) => {
     let url = '/api/community/article/hot';
@@ -17,4 +21,8 @@ export function getArticleHot() {
     let outputObj = { type: types.GET_ARTICLE_HOT };
     myFetch(url, fetchObj, outputObj, dispatch);
   };
+}
+
+export function clearProps() {
+  return { type: types.CLEAR_PROPS };
 }

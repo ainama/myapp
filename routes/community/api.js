@@ -390,9 +390,44 @@ router.post('/article/read', function(req, res) {
   var selectSql = 'SELECT * FROM t_article WHERE id = ' + data.id;
   query(selectSql, null, function(error, results, fields) {
     if (error) { throw error; }
-    res.send({ code: 10000, msg: results });
 
-    // 统计访问次数
+    // 判断是否为作者，是否赞过
+    var uid = req.session.sessionId;
+    if (uid) {
+
+      var authorID = results[0].author_id;
+
+      if (uid == authorID) {
+
+        results[0].isLiked = false;
+        results[0].isAuthor = true;
+        res.send({ code: 10000, msg: results });
+
+      } else {
+
+        var s2 = 'SELECT article_id FROM t_like WHERE user_id=' + uid;
+        results[0].isLiked = false;
+        results[0].isAuthor = false;
+        query(s2, null, function (e, r, f) {
+          if (e) throw e;
+          for (var i = 0; i < r.length; i++) {
+            if (r[i].article_id == data.id) {
+              results[0].isLiked = true;
+              break;
+            }
+          }
+          res.send({ code: 10000, msg: results });
+        });
+
+      }
+
+    } else {
+      results[0].isLiked = false;
+      results[0].isAuthor = false;
+      res.send({ code: 10000, msg: results });
+    }
+
+    /* 统计访问次数 */
     var praise = results[0].praise + 1;
     var updatesQL = 'UPDATE t_article SET praise=' + praise + ' WHERE id=' + data.id;
     query(updatesQL, null, function (error, results, fields) {

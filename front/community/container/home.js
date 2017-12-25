@@ -52,7 +52,7 @@ class Home extends React.Component {
               let tagString = this.tagString(item.content);
               let time = dateFormat(new Date(item.create_time).getTime());
               return (
-                <div key = { index }>
+                <React.Fragment key = { index }>
                   <div className = 'item'>
                     <div className = 'user'>
                       <img className = 'head' src = { head } />
@@ -71,7 +71,7 @@ class Home extends React.Component {
                       </Link>
                     </div>
                   </div>
-                </div>
+                </React.Fragment>
               );
             })
           }

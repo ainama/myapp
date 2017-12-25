@@ -4,7 +4,7 @@ var session = require('express-session');
 var formidable = require('formidable'),
     fs = require('fs'),
     TITLE = 'formidable上传示例',
-    AVATAR_UPLOAD_FOLDER = '/images/article/',
+    AVATAR_UPLOAD_FOLDER = '/images/resource/',
     domain = "http://localhost:3000";
 
 var query = require('../../tools/community_server.js');
@@ -249,10 +249,9 @@ router.get('/user/base', function (req, res) {
  * @author Ainama-/*[Mr.Zhang]
  */
 router.get('/article/recent', function (req, res) {
-  console.log('article');
   var start = (req.query.page - 1) * 10;
   var end = req.query.page * 10;
-  var sql = 'SELECT t_article.id, t_article.title, t_article.content, t_article.banner, t_article.create_time, t_user.name, t_user.head_img FROM t_article, t_user WHERE t_article.author_id=t_user.id ORDER BY create_time DESC limit ' + start + ',' + end;
+  var sql = 'SELECT t_article.id, t_article.title, t_article.content, t_article.banner, t_article.create_time, t_user.name, t_user.head_img FROM t_article LEFT JOIN t_user ON t_article.author_id=t_user.id ORDER BY create_time DESC limit ' + start + ',' + end;
   query(sql, null, function (error, results, fields) {
     if (error) throw error;
     res.send({ code: 10000, msg: results });
@@ -265,7 +264,6 @@ router.get('/article/recent', function (req, res) {
  * @author Ainama-/*[Mr.Zhang]
  */
 router.get('/article/hot', function (req, res) {
-  console.log('article');
   var sql = 'SELECT id, title, banner, create_time FROM t_article ORDER BY praise DESC limit 10';
   query(sql, null, function (error, results, fields) {
     if (error) throw error;
@@ -275,10 +273,10 @@ router.get('/article/hot', function (req, res) {
 
 /* lichaoqun */
 /**
- * 上传文章banner
- * @method /api/community/article/image
+ * 上传图片
+ * @method /api/community/uploadImg
  */
-router.post('/article/image', function (req, res) {
+router.post('/uploadImg', function (req, res) {
   var form = new formidable.IncomingForm();   //创建上传表单
   form.encoding = 'utf-8';        //设置编辑
   form.uploadDir = 'public' + AVATAR_UPLOAD_FOLDER;     //设置上传目录
@@ -388,13 +386,17 @@ router.post('/article/upload', function(req, res) {
  */
 router.post('/article/read', function(req, res) {
   var data = req.body;
-  var sql = 'SELECT * FROM t_article WHERE id = ' + data.id;
-  query(sql, function(error, results, fields) {
-    if (error) {
-      throw error;
-    } else {
-      res.send({ code: 10000, msg: results });
-    }
+  var selectSql = 'SELECT * FROM t_article WHERE id = ' + data.id;
+  query(selectSql, null, function(error, results, fields) {
+    if (error) { throw error; }
+    res.send({ code: 10000, msg: results });
+
+    // 统计访问次数
+    var praise = results[0].praise + 1;
+    var updatesQL = 'UPDATE t_article SET praise=' + praise + ' WHERE id=' + data.id;
+    query(updatesQL, null, function (error, results, fields) {
+      if (error) throw error;
+    });
   });
 });
 

@@ -12,7 +12,7 @@
 export function uploadImage(data) {
  return (dispatch) => {
    $.ajax({
-     url: '/api/community/article/image',
+     url: '/api/community/uploadImg',
      type: 'POST',
      timeout: 5000,
      data: data,

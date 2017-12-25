@@ -3,21 +3,24 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as actions from '../actions/personal';
-var height = window.screen.availHeight;
+
+import Toast from '../component/toast.js';
 
 class SettingPage extends React.Component {
   constructor(props) {
     super(props);
+    this._uploadImg = this._uploadImg.bind(this);
+    this._closeToast = this._closeToast.bind(this);
     this.state = {
-      update: 'pwd'
+      update: 'pwd',
+      show: false,
+      text: '',
     }
   }
 
   componentWillMount() {
-
     // 获取用户信息
     this.props.actions.getUserInfo();
-
   }
 
   _saveInfo() {
@@ -25,6 +28,7 @@ class SettingPage extends React.Component {
   }
 
   _nameBlur(e) {
+    let that = this;
     let value = e.target.value;
     if (value.length != 0) {
 
@@ -33,22 +37,14 @@ class SettingPage extends React.Component {
         type: 'post',
         data: { name: value },
         success: function(res) {
-          alert(res.msg);
+          // alert(res.msg);
+          that.setState({
+            show: true,
+            text: res.msg
+          })
         }
       });
     }
-
-
-
-    
-    // $.ajax({
-    //   url: '/api/community/user/updateImg',
-    //   type: 'post',
-    //   data: { head_img: value },
-    //   success: function(res) {
-    //     console.log('00000', res);
-    //   }
-    // });
   }
 
   // 修改用户密码或手机号
@@ -56,7 +52,7 @@ class SettingPage extends React.Component {
     this.setState({
       update: type
     })
-    document.getElementsByClassName('page-setting-mask')[0].style.display = 'block';
+    document.getElementsByClassName('page-setting-mask')[0].style.display = 'flex';
   }
 
   // 关闭修改弹层
@@ -66,6 +62,7 @@ class SettingPage extends React.Component {
 
   // 修改用户密码或手机号
   _updateSubmit(type) {
+    let that = this;
     if (type == 'pwd') {
       let userPwd = this.props.userInfo.pwd;
       let original = $('#original').val();
@@ -75,14 +72,27 @@ class SettingPage extends React.Component {
       let bool = reg.test(reNewPwd);
 
       if (userPwd != original) {
-        alert('原密码错误');
+        // alert('原密码错误');
+        that.setState({
+          show: true,
+          text: '原密码错误'
+        })
+
         $('#original').val('');
       } else if (newPwd != reNewPwd) {
-        alert('新密码输入不一致！');
+        // alert('新密码输入不一致！');
+        that.setState({
+          show: true,
+          text: '新密码输入不一致！'
+        })
         $('#newPwd').val('');
         $('#reNewPwd').val('');
       } else if (!bool) {
-        alert('请输入8-16位密码');
+        // alert('请输入8-16位密码');
+        that.setState({
+          show: true,
+          text: '请输入8-16位密码'
+        })
         $('#newPwd').val('');
         $('#reNewPwd').val('');
       } else {
@@ -91,7 +101,11 @@ class SettingPage extends React.Component {
           type: 'post',
           data: { pwd: reNewPwd },
           success: function(res) {
-            alert(res.msg);
+            // alert(res.msg);
+            that.setState({
+              show: true,
+              text: res.msg
+            })
             $('#original').val('');
             $('#newPwd').val('');
             $('#reNewPwd').val('');
@@ -105,7 +119,11 @@ class SettingPage extends React.Component {
       let reg = /^1[3|4|5|7|8][0-9]{9}$/;
       let bool = reg.test(newTel);
       if (!bool) {
-        alert('手机格式不对，请重新输入！');
+        // alert('手机格式不对，请重新输入！');
+        that.setState({
+          show: true,
+          text: '手机格式不对，请重新输入'
+        })
         $('#newTel').val('');
       } else {
         $.ajax({
@@ -113,7 +131,11 @@ class SettingPage extends React.Component {
           type: 'post',
           data: { tel: newTel },
           success: function(res) {
-            alert(res.msg);
+            // alert(res.msg);
+            that.setState({
+              show: true,
+              text: res.msg
+            })
             if (res.code == 10002) {
               $('#newTel').val('');
             } else if (res.code == 10000) {
@@ -142,6 +164,44 @@ class SettingPage extends React.Component {
     }
   }
 
+  // 上传头像
+  _uploadImg(e) {
+    let that = this;
+    let formData = new FormData();
+    formData.append('image', e.target.files[0]);
+
+    $.ajax({
+      url: '/api/community/uploadImg',
+      type: 'post',
+      data: formData,
+      contentType: false,
+      processData: false,
+      success: function(res) {
+        console.log('00000', res);
+        $.ajax({
+          url: '/api/community/user/updateImg',
+          type: 'post',
+          data: { head_img: res.newPath },
+          success: function(response) {
+            // alert('上传头像成功！');
+            that.setState({
+              show: true,
+              text: res.msg
+            })
+            that.props.actions.getUserInfo();
+          }
+        });
+      }
+    });
+  }
+
+  // 关闭toast
+  _closeToast() {
+    this.setState({
+      show: false
+    })
+  }
+
   render() {
     let { userInfo } = this.props;
     return (
@@ -155,7 +215,21 @@ class SettingPage extends React.Component {
             <div className = 'setting-content-detail'>
               <p className = 'setting-content-title'>基本资料</p>
               <div className = 'setting-content-base'>
-                <img src = '/images/userImg.png'/>
+                <div className = 'setting-content-img'>
+                  <div className = 'mask'>
+                    <div>
+                      <img src = '/images/camera.png' />
+                      <p>修改头像</p>
+                      <input
+                        className = 'upload'
+                        accept = '.png,.jpg,.jpeg'
+                        type = 'file'
+                        name = 'image'
+                        onChange = {e => this._uploadImg(e)}/>
+                    </div>
+                  </div>
+                  <img src = { userInfo.head_img }/>
+                </div>
                 <div className = 'setting-content-separate'></div>
                 <div className = 'setting-content-input'>
                   <p>姓名</p>
@@ -182,9 +256,7 @@ class SettingPage extends React.Component {
             </div>
           </div>
         </div>
-        <div
-          className = 'page-setting-mask'
-          style = {{height: height}}>
+        <div className = 'page-setting-mask'>
 
           { this.state.update == 'pwd'           
             ? <div className = 'setting-mask-div'>
@@ -220,7 +292,13 @@ class SettingPage extends React.Component {
                   onClick = {() => this._updateSubmit('tel')}>确认</div>
               </div>
           }
-          </div>
+        </div>
+
+        {/*toast*/}
+        <Toast
+          show = { this.state.show }
+          text = { this.state.text }
+          closeCallback = { this._closeToast } />
 
       </div>
     );

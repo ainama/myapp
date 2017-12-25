@@ -29,6 +29,10 @@ class Home extends React.Component {
     this.props.actions.getArticleRecent('page='+page);
   }
 
+  componentWillUnmount() {
+    this.props.actions.clearProps();
+  }
+
   render() {
     return (
       <div className = 'home-page'>

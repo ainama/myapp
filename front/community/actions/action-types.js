@@ -9,6 +9,7 @@ export const GET_USER_BASE = 'GET_USER_BASE';
 export const GET_ARTICLE_RECENT = 'GET_ARTICLE_RECENT';
 export const GET_ARTICLE_HOT = 'GET_ARTICLE_HOT';
 export const SET_LOAD_TEXT = 'SET_LOAD_TEXT';
+export const CLEAR_PROPS = 'CLEAR_PROPS';
 
 export const GET_USER_INFO = 'GET_USER_INFO';
 export const GET_USER_ARTICLES = 'GET_USER_ARTICLES';

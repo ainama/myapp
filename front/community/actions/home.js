@@ -22,3 +22,7 @@ export function getArticleHot() {
     myFetch(url, fetchObj, outputObj, dispatch);
   };
 }
+
+export function clearProps() {
+  return { type: types.CLEAR_PROPS };
+}

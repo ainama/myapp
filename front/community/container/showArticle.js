@@ -20,13 +20,18 @@ class ShowArticle extends React.Component {
     };
   }
 
-  componentDidMount() {
-    // console.log(111);
+  componentWillMount() {
     let article_id = this.props.match.params.article;
+    // let user_id = this.props.header.user.id;
     this.props.actions.getArticle(article_id);  // 获取文章信息
     this.props.actions.getLike(article_id);  // 获取文章点赞信息
     this.props.actions.getAuthorInfo(article_id);  // 获取作者信息
     this.props.actions.getLatestArticle(article_id);  // 获取最新文章信息
+    // console.log('componentWillMount', this.props.header.user.id)
+  }
+
+  componentDidMount() {
+    // console.log('componentDidMount', this.props.header.user.id)
   }
 
   _addLike() {
@@ -99,6 +104,7 @@ class ShowArticle extends React.Component {
             disabled = { status }
             className = {!status ?'showArticle-like' : 'showArticle-dislike'}
             onClick = { this._addLike }>
+            <img src = '/images/article_thumb_up.png'/>
             {
               !status
               ? `赞(${ article.like })`
@@ -116,8 +122,8 @@ class ShowArticle extends React.Component {
 
             {/*head_img*/}
             <img
-              src = '/images/community/header_default_avatar.png'
-              // src = { article.head_img }
+              // src = '/images/community/header_default_avatar.png'
+              src = { article.head_img }
               className = 'showArticle-headImg'/>
 
             {/*author info*/}

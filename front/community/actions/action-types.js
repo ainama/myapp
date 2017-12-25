@@ -12,4 +12,3 @@ export const GET_ARTICLE_HOT = 'GET_ARTICLE_HOT';
 export const GET_USER_INFO = 'GET_USER_INFO';
 export const GET_USER_ARTICLES = 'GET_USER_ARTICLES';
 export const GET_USER_LIKES = 'GET_USER_LIKES';
-

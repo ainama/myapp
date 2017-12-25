@@ -4,6 +4,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from '../actions/article';
 
+import Toast from '../component/toast.js';
+
 class ShowArticle extends React.Component {
   constructor(props) {
     super(props);
@@ -11,8 +13,10 @@ class ShowArticle extends React.Component {
     this._goEdit = this._goEdit.bind(this);
     this._showLatest = this._showLatest.bind(this);
     this._createMarkup = this._createMarkup.bind(this);
+    this._closeToast = this._closeToast.bind(this);
     this.state = {
-      status: false,
+      status: false,  // 是否可点赞
+      show: false  // toast出现
     };
   }
 
@@ -37,7 +41,7 @@ class ShowArticle extends React.Component {
       this.props.actions.editLike(data);
       this.props.actions.getLike(article_id);  // 获取文章信息
     } else {
-      alert('请登陆');
+      this.setState({ show: true});
     }
   }
 
@@ -52,6 +56,12 @@ class ShowArticle extends React.Component {
     this.props.history.push('/community/showArticle/' + article_id);
   }
 
+  _closeToast() {
+    this.setState({
+      show: false
+    })
+  }
+
   // 文字转换
   _createMarkup(data) {
     return { __html: data };
@@ -60,7 +70,7 @@ class ShowArticle extends React.Component {
   render() {
 
     const article = this.props.article;
-    const { status } = this.state;
+    const { status, show } = this.state;
 
     return (
       <div className = 'showArticle-layout'>
@@ -135,6 +145,12 @@ class ShowArticle extends React.Component {
 
           </div>
         </div>
+
+        {/*toast*/}
+        <Toast
+          show = { show }
+          text = '请您登陆'
+          closeCallback = { this._closeToast } />
 
 
         {/*eidt  暂时关闭编辑接口*/}

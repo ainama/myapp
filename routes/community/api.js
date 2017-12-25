@@ -4,7 +4,7 @@ var session = require('express-session');
 var formidable = require('formidable'),
     fs = require('fs'),
     TITLE = 'formidable上传示例',
-    AVATAR_UPLOAD_FOLDER = '/images/article/',
+    AVATAR_UPLOAD_FOLDER = '/images/resource/',
     domain = "http://localhost:3000";
 
 var query = require('../../tools/community_server.js');
@@ -275,10 +275,10 @@ router.get('/article/hot', function (req, res) {
 
 /* lichaoqun */
 /**
- * 上传文章banner
- * @method /api/community/article/image
+ * 上传图片
+ * @method /api/community/uploadImg
  */
-router.post('/article/image', function (req, res) {
+router.post('/uploadImg', function (req, res) {
   var form = new formidable.IncomingForm();   //创建上传表单
   form.encoding = 'utf-8';        //设置编辑
   form.uploadDir = 'public' + AVATAR_UPLOAD_FOLDER;     //设置上传目录

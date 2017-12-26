@@ -4,6 +4,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+// var session = require('express-session');
 
 var app = express();
 
@@ -55,7 +56,7 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-// // 使用 session 中间件
+// 使用 session 中间件
 // app.use(session({
 //     secret :  'secret', // 对session id 相关的cookie 进行签名
 //     resave : true,

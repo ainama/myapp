@@ -89,7 +89,7 @@ class PersonalPage extends React.Component {
                 <img src = '/images/thumb_up.png'/>
                 <span>好评</span>
               </div>
-              <p>558</p>
+              <p>{ userInfo.like }</p>
             </div>
           </div>   
         </div>

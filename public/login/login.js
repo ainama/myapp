@@ -1,4 +1,16 @@
 $(document).ready(function(){
+	initialState();
+
+	/*
+	 * 登录／注册页面初始化
+	 * @detail 根据本地存储判断默认显示登录或注册
+	 */
+	function initialState() {
+		var type = localStorage.getItem('login');
+		if (type != undefined) {
+			tabClick(type);
+		}
+	}
 
 	/*
 	 * 验证输入是否正确公共方法
@@ -66,25 +78,34 @@ $(document).ready(function(){
 	 * 登录tab按钮点击事件
 	 * @detail 登录按钮显示选中态，注册按钮显示普通态，登录表单显示，注册表单隐藏
 	 */
-	$('#loginBtn').click((function(){
-		console.log('登录btn');
-		$('#loginBtn').addClass('active-btn');
-		$('#registerBtn').removeClass('active-btn');
-		$('#index-login-login').css('display', 'block');
-		$('#index-login-register').css('display', 'none');
-	}));
+	$('#loginBtn').click(function(){
+		tabClick('login');
+	});
 
 	/*
 	 * 注册tab按钮点击事件
 	 * @detail 注册按钮显示选中态，登录按钮显示普通态，注册表单显示，登录表单隐藏
 	 */
-	$('#registerBtn').click((function(){
-		console.log('注册btn');
-		$('#loginBtn').removeClass('active-btn');
-		$('#registerBtn').addClass('active-btn');
-		$('#index-login-login').css('display', 'none');
-		$('#index-login-register').css('display', 'block');
-	}))
+	$('#registerBtn').click(function(){
+		tabClick('register');
+	});
+
+	/*
+	 * 登录／注册tab按钮点击事件公共方法
+	 */
+	function tabClick(type){
+		if (type == 'login') {
+			$('#loginBtn').addClass('active-btn');
+			$('#registerBtn').removeClass('active-btn');
+			$('#index-login-login').css('display', 'block');
+			$('#index-login-register').css('display', 'none');
+		} else {
+			$('#loginBtn').removeClass('active-btn');
+			$('#registerBtn').addClass('active-btn');
+			$('#index-login-login').css('display', 'none');
+			$('#index-login-register').css('display', 'block');
+		}
+	}
 
 	/*
 	 * 登录提交按钮点击事件

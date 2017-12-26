@@ -24,14 +24,14 @@ router.use(session({
 // 一个中间件栈，显示任何指向 /user/:id 的 HTTP 请求的信息
 router.use('/user/:id', function(req, res, next) {
   if (req.session.sessionId) {
-    console.log('Request URL:', req.originalUrl);
+    // console.log('Request URL:', req.originalUrl);
     next();
   } else {
-    console.log('没有登录');
+    // console.log('没有登录');
     res.send({ code: 10008, msg: '未登录' });
   }
 }, function (req, res, next) {
-  console.log('Request Type:', req.method);
+  // console.log('Request Type:', req.method);
   next();
 });
 
@@ -100,7 +100,19 @@ router.get('/user/userInfo', function (req, res) {
     if (error) {
       throw error;
     } else {
-      res.send({ code: 10000, msg: results });
+      var sqlLike = 'SELECT count_like FROM t_article where author_id=' + uid;
+      query(sqlLike, null, function (error, result, fields) {
+        if (error) {
+          throw error;
+        } else {
+          var num = 0;
+          for(var i=0;i<result.length;i++) {
+            num += result[i].count_like;
+          }
+          results[0]['like']= num;
+          res.send({ code: 10000, msg: results });
+        }
+      });
     }
   });
 });
@@ -164,7 +176,6 @@ router.post('/user/updateTel', function(req, res){
   var telSql = 'SELECT t_user.tel FROM t_user';
   var sql = 'UPDATE t_user SET tel=? where id=?';
   query(telSql, null, function (error, results, fields) {
-    console.log('oooooo', results);
     if (error) {
       throw error;
     } else {
@@ -179,7 +190,6 @@ router.post('/user/updateTel', function(req, res){
 
         if (bool) {
           query(sql, params, function (error, results, fields) {
-            console.log('update', results);
             if (error) {
               throw error;
             } else {
@@ -209,7 +219,6 @@ function updateInfo(req, res, type) {
   var params = [data[type], uid]
   var sql = 'UPDATE t_user SET '+ type +'=? where id=?';
   query(sql, params, function (error, results, fields) {
-    console.log('update', results);
     if (error) {
       throw error;
     } else {
@@ -225,8 +234,8 @@ function updateInfo(req, res, type) {
  * @method /api/community/user/logout
  */
 router.get('/logout', function (req, res) {
-    req.session.sessionId = null; // 删除session
-    res.redirect('/login');
+  req.session.sessionId = null; // 删除session
+  res.redirect('/login');
 });
 
 /**

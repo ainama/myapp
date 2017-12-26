@@ -48,6 +48,7 @@ export function uploadArticle(data) {
      data: data,
      success: function(res) {
        console.log('uploadArticle action => ', res);
+       dispatch(showArticle(res));  // 展示文章信息
      }
    });
  };
@@ -108,6 +109,7 @@ export function editLike(data) {
      data: data,
      success: function(res) {
        // console.log('editLike action => ', res);
+       dispatch(getLike(data.article_id));
      }
    });
  };

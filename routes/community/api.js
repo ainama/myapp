@@ -326,6 +326,7 @@ router.post('/uploadImg', function (req, res) {
     });
   });
 });
+
 /**
  *  add/edit article
  * @method /api/community/article/upload
@@ -348,7 +349,7 @@ router.post('/article/upload', function(req, res) {
         // throw error;
       } else {
         if (results.serverStatus == 2) {
-          res.send({ code: 10000, msg: '发布成功', article_id: results.insertId});
+          res.send({ code: 10000, msg: '发布成功', id: results.insertId });
         } else {
           res.send({ code: 10001, msg: '发布失败' });
         }
@@ -385,7 +386,7 @@ router.post('/article/upload', function(req, res) {
  * @method /api/community/article/read
  */
 router.post('/article/read', function(req, res) {
-  
+
   var data = req.body;
   var selectSql = 'SELECT * FROM t_article WHERE id = ' + data.id;
   query(selectSql, null, function(error, results, fields) {
@@ -397,29 +398,21 @@ router.post('/article/read', function(req, res) {
 
       var authorID = results[0].author_id;
 
-      if (uid == authorID) {
+      if (uid == authorID) { results[0].isAuthor = true; }
+      else { results[0].isAuthor = false };
 
-        results[0].isLiked = false;
-        results[0].isAuthor = true;
-        res.send({ code: 10000, msg: results });
-
-      } else {
-
-        var s2 = 'SELECT article_id FROM t_like WHERE user_id=' + uid;
-        results[0].isLiked = false;
-        results[0].isAuthor = false;
-        query(s2, null, function (e, r, f) {
-          if (e) throw e;
-          for (var i = 0; i < r.length; i++) {
-            if (r[i].article_id == data.id) {
-              results[0].isLiked = true;
-              break;
-            }
+      var s2 = 'SELECT article_id FROM t_like WHERE user_id=' + uid;
+      results[0].isLiked = false;
+      query(s2, null, function (e, r, f) {
+        if (e) throw e;
+        for (var i = 0; i < r.length; i++) {
+          if (r[i].article_id == data.id) {
+            results[0].isLiked = true;
+            break;
           }
-          res.send({ code: 10000, msg: results });
-        });
-
-      }
+        }
+        res.send({ code: 10000, msg: results });
+      });
 
     } else {
       results[0].isLiked = false;

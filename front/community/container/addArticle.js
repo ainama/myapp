@@ -62,10 +62,14 @@ class AddArticle extends React.Component {
       create_time: '',
       // update_time: ''
     };
-
-    // console.log('upload', data);
     this.props.actions.uploadArticle(data);
-    this.props.history.push('/community/home');
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.article.id) {
+      // console.log('componentWillRecieveProps', nextProps.article.id)
+      this.props.history.push('/community/showArticle/' + nextProps.article.id);
+    }
   }
 
   render() {

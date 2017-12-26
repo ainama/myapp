@@ -12443,6 +12443,7 @@ function uploadArticle(data) {
       data: data,
       success: function success(res) {
         console.log('uploadArticle action => ', res);
+        dispatch(showArticle(res)); // 展示文章信息
       }
     });
   };
@@ -12503,6 +12504,7 @@ function editLike(data) {
       data: data,
       success: function success(res) {
         // console.log('editLike action => ', res);
+        dispatch(getLike(data.article_id));
       }
     });
   };
@@ -29262,10 +29264,15 @@ var AddArticle = function (_React$Component) {
         create_time: ''
         // update_time: ''
       };
-
-      // console.log('upload', data);
       this.props.actions.uploadArticle(data);
-      this.props.history.push('/community/home');
+    }
+  }, {
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(nextProps) {
+      if (nextProps.article.id) {
+        // console.log('componentWillRecieveProps', nextProps.article.id)
+        this.props.history.push('/community/showArticle/' + nextProps.article.id);
+      }
     }
   }, {
     key: 'render',
@@ -29796,7 +29803,6 @@ var ShowArticle = function (_React$Component) {
     key: 'componentWillMount',
     value: function componentWillMount() {
       var article_id = this.props.match.params.article;
-      // let user_id = this.props.header.user.id;
       this.props.actions.getArticle(article_id); // 获取文章信息
       this.props.actions.getLike(article_id); // 获取文章点赞信息
       this.props.actions.getAuthorInfo(article_id); // 获取作者信息
@@ -29804,8 +29810,9 @@ var ShowArticle = function (_React$Component) {
       // console.log('componentWillMount', this.props.header.user.id)
     }
   }, {
-    key: 'componentDidMount',
-    value: function componentDidMount() {
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(nextProps) {
+      console.log('nextProps', nextProps);
       // console.log('componentDidMount', this.props.header.user.id)
     }
   }, {
@@ -29821,7 +29828,7 @@ var ShowArticle = function (_React$Component) {
           user_id: user_id
         };
         this.props.actions.editLike(data);
-        this.props.actions.getLike(article_id); // 获取文章信息
+        // this.props.actions.getLike(article_id);  // 获取文章点赞信息
       } else {
         this.setState({ show: true });
       }
@@ -31304,7 +31311,7 @@ function article() {
 
     case types.SHOW_ARTICLE:
       {
-        console.log('SHOW_ARTICLE reducer => ', action.payload);
+        // console.log('SHOW_ARTICLE reducer => ', action.payload);
         return (0, _lodash2.default)({}, state, action.payload, { article_id: action.payload.id });
       }
 

@@ -22,7 +22,6 @@ class ShowArticle extends React.Component {
 
   componentWillMount() {
     let article_id = this.props.match.params.article;
-    // let user_id = this.props.header.user.id;
     this.props.actions.getArticle(article_id);  // 获取文章信息
     this.props.actions.getLike(article_id);  // 获取文章点赞信息
     this.props.actions.getAuthorInfo(article_id);  // 获取作者信息
@@ -30,7 +29,8 @@ class ShowArticle extends React.Component {
     // console.log('componentWillMount', this.props.header.user.id)
   }
 
-  componentDidMount() {
+  componentWillReceiveProps(nextProps) {
+    console.log('nextProps', nextProps)
     // console.log('componentDidMount', this.props.header.user.id)
   }
 
@@ -45,7 +45,7 @@ class ShowArticle extends React.Component {
         user_id: user_id
       };
       this.props.actions.editLike(data);
-      this.props.actions.getLike(article_id);  // 获取文章信息
+      // this.props.actions.getLike(article_id);  // 获取文章点赞信息
     } else {
       this.setState({ show: true});
     }

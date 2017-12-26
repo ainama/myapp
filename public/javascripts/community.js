@@ -13121,7 +13121,8 @@ function uploadArticle(data) {
       type: 'POST',
       data: data,
       success: function success(res) {
-        // console.log('uploadArticle action => ', res);
+        console.log('uploadArticle action => ', res);
+        dispatch(showArticle(res)); // 展示文章信息
       }
     });
   };
@@ -13182,6 +13183,7 @@ function editLike(data) {
       data: data,
       success: function success(res) {
         // console.log('editLike action => ', res);
+        dispatch(getLike(data.article_id));
       }
     });
   };
@@ -23662,7 +23664,7 @@ _reactDom2.default.render(_react2.default.createElement(
       _react2.default.createElement(_reactRouterDom.Route, { exact: true, strict: true, path: '/community/page2', component: _page4.default }),
       _react2.default.createElement(_reactRouterDom.Route, { exact: true, strict: true, path: '/community/home', component: _home2.default }),
       _react2.default.createElement(_reactRouterDom.Route, { exact: true, strict: true, path: '/community/addArticle', component: _addArticle2.default }),
-      _react2.default.createElement(_reactRouterDom.Route, { exact: true, strict: true, path: '/community/addArticle/:type', component: _addArticle2.default }),
+      _react2.default.createElement(_reactRouterDom.Route, { exact: true, strict: true, path: '/community/addArticle/:article', component: _addArticle2.default }),
       _react2.default.createElement(_reactRouterDom.Route, { exact: true, strict: true, path: '/community/showArticle/:article', component: _showArticle2.default }),
       _react2.default.createElement(_reactRouterDom.Route, { exact: true, strict: true, path: '/community/personal', component: _PersonalPage2.default }),
       _react2.default.createElement(_reactRouterDom.Route, { exact: true, strict: true, path: '/community/setting', component: _SettingPage2.default })
@@ -29134,6 +29136,16 @@ var Header = function (_React$Component) {
       localStorage.setItem('login', type);
     }
   }, {
+    key: 'scrollTop',
+    value: function scrollTop() {
+      scrollTo(0, 0);
+    }
+  }, {
+    key: 'logout',
+    value: function logout() {
+      this.props.actions.logout();
+    }
+  }, {
     key: 'render',
     value: function render() {
       var _this3 = this;
@@ -29148,7 +29160,7 @@ var Header = function (_React$Component) {
             className: 'logo',
             to: '/community/home',
             onClick: function onClick() {
-              scrollTo(0, 0);
+              _this3.scrollTop();
             } }),
           _react2.default.createElement(
             'div',
@@ -29159,7 +29171,7 @@ var Header = function (_React$Component) {
                 className: 'home',
                 to: '/community/home',
                 onClick: function onClick() {
-                  scrollTo(0, 0);
+                  _this3.scrollTop();
                 } },
               _react2.default.createElement(
                 'div',
@@ -29174,7 +29186,7 @@ var Header = function (_React$Component) {
               className: 'write',
               href: '/login',
               onClick: function onClick() {
-                scrollTo(0, 0);
+                _this3.scrollTop();
               } },
             _react2.default.createElement('div', { className: 'icon' }),
             _react2.default.createElement(
@@ -29189,7 +29201,7 @@ var Header = function (_React$Component) {
               className: 'write',
               to: '/community/addArticle',
               onClick: function onClick() {
-                scrollTo(0, 0);
+                _this3.scrollTop();
               } },
             _react2.default.createElement('div', { className: 'icon' }),
             _react2.default.createElement(
@@ -29250,7 +29262,7 @@ var Header = function (_React$Component) {
                 {
                   to: '/community/personal',
                   onClick: function onClick() {
-                    scrollTo(0, 0);
+                    _this3.scrollTop();
                   } },
                 _react2.default.createElement(
                   'div',
@@ -29263,7 +29275,7 @@ var Header = function (_React$Component) {
                 {
                   to: '/community/setting',
                   onClick: function onClick() {
-                    scrollTo(0, 0);
+                    _this3.scrollTop();
                   } },
                 _react2.default.createElement(
                   'div',
@@ -29276,7 +29288,7 @@ var Header = function (_React$Component) {
                 {
                   href: '/login',
                   onClick: function onClick() {
-                    scrollTo(0, 0);
+                    _this3.logout();
                   } },
                 _react2.default.createElement(
                   'div',
@@ -30450,14 +30462,16 @@ var AddArticle = function (_React$Component) {
     _this.state = {
       content: _this.props.article.content,
       title: _this.props.article.title,
-      type: _this.props.match.params.type
+      article_id: _this.props.match.params.article || 0
     };
     return _this;
   }
 
   _createClass(AddArticle, [{
     key: 'componentDidMount',
-    value: function componentDidMount() {}
+    value: function componentDidMount() {
+      // if()
+    }
   }, {
     key: '_addBanner',
     value: function _addBanner() {
@@ -30503,10 +30517,15 @@ var AddArticle = function (_React$Component) {
         create_time: ''
         // update_time: ''
       };
-
-      // console.log('upload', data);
       this.props.actions.uploadArticle(data);
-      this.props.history.push('/community/home');
+    }
+  }, {
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(nextProps) {
+      if (nextProps.article.id) {
+        // console.log('componentWillRecieveProps', nextProps.article.id)
+        this.props.history.push('/community/showArticle/' + nextProps.article.id);
+      }
     }
   }, {
     key: 'render',
@@ -30517,7 +30536,7 @@ var AddArticle = function (_React$Component) {
       var _state = this.state,
           title = _state.title,
           content = _state.content,
-          type = _state.type;
+          article_id = _state.article_id;
 
 
       return _react2.default.createElement(
@@ -30562,7 +30581,7 @@ var AddArticle = function (_React$Component) {
           {
             onClick: this._upload,
             className: 'addArticle-upload' },
-          type == 'edit' ? '更新' : '发布'
+          article_id == 0 ? '发布' : '更新'
         )
       );
     }
@@ -30646,7 +30665,10 @@ var SimditorTextarea = function (_React$Component) {
     key: 'componentDidMount',
     value: function componentDidMount() {
       this._initEditor();
-      // this.editor.focus();
+      // $(this.refs.textarea).onpaste = function() { return false };
+      this.editor.onpaste = function () {
+        return false;
+      };
     }
   }, {
     key: '_initEditor',
@@ -31024,7 +31046,7 @@ var ShowArticle = function (_React$Component) {
     _this._createMarkup = _this._createMarkup.bind(_this);
     _this._closeToast = _this._closeToast.bind(_this);
     _this.state = {
-      status: false, // 是否可点赞
+      status: true, // 是否可点赞
       show: false // toast出现
     };
     return _this;
@@ -31034,7 +31056,6 @@ var ShowArticle = function (_React$Component) {
     key: 'componentWillMount',
     value: function componentWillMount() {
       var article_id = this.props.match.params.article;
-      // let user_id = this.props.header.user.id;
       this.props.actions.getArticle(article_id); // 获取文章信息
       this.props.actions.getLike(article_id); // 获取文章点赞信息
       this.props.actions.getAuthorInfo(article_id); // 获取作者信息
@@ -31042,15 +31063,17 @@ var ShowArticle = function (_React$Component) {
       // console.log('componentWillMount', this.props.header.user.id)
     }
   }, {
-    key: 'componentDidMount',
-    value: function componentDidMount() {
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(nextProps) {
+      console.log('nextProps', nextProps);
       // console.log('componentDidMount', this.props.header.user.id)
     }
   }, {
     key: '_addLike',
     value: function _addLike() {
+      console.log(111);
       if (this.props.header.user) {
-        this.setState({ status: true });
+        this.setState({ status: false });
         var article_id = this.props.match.params.article;
         var user_id = this.props.header.user.id;
         var data = {
@@ -31058,7 +31081,7 @@ var ShowArticle = function (_React$Component) {
           user_id: user_id
         };
         this.props.actions.editLike(data);
-        this.props.actions.getLike(article_id); // 获取文章信息
+        // this.props.actions.getLike(article_id);  // 获取文章点赞信息
       } else {
         this.setState({ show: true });
       }
@@ -31128,11 +31151,11 @@ var ShowArticle = function (_React$Component) {
           _react2.default.createElement(
             'button',
             {
-              disabled: status,
-              className: !status ? 'showArticle-like' : 'showArticle-dislike',
+              disabled: article.isLiked && !status,
+              className: !article.isLiked && status ? 'showArticle-like' : 'showArticle-dislike',
               onClick: this._addLike },
             _react2.default.createElement('img', { src: '/images/article_thumb_up.png' }),
-            !status ? '\u8D5E(' + article.like + ')' : '\u611F\u8C22(' + article.like + ')'
+            !article.isLiked && status ? '\u8D5E(' + article.like + ')' : '\u611F\u8C22(' + article.like + ')'
           )
         ),
         _react2.default.createElement(
@@ -32541,7 +32564,7 @@ function article() {
 
     case types.SHOW_ARTICLE:
       {
-        console.log('SHOW_ARTICLE reducer => ', action.payload);
+        // console.log('SHOW_ARTICLE reducer => ', action.payload);
         return (0, _lodash2.default)({}, state, action.payload, { article_id: action.payload.id });
       }
 

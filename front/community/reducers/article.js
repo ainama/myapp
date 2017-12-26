@@ -34,7 +34,7 @@ export function article(state = defaultStatus, action) {
     }
 
     case types.SHOW_ARTICLE: {
-      console.log('SHOW_ARTICLE reducer => ', action.payload);
+      // console.log('SHOW_ARTICLE reducer => ', action.payload);
       return assign({}, state, action.payload, { article_id: action.payload.id });
     }
 

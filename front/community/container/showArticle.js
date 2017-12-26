@@ -15,14 +15,13 @@ class ShowArticle extends React.Component {
     this._createMarkup = this._createMarkup.bind(this);
     this._closeToast = this._closeToast.bind(this);
     this.state = {
-      status: false,  // 是否可点赞
+      status: true,  // 是否可点赞
       show: false  // toast出现
     };
   }
 
   componentWillMount() {
     let article_id = this.props.match.params.article;
-    // let user_id = this.props.header.user.id;
     this.props.actions.getArticle(article_id);  // 获取文章信息
     this.props.actions.getLike(article_id);  // 获取文章点赞信息
     this.props.actions.getAuthorInfo(article_id);  // 获取作者信息
@@ -30,13 +29,15 @@ class ShowArticle extends React.Component {
     // console.log('componentWillMount', this.props.header.user.id)
   }
 
-  componentDidMount() {
+  componentWillReceiveProps(nextProps) {
+    console.log('nextProps', nextProps)
     // console.log('componentDidMount', this.props.header.user.id)
   }
 
   _addLike() {
+    console.log(111)
     if(this.props.header.user) {
-      this.setState({ status: true});
+      this.setState({ status: false});
       let article_id = this.props.match.params.article;
       let user_id = this.props.header.user.id;
       let data = {
@@ -44,7 +45,7 @@ class ShowArticle extends React.Component {
         user_id: user_id
       };
       this.props.actions.editLike(data);
-      this.props.actions.getLike(article_id);  // 获取文章信息
+      // this.props.actions.getLike(article_id);  // 获取文章点赞信息
     } else {
       this.setState({ show: true});
     }
@@ -101,12 +102,12 @@ class ShowArticle extends React.Component {
 
           {/*like*/}
           <button
-            disabled = { status }
-            className = {!status ?'showArticle-like' : 'showArticle-dislike'}
+            disabled = { article.isLiked && !status }
+            className = { !article.isLiked && status ?'showArticle-like' : 'showArticle-dislike' }
             onClick = { this._addLike }>
             <img src = '/images/article_thumb_up.png'/>
             {
-              !status
+              !article.isLiked && status
               ? `赞(${ article.like })`
               : `感谢(${ article.like })`
             }

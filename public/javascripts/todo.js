@@ -639,6 +639,7 @@ module.exports = emptyObject;
 /* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
+<<<<<<< HEAD
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process) {/**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -647,6 +648,9 @@ module.exports = emptyObject;
  * LICENSE file in the root directory of this source tree.
  *
  */
+=======
+var _button = __webpack_require__(77);
+>>>>>>> bbbe439390f12dca65a3cf6542399965af7f16b0
 
 
 
@@ -877,8 +881,147 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 	var to = toObject(target);
 	var symbols;
 
+<<<<<<< HEAD
 	for (var s = 1; s < arguments.length; s++) {
 		from = Object(arguments[s]);
+=======
+    return _possibleConstructorReturn(this, (TodoItem.__proto__ || Object.getPrototypeOf(TodoItem)).call(this, props));
+  }
+
+  _createClass(TodoItem, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {}
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this2 = this;
+
+      var icon = this.props.status == 0 ? 'item-icon-undone' : 'item-icon-completed';
+      var text = this.props.status == 0 ? 'item-text-undone' : 'item-text-completed';
+      return _react2.default.createElement(
+        'li',
+        { className: 'todo-item' },
+        _react2.default.createElement('div', {
+          className: icon,
+          onClick: function onClick() {
+            _this2.props.onClick();
+          } }),
+        _react2.default.createElement(
+          'div',
+          { className: text },
+          this.props.todo
+        )
+      );
+    }
+  }]);
+
+  return TodoItem;
+}(_react2.default.Component);
+
+TodoItem.propTypes = {};
+
+TodoItem.defaultProps = {};
+
+module.exports = TodoItem;
+
+/***/ }),
+
+/***/ 174:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(2);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _button = __webpack_require__(77);
+
+var _button2 = _interopRequireDefault(_button);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var AddTodo = function (_React$Component) {
+  _inherits(AddTodo, _React$Component);
+
+  function AddTodo(props) {
+    _classCallCheck(this, AddTodo);
+
+    return _possibleConstructorReturn(this, (AddTodo.__proto__ || Object.getPrototypeOf(AddTodo)).call(this, props));
+  }
+
+  _createClass(AddTodo, [{
+    key: 'addClick',
+    value: function addClick(value) {
+      this.props.onClick(value);
+      this.refs.input.value = '';
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this2 = this;
+
+      return _react2.default.createElement(
+        'div',
+        { className: this.props.className },
+        _react2.default.createElement(
+          'div',
+          { className: 'add-title' },
+          '\u6DFB\u52A0TODO'
+        ),
+        _react2.default.createElement('input', {
+          className: 'add-input',
+          ref: 'input',
+          placeholder: '\u8BF7\u8F93\u5165TODO\u5185\u5BB9' }),
+        _react2.default.createElement(
+          'div',
+          null,
+          _react2.default.createElement(_button2.default, {
+            className: 'add-button',
+            text: '\u4FDD\u5B58',
+            onClick: function onClick() {
+              _this2.addClick(_this2.refs.input.value);
+            } })
+        )
+      );
+    }
+  }]);
+
+  return AddTodo;
+}(_react2.default.Component);
+
+module.exports = AddTodo;
+
+/***/ }),
+
+/***/ 175:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+__webpack_require__(176);
+
+/***/ }),
+
+/***/ 176:
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+>>>>>>> bbbe439390f12dca65a3cf6542399965af7f16b0
 
 		for (var key in from) {
 			if (hasOwnProperty.call(from, key)) {
@@ -10124,8 +10267,12 @@ TodoItem.defaultProps = {};
 
 module.exports = TodoItem;
 
+<<<<<<< HEAD
 /***/ }),
 /* 199 */
+=======
+/***/ 77:
+>>>>>>> bbbe439390f12dca65a3cf6542399965af7f16b0
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

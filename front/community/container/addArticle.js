@@ -17,11 +17,12 @@ class AddArticle extends React.Component {
     this.state = {
       content: this.props.article.content,
       title: this.props.article.title,
-      type: this.props.match.params.type
+      article_id: this.props.match.params.article || 0
     };
   }
 
   componentDidMount() {
+    // if()
   }
 
   _addBanner() {
@@ -61,16 +62,20 @@ class AddArticle extends React.Component {
       create_time: '',
       // update_time: ''
     };
-
-    // console.log('upload', data);
     this.props.actions.uploadArticle(data);
-    this.props.history.push('/community/home');
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.article.id) {
+      // console.log('componentWillRecieveProps', nextProps.article.id)
+      this.props.history.push('/community/showArticle/' + nextProps.article.id);
+    }
   }
 
   render() {
 
     const { article } = this.props;
-    const { title, content, type } = this.state;
+    const { title, content, article_id } = this.state;
 
     return (
       <div className = 'addArticle-layout'>
@@ -106,9 +111,9 @@ class AddArticle extends React.Component {
           onClick = { this._upload }
           className = 'addArticle-upload'>
           {
-            type == 'edit'
-            ? '更新'
-            : '发布'
+            article_id == 0
+            ? '发布'
+            : '更新'
           }
         </button>
 

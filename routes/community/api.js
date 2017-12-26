@@ -241,7 +241,7 @@ router.get('/logout', function (req, res) {
 /**
  * 获取用户信息（顶导）
  * @method /api/community/user/base
- * @author zhangning
+ * @author Ainama-/*[Mr.Zhang]
  */
 router.get('/user/base', function (req, res) {
   var sid = req.session.sessionId;
@@ -255,7 +255,7 @@ router.get('/user/base', function (req, res) {
 /**
  * 最近文章列表
  * @method /api/community/article/recent
- * @author zhangning
+ * @author Ainama-/*[Mr.Zhang]
  */
 router.get('/article/recent', function (req, res) {
   var start = (req.query.page - 1) * 10;
@@ -270,7 +270,7 @@ router.get('/article/recent', function (req, res) {
 /**
  * 热门文章列表
  * @method /api/community/article/hot
- * @author zhangning
+ * @author Ainama-/*[Mr.Zhang]
  */
 router.get('/article/hot', function (req, res) {
   var sql = 'SELECT id, title, banner, create_time FROM t_article ORDER BY praise DESC limit 10';
@@ -335,6 +335,7 @@ router.post('/uploadImg', function (req, res) {
     });
   });
 });
+
 /**
  *  add/edit article
  * @method /api/community/article/upload
@@ -357,7 +358,7 @@ router.post('/article/upload', function(req, res) {
         // throw error;
       } else {
         if (results.serverStatus == 2) {
-          res.send({ code: 10000, msg: '发布成功' });
+          res.send({ code: 10000, msg: '发布成功', id: results.insertId });
         } else {
           res.send({ code: 10001, msg: '发布失败' });
         }
@@ -392,16 +393,43 @@ router.post('/article/upload', function(req, res) {
 /**
  * 读文章
  * @method /api/community/article/read
- * @author chaoqun zhangning
  */
 router.post('/article/read', function(req, res) {
+
   var data = req.body;
   var selectSql = 'SELECT * FROM t_article WHERE id = ' + data.id;
   query(selectSql, null, function(error, results, fields) {
     if (error) { throw error; }
-    res.send({ code: 10000, msg: results });
 
-    // 统计访问次数
+    // 判断是否为作者，是否赞过
+    var uid = req.session.sessionId;
+    if (uid) {
+
+      var authorID = results[0].author_id;
+
+      if (uid == authorID) { results[0].isAuthor = true; }
+      else { results[0].isAuthor = false };
+
+      var s2 = 'SELECT article_id FROM t_like WHERE user_id=' + uid;
+      results[0].isLiked = false;
+      query(s2, null, function (e, r, f) {
+        if (e) throw e;
+        for (var i = 0; i < r.length; i++) {
+          if (r[i].article_id == data.id) {
+            results[0].isLiked = true;
+            break;
+          }
+        }
+        res.send({ code: 10000, msg: results });
+      });
+
+    } else {
+      results[0].isLiked = false;
+      results[0].isAuthor = false;
+      res.send({ code: 10000, msg: results });
+    }
+
+    /* 统计访问次数 */
     var praise = results[0].praise + 1;
     var updatesQL = 'UPDATE t_article SET praise=' + praise + ' WHERE id=' + data.id;
     query(updatesQL, null, function (error, results, fields) {

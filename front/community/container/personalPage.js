@@ -121,7 +121,7 @@ class PersonalPage extends React.Component {
                           src = '/images/hot_icon.png'/><span>{ item.praise }</span>
                         <img  
                           className = 'thumb-up'
-                          src = '/images/thumb_icon.png'/><span>{ item.like }</span>
+                          src = '/images/thumb_icon.png'/><span>{ item.count_like }</span>
                       </div>
                     </div>
                     <img

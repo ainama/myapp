@@ -15,7 +15,7 @@ class ShowArticle extends React.Component {
     this._createMarkup = this._createMarkup.bind(this);
     this._closeToast = this._closeToast.bind(this);
     this.state = {
-      status: false,  // 是否可点赞
+      status: true,  // 是否可点赞
       show: false  // toast出现
     };
   }
@@ -35,8 +35,9 @@ class ShowArticle extends React.Component {
   }
 
   _addLike() {
+    console.log(111)
     if(this.props.header.user) {
-      this.setState({ status: true});
+      this.setState({ status: false});
       let article_id = this.props.match.params.article;
       let user_id = this.props.header.user.id;
       let data = {
@@ -101,12 +102,12 @@ class ShowArticle extends React.Component {
 
           {/*like*/}
           <button
-            disabled = { status }
-            className = {!status ?'showArticle-like' : 'showArticle-dislike'}
+            disabled = { article.isLiked && !status }
+            className = { !article.isLiked && status ?'showArticle-like' : 'showArticle-dislike' }
             onClick = { this._addLike }>
             <img src = '/images/article_thumb_up.png'/>
             {
-              !status
+              !article.isLiked && status
               ? `赞(${ article.like })`
               : `感谢(${ article.like })`
             }

@@ -40,6 +40,14 @@ class Header extends React.Component {
     localStorage.setItem('login', type);
   }
 
+  scrollTop() {
+    scrollTo(0, 0);
+  }
+
+  logout() {
+    this.props.actions.logout();
+  }
+
   render() {
     return (
       <div className = 'header'>
@@ -49,14 +57,14 @@ class Header extends React.Component {
           <Link
             className = 'logo'
             to = '/community/home'
-            onClick = { () => { scrollTo(0, 0); } } />
+            onClick = { () => { this.scrollTop(); } } />
 
           {/* 预留区 */}
           <div className = 'group'>
             <Link
               className = 'home'
               to = '/community/home'
-              onClick = { () => { scrollTo(0, 0); } }>
+              onClick = { () => { this.scrollTop(); } }>
               <div>首页</div>
             </Link>
           </div>
@@ -67,7 +75,7 @@ class Header extends React.Component {
             <a
               className = 'write'
               href = '/login'
-              onClick = { () => { scrollTo(0, 0); } }>
+              onClick = { () => { this.scrollTop(); } }>
               <div className = 'icon'></div>
               <span>写文章</span>
             </a>
@@ -77,7 +85,7 @@ class Header extends React.Component {
             <Link
               className = 'write'
               to = '/community/addArticle'
-              onClick = { () => { scrollTo(0, 0); } }>
+              onClick = { () => { this.scrollTop(); } }>
               <div className = 'icon'></div>
               <span>写文章</span>
             </Link>
@@ -120,17 +128,17 @@ class Header extends React.Component {
               <div className = 'expand'>
                 <Link
                   to = '/community/personal'
-                  onClick = { () => { scrollTo(0, 0); } }>
+                  onClick = { () => { this.scrollTop(); } }>
                   <div className = 'item'>我的主页</div>
                 </Link>
                 <Link
                   to = '/community/setting'
-                  onClick = { () => { scrollTo(0, 0); } }>
+                  onClick = { () => { this.scrollTop(); } }>
                   <div className = 'item'>设置</div>
                 </Link>
                 <a
                   href = '/login'
-                  onClick = { () => { scrollTo(0, 0); } }>
+                  onClick = { () => { this.logout(); } }>
                   <div className = 'item'>退出</div>
                 </a>
 

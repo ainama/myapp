@@ -27893,6 +27893,16 @@ var Header = function (_React$Component) {
       localStorage.setItem('login', type);
     }
   }, {
+    key: 'scrollTop',
+    value: function scrollTop() {
+      scrollTo(0, 0);
+    }
+  }, {
+    key: 'logout',
+    value: function logout() {
+      this.props.actions.logout();
+    }
+  }, {
     key: 'render',
     value: function render() {
       var _this3 = this;
@@ -27907,7 +27917,7 @@ var Header = function (_React$Component) {
             className: 'logo',
             to: '/community/home',
             onClick: function onClick() {
-              scrollTo(0, 0);
+              _this3.scrollTop();
             } }),
           _react2.default.createElement(
             'div',
@@ -27918,7 +27928,7 @@ var Header = function (_React$Component) {
                 className: 'home',
                 to: '/community/home',
                 onClick: function onClick() {
-                  scrollTo(0, 0);
+                  _this3.scrollTop();
                 } },
               _react2.default.createElement(
                 'div',
@@ -27933,7 +27943,7 @@ var Header = function (_React$Component) {
               className: 'write',
               href: '/login',
               onClick: function onClick() {
-                scrollTo(0, 0);
+                _this3.scrollTop();
               } },
             _react2.default.createElement('div', { className: 'icon' }),
             _react2.default.createElement(
@@ -27948,7 +27958,7 @@ var Header = function (_React$Component) {
               className: 'write',
               to: '/community/addArticle',
               onClick: function onClick() {
-                scrollTo(0, 0);
+                _this3.scrollTop();
               } },
             _react2.default.createElement('div', { className: 'icon' }),
             _react2.default.createElement(
@@ -28009,7 +28019,7 @@ var Header = function (_React$Component) {
                 {
                   to: '/community/personal',
                   onClick: function onClick() {
-                    scrollTo(0, 0);
+                    _this3.scrollTop();
                   } },
                 _react2.default.createElement(
                   'div',
@@ -28022,7 +28032,7 @@ var Header = function (_React$Component) {
                 {
                   to: '/community/setting',
                   onClick: function onClick() {
-                    scrollTo(0, 0);
+                    _this3.scrollTop();
                   } },
                 _react2.default.createElement(
                   'div',
@@ -28035,7 +28045,7 @@ var Header = function (_React$Component) {
                 {
                   href: '/login',
                   onClick: function onClick() {
-                    scrollTo(0, 0);
+                    _this3.logout();
                   } },
                 _react2.default.createElement(
                   'div',

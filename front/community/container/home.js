@@ -31,9 +31,13 @@ class Home extends React.Component {
 
   componentWillUnmount() {
     this.props.actions.clearProps();
+    if (this.props.header.user.id) {
+      localStorage.setItem('current_uid', this.props.header.user.id);
+    }
   }
 
   render() {
+    console.log('this.props.header', );
     return (
       <div className = 'home-page'>
 
@@ -65,7 +69,8 @@ class Home extends React.Component {
 
 const mapStateToProps = (store) => {
   return {
-    home: store.home
+    home: store.home,
+    header: store.header
   };
 };
 

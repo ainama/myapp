@@ -31,7 +31,7 @@ class Home extends React.Component {
 
   componentWillUnmount() {
     this.props.actions.clearProps();
-    if (this.props.header.user.id) {
+    if (this.props.header.user) {
       localStorage.setItem('current_uid', this.props.header.user.id);
     }
   }

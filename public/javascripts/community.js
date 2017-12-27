@@ -23209,18 +23209,18 @@ var _tools = __webpack_require__(32);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
-function getUserInfo() {
+function getUserInfo(uid) {
   return function (dispatch) {
-    var url = '/api/community/user/userInfo';
+    var url = '/api/community/user/userInfo?id=' + uid;
     var fetchObj = { method: 'get', credentials: 'include' };
     var outputObj = { type: types.GET_USER_INFO };
     (0, _tools.myFetch)(url, fetchObj, outputObj, dispatch);
   };
 }
 
-function getArticles() {
+function getArticles(uid) {
   return function (dispatch) {
-    var url = '/api/community/user/articles';
+    var url = '/api/community/user/articles?id=' + uid;
     var fetchObj = { method: 'get', credentials: 'include' };
     var outputObj = { type: types.GET_USER_ARTICLES };
     (0, _tools.myFetch)(url, fetchObj, outputObj, dispatch);
@@ -23666,7 +23666,7 @@ _reactDom2.default.render(_react2.default.createElement(
       _react2.default.createElement(_reactRouterDom.Route, { exact: true, strict: true, path: '/community/addArticle', component: _addArticle2.default }),
       _react2.default.createElement(_reactRouterDom.Route, { exact: true, strict: true, path: '/community/addArticle/:article', component: _addArticle2.default }),
       _react2.default.createElement(_reactRouterDom.Route, { exact: true, strict: true, path: '/community/showArticle/:article', component: _showArticle2.default }),
-      _react2.default.createElement(_reactRouterDom.Route, { exact: true, strict: true, path: '/community/personal', component: _PersonalPage2.default }),
+      _react2.default.createElement(_reactRouterDom.Route, { exact: true, strict: true, path: '/community/personal/:uid', component: _PersonalPage2.default }),
       _react2.default.createElement(_reactRouterDom.Route, { exact: true, strict: true, path: '/community/setting', component: _SettingPage2.default })
     )
   )
@@ -29260,7 +29260,7 @@ var Header = function (_React$Component) {
               _react2.default.createElement(
                 _reactRouterDom.Link,
                 {
-                  to: '/community/personal',
+                  to: '/community/personal/' + this.props.header.user.id,
                   onClick: function onClick() {
                     _this3.scrollTop();
                   } },
@@ -31114,9 +31114,18 @@ var ShowArticle = function (_React$Component) {
     value: function _createMarkup(data) {
       return { __html: data };
     }
+
+    // 跳转至个人主页
+
+  }, {
+    key: '_toPersonal',
+    value: function _toPersonal(id) {
+      this.props.history.push('/community/personal/' + id);
+    }
   }, {
     key: 'render',
     value: function render() {
+      var _this2 = this;
 
       var article = this.props.article;
       var _state = this.state,
@@ -31167,6 +31176,9 @@ var ShowArticle = function (_React$Component) {
             _react2.default.createElement('img', {
               // src = '/images/community/header_default_avatar.png'
               src: article.head_img,
+              onClick: function onClick() {
+                return _this2._toPersonal(article.author_id);
+              },
               className: 'showArticle-headImg' }),
             _react2.default.createElement(
               'div',
@@ -31280,7 +31292,8 @@ var PersonalPage = function (_React$Component) {
     _this.state = {
       active: 'article',
       articleArr: [], // 用户发表文章列表
-      likeArr: [] // 获取用户点赞文章列表
+      likeArr: [], // 获取用户点赞文章列表
+      isMaster: false
     };
     return _this;
   }
@@ -31288,20 +31301,17 @@ var PersonalPage = function (_React$Component) {
   _createClass(PersonalPage, [{
     key: 'componentWillMount',
     value: function componentWillMount() {
+      var uid = this.props.match.params.uid;
+      var current_uid = localStorage.getItem('current_uid');
+      if (uid == current_uid) {
+        this.setState({
+          isMaster: true
+        });
+      }
       // 获取用户信息
-      this.props.actions.getUserInfo();
+      this.props.actions.getUserInfo(uid);
       // 默认首先获取文章列表获取
-      this.props.actions.getArticles();
-      // $.ajax({
-      //   url: '/api/community/user/userInfo',
-      //   type: 'get',
-      //   success: function(res) {
-      //     console.log('00000', res);
-      //     if (res.code == 10008) {
-      //       location.href = '/login';
-      //     }
-      //   }
-      // }); 
+      this.props.actions.getArticles(uid);
     }
   }, {
     key: 'componentWillReceiveProps',
@@ -31331,8 +31341,9 @@ var PersonalPage = function (_React$Component) {
       });
 
       if (type == 'article') {
+        var uid = this.props.match.params.uid;
         // 获取用户发表文章列表
-        this.props.actions.getArticles();
+        this.props.actions.getArticles(uid);
       } else if (type == 'like') {
         // 获取用户点赞文章列表
         this.props.actions.getLikes();
@@ -31412,7 +31423,7 @@ var PersonalPage = function (_React$Component) {
         _react2.default.createElement(
           'div',
           { className: 'personal-content' },
-          _react2.default.createElement(
+          this.state.isMaster ? _react2.default.createElement(
             'div',
             { className: 'personal-content-tabs' },
             _react2.default.createElement(
@@ -31432,6 +31443,18 @@ var PersonalPage = function (_React$Component) {
                   return _this2._tabsChange('like');
                 } },
               '\u5DF2\u8D5E'
+            )
+          ) : _react2.default.createElement(
+            'div',
+            { className: 'personal-content-tabs' },
+            _react2.default.createElement(
+              'p',
+              {
+                className: active == 'article' ? 'tabs-cell active' : 'tabs-cell',
+                onClick: function onClick() {
+                  return _this2._tabsChange('article');
+                } },
+              '\u6587\u7AE0'
             )
           ),
           _react2.default.createElement(
@@ -31502,7 +31525,6 @@ var mapStateToProps = function mapStateToProps(store) {
     userInfo: store.userInfo.msg,
     userArticles: store.userArticles.msg,
     userLikes: store.userLikes.msg
-
   };
 };
 

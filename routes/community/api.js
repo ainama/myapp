@@ -94,7 +94,8 @@ router.post('/login', function (req, res) {
  * @method /api/community/user/userInfo
  */
 router.get('/user/userInfo', function (req, res) {
-  var uid = req.session.sessionId;
+  // var uid = req.session.sessionId;
+  var uid = req.query.id;
   var sql = 'SELECT * FROM t_user where id=' + uid;
   query(sql, null, function (error, results, fields) {
     if (error) {
@@ -122,13 +123,30 @@ router.get('/user/userInfo', function (req, res) {
  * @method /api/community/user/articles
  */
 router.get('/user/articles', function (req, res) {
-  var uid = req.session.sessionId;
+  // var uid = req.session.sessionId;
+  var uid = req.query.id;
   var sql = 'SELECT * FROM t_article where author_id=' + uid;
   query(sql, null, function (error, results, fields) {
     if (error) {
       throw error;
     } else {
       res.send({ code: 10000, msg: results });
+    }
+  });
+});
+
+/**
+ * 用户删除文章
+ * @method /api/community/user/delete
+ */
+router.post('/user/delete', function (req, res) {
+  var id = req.body.id;
+  var sql = 'DELETE FROM t_article where id=' + id;
+  query(sql, null, function (error, results, fields) {
+    if (error) {
+      throw error;
+    } else {
+      res.send({ code: 10000, msg: '删除成功' });
     }
   });
 });

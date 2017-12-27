@@ -73,6 +73,11 @@ class ShowArticle extends React.Component {
     return { __html: data };
   }
 
+  // 跳转至个人主页
+  _toPersonal(id) {
+    this.props.history.push('/community/personal/' + id);
+  }
+
   render() {
 
     const article = this.props.article;
@@ -125,6 +130,7 @@ class ShowArticle extends React.Component {
             <img
               // src = '/images/community/header_default_avatar.png'
               src = { article.head_img }
+              onClick = {() => this._toPersonal(article.author_id)}
               className = 'showArticle-headImg'/>
 
             {/*author info*/}

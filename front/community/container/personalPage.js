@@ -12,24 +12,22 @@ class PersonalPage extends React.Component {
       active: 'article',
       articleArr: [],  // 用户发表文章列表
       likeArr: [],     // 获取用户点赞文章列表
+      isMaster: false,
     }
   }
 
   componentWillMount() {
+    let uid = this.props.match.params.uid;
+    let current_uid = localStorage.getItem('current_uid');
+    if (uid == current_uid) {
+      this.setState({
+        isMaster: true,
+      })
+    }
     // 获取用户信息
-    this.props.actions.getUserInfo();
+    this.props.actions.getUserInfo(uid);
     // 默认首先获取文章列表获取
-    this.props.actions.getArticles();
-    // $.ajax({
-    //   url: '/api/community/user/userInfo',
-    //   type: 'get',
-    //   success: function(res) {
-    //     console.log('00000', res);
-    //     if (res.code == 10008) {
-    //       location.href = '/login';
-    //     }
-    //   }
-    // }); 
+    this.props.actions.getArticles(uid);
   }
 
   componentWillReceiveProps() {
@@ -56,8 +54,9 @@ class PersonalPage extends React.Component {
     })
 
     if (type == 'article') {
+      let uid = this.props.match.params.uid;
       // 获取用户发表文章列表
-      this.props.actions.getArticles();
+      this.props.actions.getArticles(uid);
     } else if (type == 'like') {
       // 获取用户点赞文章列表
       this.props.actions.getLikes();   
@@ -95,14 +94,21 @@ class PersonalPage extends React.Component {
         </div>
         {/*个人参与的社区活动*/}
         <div className = 'personal-content'>
-          <div className = 'personal-content-tabs'>
-            <p
-              className = { active == 'article' ? 'tabs-cell active' : 'tabs-cell'}
-              onClick = {() => this._tabsChange('article')}>文章</p>
-            <p
-              className = { active == 'like' ? 'tabs-cell active' : 'tabs-cell'}
-              onClick = {() => this._tabsChange('like')}>已赞</p>
-          </div>
+          { this.state.isMaster
+            ? <div className = 'personal-content-tabs'>
+                <p
+                  className = { active == 'article' ? 'tabs-cell active' : 'tabs-cell'}
+                  onClick = {() => this._tabsChange('article')}>文章</p>
+                <p
+                  className = { active == 'like' ? 'tabs-cell active' : 'tabs-cell'}
+                  onClick = {() => this._tabsChange('like')}>已赞</p>
+              </div>
+            : <div className = 'personal-content-tabs'>
+                <p
+                  className = { active == 'article' ? 'tabs-cell active' : 'tabs-cell'}
+                  onClick = {() => this._tabsChange('article')}>文章</p>
+              </div>
+          }
           <div className = 'personal-content-list'>
             { list.length
               ? list.map(function(item, k){
@@ -148,8 +154,7 @@ const mapStateToProps = (store) => {
   return {
     userInfo: store.userInfo.msg,
     userArticles: store.userArticles.msg,
-    userLikes: store.userLikes.msg,
-
+    userLikes: store.userLikes.msg
   };
 };
 

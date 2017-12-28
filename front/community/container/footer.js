@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import * as actions from '../actions/test';
+// import * as actions from '../actions/test';
 
 class Footer extends React.Component {
   constructor(props) {
@@ -36,13 +36,13 @@ class Footer extends React.Component {
 
 const mapStateToProps = (store) => {
   return {
-    test: store.test
+    // test: store.test
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    actions: bindActionCreators(actions, dispatch)
+    // actions: bindActionCreators(actions, dispatch)
   };
 };
 

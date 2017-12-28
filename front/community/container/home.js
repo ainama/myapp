@@ -18,8 +18,11 @@ class Home extends React.Component {
   }
 
   componentDidMount() {
-    this.props.actions.getArticleRecent('page=1');
-    this.props.actions.getArticleHot();
+    let len = this.props.home.recentList.length;
+    if (len == 0) this.props.actions.getArticleRecent('page=1');
+
+    let len2 = this.props.home.hotList.length;
+    if (len2 == 0) this.props.actions.getArticleHot();
   }
 
   getMore() {
@@ -30,7 +33,7 @@ class Home extends React.Component {
   }
 
   componentWillUnmount() {
-    this.props.actions.clearProps();
+    // this.props.actions.clearProps();
     if (this.props.header.user) {
       localStorage.setItem('current_uid', this.props.header.user.id);
     }

@@ -45,9 +45,9 @@ export function home(state = defaultStatus, action) {
       return assign({ }, state, stateObj);
     }
 
-    case types.CLEAR_PROPS: {
-      return defaultStatus;
-    }
+    // case types.CLEAR_PROPS: {
+    //   return defaultStatus;
+    // }
 
     default: {
       return state;

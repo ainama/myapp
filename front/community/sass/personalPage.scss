@@ -34,18 +34,20 @@
     		height: 70px;
     	}
     	.personal-info-msg {
+    		width: 200px;
     		margin-left: 10px;
     		p {
     			font-family:PingFangSC-Regular;
 					font-size:16px;
 					color:#555555;
 					line-height:16px;
+					margin-bottom: 8px;
     		}
     		div {
   				font-family:PingFangSC-Regular;
 					font-size:14px;
 					color:#bbbbbb;
-					line-height:34px;
+					width: 100%;
     		}
     	}
     }

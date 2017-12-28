@@ -262,8 +262,8 @@ router.get('/logout', function (req, res) {
  * @author zn
  */
 router.get('/user/base', function (req, res) {
-  var sid = req.session.sessionId;
-  var sql = 'SELECT id, head_img FROM t_user WHERE id=' + sid;
+  var userID = req.session.sessionId;
+  var sql = 'SELECT id, head_img FROM t_user WHERE id=' + userID;
   query(sql, null, function (error, results, fields) {
     if (error) throw error;
     res.send({ code: 10000, msg: results[0] });
@@ -297,6 +297,27 @@ router.get('/article/hot', function (req, res) {
     res.send({ code: 10000, msg: results });
   });
 });
+
+/**
+ * 插入消息
+ * @method insertNews
+ * @param {int} type 1-点赞，2-收藏，3-评论，4-回复，5-关注(345暂不支持)
+ * @param {int} userID 当前用户ID
+ * @param {int} articleID 文章ID
+ * @author zn
+ */
+function insertNews(type, userID, articleID) {
+  // 查找文章作者
+  var select = 'SELECT author_id FROM t_article WHERE id=' + articleID;
+  query(select, null, function (error, results, fields) {
+    if (error) throw error;
+    var authorID = results[0].author_id;
+    // 插入消息
+    var insert = 'INSERT INTO t_news(type, launch_id, accept_id) VALUES (?, ?, ?)';
+    var params = [type, userID, authorID];
+    query(insert, params);
+  });
+}
 
 /* lichaoqun */
 /**
@@ -501,27 +522,6 @@ router.post('/article/like', function(req, res) {
     }
   });
 });
-
-/**
- * 插入消息
- * @method insertNews
- * @param {int} type 1-消息 2-收藏
- * @param {int} userID 当前用户ID
- * @param {int} articleID 文章ID
- * @author zn
- */
-function insertNews(type, userID, articleID) {
-  // 查找文章作者
-  var select = 'SELECT author_id FROM t_article WHERE id=' + articleID;
-  query(select, null, function (error, results, fields) {
-    if (error) throw error;
-    var authorID = results[0].author_id;
-    // 插入消息
-    var insert = 'INSERT INTO t_news(type, launch_id, accept_id) VALUES (?, ?, ?)';
-    var params = [type, userID, authorID];
-    query(insert, params);
-  });
-}
 
 /**
  * get authorInfo

@@ -291,7 +291,8 @@ router.get('/article/recent', function (req, res) {
  * @author zn
  */
 router.get('/article/hot', function (req, res) {
-  var sql = 'SELECT id, title, banner, create_time FROM t_article ORDER BY praise DESC limit 10';
+  var sql = 'SELECT id, title, banner, create_time FROM t_article ' +
+                'ORDER BY praise DESC limit 10';
   query(sql, null, function (error, results, fields) {
     if (error) throw error;
     res.send({ code: 10000, msg: results });
@@ -301,7 +302,7 @@ router.get('/article/hot', function (req, res) {
 /**
  * 插入消息
  * @method insertNews
- * @param {int} type 1-点赞，2-收藏，3-评论，4-回复，5-关注(345暂不支持)
+ * @param {int} type 消息类型：1-点赞，2-收藏，3-评论，4-回复，5-关注(345暂不支持)
  * @param {int} userID 当前用户ID
  * @param {int} articleID 文章ID
  * @author zn
@@ -313,11 +314,30 @@ function insertNews(type, userID, articleID) {
     if (error) throw error;
     var authorID = results[0].author_id;
     // 插入消息
-    var insert = 'INSERT INTO t_news(type, launch_id, accept_id) VALUES (?, ?, ?)';
+    var insert = 'INSERT INTO t_news(type, launch_id, accept_id) ' +
+                     'VALUES (?, ?, ?)';
     var params = [type, userID, authorID];
     query(insert, params);
   });
 }
+
+/**
+ * 消息列表
+ * @method /api/community/news/list
+ * @author zn
+ */
+router.get('/news/list', function (req, res) {
+  var userID = req.session.sessionId;
+  var sql = 'SELECT t_news.* FROM t_news ' +
+                'LEFT JOIN t_user ' +
+                'ON t_news.launch_id=t_user.id ' +
+                'WHERE t_news.accept_id=' + userID +
+                    ' AND t_news.type=' + req.body.type;
+  query(sql, null, function (error, results, fields) {
+    if (error) throw error;
+    res.send({ code: 10000, msg: results });
+  });
+});
 
 /* lichaoqun */
 /**

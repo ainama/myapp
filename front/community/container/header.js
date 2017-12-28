@@ -127,7 +127,7 @@ class Header extends React.Component {
               this.state.expandStatus &&
               <div className = 'expand'>
                 <Link
-                  to = '/community/personal'
+                  to = {'/community/personal/' + this.props.header.user.id}
                   onClick = { () => { this.scrollTop(); } }>
                   <div className = 'item'>我的主页</div>
                 </Link>

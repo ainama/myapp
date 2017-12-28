@@ -44,7 +44,7 @@ ReactDOM.render((
         <Route exact strict path = '/community/addArticle/:article' component = { AddArticle } />
         <Route exact strict path = '/community/showArticle/:article' component = { ShowArticle } />
         <Route exact strict path = '/community/personal/:uid' component = { PersonalPage } />
-        <Route exact strict path = '/community/setting' component = { SettingPage } />
+        <Route exact strict path = '/community/setting/:uid' component = { SettingPage } />
       </Index>
     </Router>
   </Provider>

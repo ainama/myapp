@@ -77,8 +77,8 @@ class PersonalPage extends React.Component {
             <div className = 'personal-info-detail'>
               <img src = { userInfo.head_img }/>             
               <div className = 'personal-info-msg'>
-                <p>{ userInfo.tel }</p>
-                <div>暂无个人简介</div>
+                <p>{ userInfo.profession }</p>
+                <div>{ userInfo.bf_introduction }</div>
               </div>
             </div>
           </div>

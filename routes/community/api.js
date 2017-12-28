@@ -168,11 +168,30 @@ router.get('/user/likes', function (req, res) {
 });
 
 /**
- * 用户修改姓名
- * @method /api/community/user/updateName
+ * 用户修改基本信息（姓名，职业，个人简介）
+ * @method /api/community/user/updateBaseMsg
  */
-router.post('/user/updateName', function(req, res){
-  updateInfo(req, res, 'name');
+router.post('/user/updateBaseMsg', function(req, res){
+  // updateInfo(req, res, 'name');
+  // { name: value, profession: profession, bfId: bfId }
+  console.log('req.body', req.body);
+  var uid = req.session.sessionId;
+  var data = req.body;
+  var params = [];
+  for(var k in data) {
+    params.push(data[k]);
+  }
+  params.push(uid);
+  var sql = 'UPDATE t_user SET name=?,profession=?,bf_introduction=? where id=?';
+  query(sql, params, function (error, results, fields) {
+    if (error) {
+      throw error;
+    } else {
+      if (results.serverStatus == 2) {
+        res.send({ code: 10000, msg: '修改成功！' });
+      }
+    }
+  });
 });
 
 /**
@@ -234,7 +253,7 @@ router.post('/user/updateImg', function(req, res){
 function updateInfo(req, res, type) {
   var uid = req.session.sessionId;
   var data = req.body;
-  var params = [data[type], uid]
+  var params = [data[type], uid];
   var sql = 'UPDATE t_user SET '+ type +'=? where id=?';
   query(sql, params, function (error, results, fields) {
     if (error) {

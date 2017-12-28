@@ -11,31 +11,80 @@ class SettingPage extends React.Component {
     super(props);
     this._uploadImg = this._uploadImg.bind(this);
     this._closeToast = this._closeToast.bind(this);
+    this._nameBlur = this._nameBlur.bind(this);
     this.state = {
-      update: 'pwd',
-      show: false,
-      text: '',
+      update: 'pwd',   // 账户安全修改类型，密码pwd,手机号tel
+      show: false,     // 是否显示toast
+      text: '',        // toast提示文字内容
+      name: '',        // 姓名
+      profession: '',  // 职业
+      bfId: '',        // 个人简介
     }
   }
 
   componentWillMount() {
     // 获取用户信息
-    this.props.actions.getUserInfo();
+    let uid = this.props.match.params.uid;
+    this.props.actions.getUserInfo(uid);
   }
 
-  _saveInfo() {
-    this.props.history.push('/community/personal');
+  componentWillReceiveProps(nextProps) {
+    console.log(nextProps.userInfo.name);
+    console.log(nextProps.userInfo.profession);
+    console.log(nextProps.userInfo.bf_introduction);
+    this.setState({
+      name: nextProps.userInfo.name,              // 姓名
+      profession: nextProps.userInfo.profession,  // 职业
+      bfId: nextProps.userInfo.bf_introduction,   // 个人简介
+    })
   }
 
-  _nameBlur(e) {
-    let that = this;
+  // 失去焦点时设置相应信息
+  _nameBlur(e, type) {
+    console.log('_nameBlur', this.state.name, this.state.profession,this.state.bfId);
     let value = e.target.value;
-    if (value.length != 0) {
+    this.setState({
+      [type]: value
+    })
+  }
 
+  // input改变时
+  _inputChange(e, type) {
+    let value = e.target.value;
+    this.setState({
+      [type]: value
+    })
+  }
+
+  // 保存设置的基本信息
+  _settingSubmit() {
+    let that = this;
+    console.log('state', this.state.name, this.state.profession,this.state.bfId);
+    if (this.state.name == '') {
+      this.setState({
+        show: true,
+        text: '请填入姓名'
+      })   
+    } else if(this.state.profession == '') {
+      this.setState({
+        show: true,
+        text: '请填入职业'
+      })       
+    } else if(this.state.bfId == '') {
+      this.setState({
+        show: true,
+        text: '请填入简介'
+      }) 
+    } else {   
+    // 提交设置
       $.ajax({
-        url: '/api/community/user/updateName',
+        url: '/api/community/user/updateBaseMsg',
         type: 'post',
-        data: { name: value },
+        data: {
+          name: this.state.name,
+          profession: this.state.profession,
+          bf_introduction: this.state.bfId
+        },
         success: function(res) {
           // alert(res.msg);
           that.setState({
@@ -45,6 +94,7 @@ class SettingPage extends React.Component {
         }
       });
     }
+
   }
 
   // 修改用户密码或手机号
@@ -158,7 +208,7 @@ class SettingPage extends React.Component {
     }
     e.target.className = 'active';
     if (type == 'safe') {
-      $('.setting-content')[0].style.marginTop = '-284px';
+      $('.setting-content')[0].style.marginTop = '-434px';
     } else {
       $('.setting-content')[0].style.marginTop = '0px';
     }
@@ -167,6 +217,7 @@ class SettingPage extends React.Component {
   // 上传头像
   _uploadImg(e) {
     let that = this;
+    let uid = this.props.match.params.uid;
     let formData = new FormData();
     formData.append('image', e.target.files[0]);
 
@@ -188,7 +239,7 @@ class SettingPage extends React.Component {
               show: true,
               text: res.msg
             })
-            that.props.actions.getUserInfo();
+            that.props.actions.getUserInfo(uid);
           }
         });
       }
@@ -231,12 +282,34 @@ class SettingPage extends React.Component {
                   <img src = { userInfo.head_img }/>
                 </div>
                 <div className = 'setting-content-separate'></div>
-                <div className = 'setting-content-input'>
-                  <p>姓名</p>
-                  <input
-                    defaultValue = { userInfo.name }
-                    className = 'setting-input'
-                    onBlur = {e => this._nameBlur(e)}/>
+                <div className = 'setting-content-box'>
+                  <div className = 'setting-content-input'>
+                    <p>姓名</p>
+                    <input
+                      value = { this.state.name }
+                      onChange = {e => this._inputChange(e, 'name')}
+                      className = 'setting-input'/>
+                  </div>
+
+                  <div className = 'setting-content-input'>
+                    <p>职业</p>
+                    <input
+                      value = { this.state.profession }
+                      onChange = {e => this._inputChange(e, 'profession')}
+                      className = 'setting-input'/>
+                  </div>
+
+                  <div className = 'setting-content-input'>
+                    <p>个人简介</p>
+                    <input
+                      value = { this.state.bfId }
+                      onChange = {e => this._inputChange(e, 'bfId')}
+                      className = 'setting-input'/>
+                  </div>
+
+                  <div
+                    className = 'setting-content-btn'
+                    onClick = { () => this._settingSubmit() }>保存设置</div>
                 </div>
               </div>
             </div>

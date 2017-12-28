@@ -291,8 +291,7 @@ router.get('/article/recent', function (req, res) {
  * @author zn
  */
 router.get('/article/hot', function (req, res) {
-  var sql = 'SELECT id, title, banner, create_time FROM t_article ' +
-                'ORDER BY praise DESC limit 10';
+  var sql = 'SELECT id, title, banner, create_time FROM t_article ORDER BY praise DESC limit 10';
   query(sql, null, function (error, results, fields) {
     if (error) throw error;
     res.send({ code: 10000, msg: results });
@@ -302,7 +301,7 @@ router.get('/article/hot', function (req, res) {
 /**
  * 插入消息
  * @method insertNews
- * @param {int} type 消息类型：1-点赞，2-收藏，3-评论，4-回复，5-关注(345暂不支持)
+ * @param {int} type 消息类型：1-点赞，2-收藏，3-评论，4-回复，5-关注
  * @param {int} userID 当前用户ID
  * @param {int} articleID 文章ID
  * @author zn
@@ -314,8 +313,7 @@ function insertNews(type, userID, articleID) {
     if (error) throw error;
     var authorID = results[0].author_id;
     // 插入消息
-    var insert = 'INSERT INTO t_news(type, launch_id, accept_id) ' +
-                     'VALUES (?, ?, ?)';
+    var insert = 'INSERT INTO t_news(type, launch_id, accept_id) VALUES (?, ?, ?)';
     var params = [type, userID, authorID];
     query(insert, params);
   });
@@ -324,18 +322,37 @@ function insertNews(type, userID, articleID) {
 /**
  * 消息列表
  * @method /api/community/news/list
+ * @param {int} type 消息类型：1-点赞，2-收藏，3-评论，4-回复，5-关注
  * @author zn
  */
 router.get('/news/list', function (req, res) {
   var userID = req.session.sessionId;
-  var sql = 'SELECT t_news.* FROM t_news ' +
-                'LEFT JOIN t_user ' +
-                'ON t_news.launch_id=t_user.id ' +
-                'WHERE t_news.accept_id=' + userID +
-                    ' AND t_news.type=' + req.body.type;
-  query(sql, null, function (error, results, fields) {
+  var type = req.body.type;
+  var select = 'SELECT t_news.* FROM t_news LEFT JOIN t_user ON t_news.launch_id=t_user.id WHERE t_news.accept_id=' + userID + ' AND t_news.type=' + type + ' AND t_news.status IN (0, 1)';
+  query(select, null, function (error, results, fields) {
     if (error) throw error;
     res.send({ code: 10000, msg: results });
+    // 修改状态为已读
+    var update = 'UPDATE t_news SET status=1 WHERE accept_id=' + userID + ' AND type=' + type;
+    query(update);
+  });
+});
+
+/**
+ * 删除消息
+ * @method /api/community/news/delete
+ * @param {int} id 消息ID
+ */
+router.delete('/news/delete', function (req, res) {
+  var newsID = req.body.id;
+  var sql = 'UPDATE t_news SET status=2 WHERE id=' + newsID;
+  query(sql, function (error, results, fields) {
+    if (error) throw error;
+    if (results.serverStatus == 2) {
+      res.send({ code: 10000, msg: '请求成功' });
+    } else {
+      res.send({ code: 10001, msg: '请求失败' });
+    }
   });
 });
 

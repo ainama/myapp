@@ -515,8 +515,6 @@ exports.connect = _connect2.default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-var TEST = exports.TEST = 'TEST';
-
 var ADD_ARTICLE_IMG = exports.ADD_ARTICLE_IMG = 'ADD_ARTICLE_IMG'; // add/edit页上传图片
 var SHOW_ARTICLE = exports.SHOW_ARTICLE = 'SHOW_ARTICLE'; // 展示文章
 var SHOW_LIKE = exports.SHOW_LIKE = 'SHOW_LIKE'; // 文章详情页展示like
@@ -526,7 +524,7 @@ var GET_USER_BASE = exports.GET_USER_BASE = 'GET_USER_BASE';
 var GET_ARTICLE_RECENT = exports.GET_ARTICLE_RECENT = 'GET_ARTICLE_RECENT';
 var GET_ARTICLE_HOT = exports.GET_ARTICLE_HOT = 'GET_ARTICLE_HOT';
 var SET_LOAD_TEXT = exports.SET_LOAD_TEXT = 'SET_LOAD_TEXT';
-var CLEAR_PROPS = exports.CLEAR_PROPS = 'CLEAR_PROPS';
+// export const CLEAR_PROPS = 'CLEAR_PROPS';
 
 var GET_USER_INFO = exports.GET_USER_INFO = 'GET_USER_INFO';
 var GET_USER_ARTICLES = exports.GET_USER_ARTICLES = 'GET_USER_ARTICLES';
@@ -11321,32 +11319,7 @@ function warning(message) {
 }
 
 /***/ }),
-/* 63 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.testfunc = testfunc;
-
-var _actionTypes = __webpack_require__(7);
-
-var types = _interopRequireWildcard(_actionTypes);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-function testfunc() {
-  console.log('This is testfunc()');
-  return {
-    type: types.TEST,
-    payload: { z: 'z' }
-  };
-}
-
-/***/ }),
+/* 63 */,
 /* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -23594,14 +23567,6 @@ var _index = __webpack_require__(152);
 
 var _index2 = _interopRequireDefault(_index);
 
-var _page = __webpack_require__(156);
-
-var _page2 = _interopRequireDefault(_page);
-
-var _page3 = __webpack_require__(157);
-
-var _page4 = _interopRequireDefault(_page3);
-
 var _home = __webpack_require__(158);
 
 var _home2 = _interopRequireDefault(_home);
@@ -23640,14 +23605,7 @@ var _reduxPromise2 = _interopRequireDefault(_reduxPromise);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// 中间件做的判断
-
-
-/*just try lichaoqun*/
 var middleware = process.env.NODE_ENV === 'production' ? [_reduxThunk2.default, _reduxPromise2.default] : [_reduxThunk2.default, (0, _reduxLogger.createLogger)(), _reduxPromise2.default];
-
-// import todoApp from './reducers';
-// const store = createStore(todoApp);
 
 var store = (0, _redux.createStore)(_reducers2.default, _redux.applyMiddleware.apply(undefined, middleware));
 
@@ -23660,8 +23618,6 @@ _reactDom2.default.render(_react2.default.createElement(
     _react2.default.createElement(
       _index2.default,
       null,
-      _react2.default.createElement(_reactRouterDom.Route, { exact: true, strict: true, path: '/community', component: _page2.default }),
-      _react2.default.createElement(_reactRouterDom.Route, { exact: true, strict: true, path: '/community/page2', component: _page4.default }),
       _react2.default.createElement(_reactRouterDom.Route, { exact: true, strict: true, path: '/community/home', component: _home2.default }),
       _react2.default.createElement(_reactRouterDom.Route, { exact: true, strict: true, path: '/community/addArticle', component: _addArticle2.default }),
       _react2.default.createElement(_reactRouterDom.Route, { exact: true, strict: true, path: '/community/addArticle/:article', component: _addArticle2.default }),
@@ -29031,7 +28987,7 @@ var Index = function (_React$Component) {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
-        'div',
+        _react2.default.Fragment,
         null,
         _react2.default.createElement(_header2.default, null),
         _react2.default.createElement(
@@ -29382,12 +29338,6 @@ var _reactRedux = __webpack_require__(6);
 
 var _reactRouterDom = __webpack_require__(9);
 
-var _test = __webpack_require__(63);
-
-var actions = _interopRequireWildcard(_test);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -29395,6 +29345,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+// import * as actions from '../actions/test';
 
 var Footer = function (_React$Component) {
   _inherits(Footer, _React$Component);
@@ -29472,269 +29424,21 @@ var Footer = function (_React$Component) {
 
 var mapStateToProps = function mapStateToProps(store) {
   return {
-    test: store.test
+    // test: store.test
   };
 };
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
-    actions: (0, _redux.bindActionCreators)(actions, dispatch)
+    // actions: bindActionCreators(actions, dispatch)
   };
 };
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Footer);
 
 /***/ }),
-/* 156 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(1);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _redux = __webpack_require__(4);
-
-var _reactRedux = __webpack_require__(6);
-
-var _test = __webpack_require__(63);
-
-var actions = _interopRequireWildcard(_test);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-// import Simditor from 'simditor';
-
-var Page = function (_React$Component) {
-  _inherits(Page, _React$Component);
-
-  function Page(props) {
-    _classCallCheck(this, Page);
-
-    return _possibleConstructorReturn(this, (Page.__proto__ || Object.getPrototypeOf(Page)).call(this, props));
-  }
-
-  _createClass(Page, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      var editor = new Simditor({
-        //textarea的id
-        textarea: $('#remark'),
-        //工具条都包含哪些内容
-        toolbar: ['title', 'bold', 'italic', 'underline', 'table', 'color', 'ol', 'ul', 'image', 'hr'],
-        //若需要上传功能，上传的参数设置。
-        upload: {
-          url: 'ImgUpload.action', //文件上传的接口地址
-          params: null, //键值对,指定文件上传接口的额外参数,上传的时候随文件一起提交
-          fileKey: 'fileDataFileName', //服务器端获取文件数据的参数名
-          connectionCount: 3,
-          leaveConfirm: '正在上传文件'
-        }
-      });
-    }
-  }, {
-    key: 'push',
-    value: function push() {
-      this.props.history.push('/community/page2');
-    }
-  }, {
-    key: 'get',
-    value: function get() {
-      $.ajax({
-        url: '/api/community/test',
-        type: 'get',
-        success: function success(res) {
-          console.log(res);
-        }
-      });
-    }
-  }, {
-    key: 'addArticle',
-    value: function addArticle() {
-      this.props.history.push('/community/addArticle');
-    }
-  }, {
-    key: 'showArticle',
-    value: function showArticle() {
-      this.props.history.push('/community/showArticle');
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      var _this2 = this;
-
-      return _react2.default.createElement(
-        'div',
-        null,
-        _react2.default.createElement(
-          'div',
-          { onClick: function onClick() {
-              _this2.push();
-            } },
-          '\u53BBpage2'
-        ),
-        _react2.default.createElement(
-          'div',
-          { onClick: function onClick() {
-              _this2.addArticle();
-            } },
-          '\u53BBaddArticle'
-        ),
-        _react2.default.createElement(
-          'div',
-          { onClick: function onClick() {
-              _this2.showArticle();
-            } },
-          '\u53BBshowArticle'
-        ),
-        _react2.default.createElement('textarea', {
-          id: 'remark',
-          ref: 'textarea',
-          placeholder: '\u8BF7\u8F93\u5165\u5185\u5BB9' })
-      );
-    }
-  }]);
-
-  return Page;
-}(_react2.default.Component);
-
-Page.propTypes = {};
-
-Page.defaultProps = {};
-
-var mapStateToProps = function mapStateToProps(store) {
-  return {
-    test: store.test
-  };
-};
-
-var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-  return {
-    actions: (0, _redux.bindActionCreators)(actions, dispatch)
-  };
-};
-
-exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Page);
-
-/***/ }),
-/* 157 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(1);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _redux = __webpack_require__(4);
-
-var _reactRedux = __webpack_require__(6);
-
-var _test = __webpack_require__(63);
-
-var actions = _interopRequireWildcard(_test);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var Page2 = function (_React$Component) {
-  _inherits(Page2, _React$Component);
-
-  function Page2(props) {
-    _classCallCheck(this, Page2);
-
-    var _this = _possibleConstructorReturn(this, (Page2.__proto__ || Object.getPrototypeOf(Page2)).call(this, props));
-
-    console.log(_this.props);
-    return _this;
-  }
-
-  _createClass(Page2, [{
-    key: 'setZ',
-    value: function setZ() {
-      // this.props.actions.testfunc();
-      this.props.history.push('/community/login');
-    }
-  }, {
-    key: 'componentWillMount',
-    value: function componentWillMount() {
-
-      // 登录接口
-      $.ajax({
-        url: '/api/user/login',
-        type: 'post',
-        data: { tel: '13325412542', pwd: '12345678' },
-        success: function success(res) {
-          console.log('00000', res);
-        }
-      });
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      var _this2 = this;
-
-      return _react2.default.createElement(
-        'div',
-        null,
-        _react2.default.createElement(
-          'div',
-          { onClick: function onClick() {
-              _this2.setZ();
-            } },
-          'actions click'
-        )
-      );
-    }
-  }]);
-
-  return Page2;
-}(_react2.default.Component);
-
-var mapStateToProps = function mapStateToProps(store) {
-  return {
-    test: store.test
-  };
-};
-
-var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-  return {
-    actions: (0, _redux.bindActionCreators)(actions, dispatch)
-  };
-};
-
-exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Page2);
-
-/***/ }),
+/* 156 */,
+/* 157 */,
 /* 158 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -29804,8 +29508,11 @@ var Home = function (_React$Component) {
   _createClass(Home, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      this.props.actions.getArticleRecent('page=1');
-      this.props.actions.getArticleHot();
+      var len = this.props.home.recentList.length;
+      if (len == 0) this.props.actions.getArticleRecent('page=1');
+
+      var len2 = this.props.home.hotList.length;
+      if (len2 == 0) this.props.actions.getArticleHot();
     }
   }, {
     key: 'getMore',
@@ -29818,7 +29525,7 @@ var Home = function (_React$Component) {
   }, {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {
-      this.props.actions.clearProps();
+      // this.props.actions.clearProps();
       if (this.props.header.user) {
         localStorage.setItem('current_uid', this.props.header.user.id);
       }
@@ -29828,7 +29535,6 @@ var Home = function (_React$Component) {
     value: function render() {
       var _this2 = this;
 
-      console.log('this.props.header');
       return _react2.default.createElement(
         'div',
         { className: 'home-page' },
@@ -29883,7 +29589,6 @@ Object.defineProperty(exports, "__esModule", {
 exports.getArticleRecent = getArticleRecent;
 exports.setLoadText = setLoadText;
 exports.getArticleHot = getArticleHot;
-exports.clearProps = clearProps;
 
 var _actionTypes = __webpack_require__(7);
 
@@ -29915,9 +29620,9 @@ function getArticleHot() {
   };
 }
 
-function clearProps() {
-  return { type: types.CLEAR_PROPS };
-}
+// export function clearProps() {
+//   return { type: types.CLEAR_PROPS };
+// }
 
 /***/ }),
 /* 160 */
@@ -32196,7 +31901,7 @@ exports = module.exports = __webpack_require__(35)(undefined);
 
 
 // module
-exports.push([module.i, "@charset \"UTF-8\";\nbody, ul, li, h1, h2, h3, h4, h5, h6, p, form, dl, dt, dd, div {\n  margin: 0px;\n  padding: 0px;\n  font-size: 14px;\n  font-weight: normal;\n  -webkit-tap-highlight-color: transparent;\n  width: max-content; }\n\nul {\n  list-style: none; }\n\nimg {\n  border-style: none; }\n\na {\n  text-decoration: none; }\n\n::-webkit-scrollbar {\n  width: 6px;\n  height: 6px;\n  background-color: #9b9b9b;\n  padding: 2px; }\n\n/*定义滚动条轨道 内阴影+圆角*/\n::-webkit-scrollbar-track {\n  background-color: #fafafa; }\n\n/*定义滑块 内阴影+圆角*/\n::-webkit-scrollbar-thumb {\n  border-radius: 2px;\n  background-color: #bbb; }\n\n.header {\n  position: fixed;\n  width: 100vw;\n  height: 60px;\n  background-color: #fff;\n  border-bottom: 1px solid #d5d5d5;\n  display: flex;\n  flex-direction: row;\n  justify-content: center; }\n  .header .body {\n    display: flex;\n    flex-direction: row;\n    align-items: center;\n    width: 1000px; }\n  .header .logo {\n    width: 96px;\n    height: 24px;\n    background-image: url(/images/community/header_logo.png);\n    background-position: center;\n    background-repeat: no-repeat;\n    background-size: 96px 24px;\n    margin-right: 26px; }\n  .header .group {\n    flex: 1; }\n    .header .group .home {\n      display: flex;\n      justify-content: center;\n      width: 60px;\n      height: 59px;\n      border-bottom: 2px solid #4a90e2;\n      line-height: 59px;\n      text-align: center;\n      font-size: 16px;\n      color: #555; }\n  .header .write {\n    width: 114px;\n    height: 36px;\n    background-image: url(/images/community/header_write.png);\n    background-position: center;\n    background-repeat: no-repeat;\n    background-size: 114px 36px;\n    margin-right: 30px;\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    align-items: center; }\n    .header .write .icon {\n      width: 16px;\n      height: 16px;\n      background-image: url(/images/community/header_write_icon.png);\n      background-position: center;\n      background-repeat: no-repeat;\n      background-size: 16px 16px;\n      margin-right: 9px; }\n    .header .write span {\n      font-size: 16px;\n      color: #fff; }\n  .header .user {\n    display: flex;\n    flex-direction: row;\n    position: relative; }\n    .header .user .login {\n      margin-right: 30px; }\n    .header .user a {\n      font-size: 16px;\n      color: #555; }\n    .header .user .img {\n      width: 32px;\n      height: 32px;\n      cursor: pointer; }\n  .header .expand {\n    position: absolute;\n    top: 46px;\n    left: -30px;\n    width: 92px;\n    padding-top: 10px;\n    padding-bottom: 10px;\n    background-color: #fff;\n    border: 1px solid #d5d5d5;\n    box-shadow: 1px 2px 8px 0 rgba(44, 64, 88, 0.2); }\n    .header .expand .item {\n      width: 100%;\n      height: 34px;\n      text-align: center;\n      line-height: 34px;\n      font-size: 14px;\n      color: #bbb; }\n    .header .expand .item:hover {\n      background-color: #f9f9f9;\n      color: #969696; }\n\n.footer {\n  width: 100vw;\n  height: 98px;\n  border-top: 1px solid #d5d5d5;\n  display: flex;\n  flex-direction: column;\n  align-items: center; }\n  .footer .body {\n    width: 1000px; }\n    .footer .body .row1 {\n      display: flex;\n      flex-direction: row;\n      margin-top: 28px; }\n    .footer .body .row2 {\n      margin-top: 18px; }\n    .footer .body .div {\n      padding-left: 10px;\n      padding-right: 10px;\n      border-right: 1px solid #969696; }\n    .footer .body .div:first-child {\n      padding-left: 0px; }\n    .footer .body .div:last-child {\n      padding-right: 0px;\n      border-right: 0px; }\n    .footer .body a {\n      font-size: 12px;\n      color: #969696; }\n    .footer .body a:hover {\n      color: #4a90e2; }\n\n.container {\n  width: 100vw;\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n  padding-top: 60px; }\n  .container .body {\n    width: 1000px;\n    min-height: calc(100vh - 160px); }\n\n.addArticle-layout {\n  margin: 50px auto 0;\n  padding: 0px 0px 20px 0px;\n  width: 600px;\n  z-index: 1;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n  -ms-flex-direction: column;\n  flex-direction: column;\n  -webkit-box-align: stretch;\n  -ms-flex-align: stretch;\n  align-items: stretch;\n  -ms-flex-negative: 0;\n  flex-shrink: 0;\n  overflow: hidden; }\n\n.fake-wrapper {\n  position: relative;\n  width: 600px;\n  height: 260px;\n  background: #f7f8f9;\n  line-height: 192px;\n  color: gray;\n  text-align: center; }\n\n.fake-banner {\n  height: 100%;\n  width: 100%; }\n\n.addArticle-banner {\n  position: absolute;\n  display: block;\n  top: 0;\n  left: 0;\n  height: 100%;\n  width: 100%;\n  opacity: 0;\n  cursor: pointer;\n  z-index: 2; }\n\n.addArticle-title {\n  margin: 20px auto; }\n\n.addArticle-input {\n  display: block;\n  width: 600px;\n  height: 60px;\n  box-sizing: border-box;\n  border: none;\n  border-radius: 2px;\n  font-size: 28px;\n  color: #888;\n  line-height: 16px;\n  padding: 6px 8px 2px 0px; }\n  .addArticle-input:focus {\n    outline: none;\n    border: none; }\n  .addArticle-input::placeholder {\n    font-size: 28px;\n    color: #999999; }\n\n.addArticle-upload {\n  border-radius: 4px;\n  text-align: center;\n  border: 1px solid #b3b3b3;\n  color: gray;\n  width: 82px;\n  height: 32px;\n  line-height: 30px;\n  padding: 0;\n  cursor: pointer; }\n\n/*simditor*/\n.simditor {\n  width: 600px !important;\n  border: none !important;\n  border-top: 1px solid #c9d8db !important;\n  margin: 0 auto; }\n  .simditor p {\n    width: 560px !important; }\n  .simditor .simditor-toolbar {\n    border-bottom: none !important; }\n\n.showArticle-layout {\n  padding: 30px 0;\n  margin: 0 auto;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  overflow: hidden; }\n\n.showArticle-left {\n  width: 650px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n  -ms-flex-direction: column;\n  flex-direction: column;\n  -webkit-box-align: stretch;\n  -ms-flex-align: stretch;\n  align-items: stretch;\n  -ms-flex-negative: 0;\n  flex-shrink: 0; }\n\n.showArticle-title {\n  width: 650px;\n  line-height: 30px;\n  font-size: 26px;\n  color: #3d464d;\n  margin-bottom: 30px; }\n\n.showArticle-info {\n  font-size: 12px;\n  color: #4a90e2;\n  line-height: 12px; }\n  .showArticle-info .showArticle-time {\n    font-size: 12px;\n    color: #bbbbbb;\n    line-height: 12px;\n    margin-left: 20px; }\n\n.showArticle-content {\n  margin: 30px auto;\n  padding: 0;\n  width: 640px;\n  z-index: 1;\n  font-size: 16px;\n  color: #3d464d;\n  line-height: 20px; }\n  .showArticle-content p {\n    width: 640px;\n    text-indent: 16px; }\n\n.showArticle-like, .showArticle-dislike {\n  margin: 0 auto;\n  background: #4a90e2;\n  border-radius: 4px;\n  width: 135px;\n  height: 40px;\n  color: #fff;\n  font-size: 16px;\n  line-height: 18px;\n  display: flex;\n  justify-content: center; }\n  .showArticle-like img, .showArticle-dislike img {\n    width: 17px;\n    height: 18px;\n    margin-right: 10px; }\n\n.showArticle-dislike {\n  background: #bbbbbb;\n  cursor: not-allowed; }\n\n.showArticle-right {\n  width: 320px;\n  margin-left: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n  -ms-flex-direction: column;\n  flex-direction: column;\n  -webkit-box-align: stretch;\n  -ms-flex-align: stretch;\n  align-items: stretch;\n  -ms-flex-negative: 0;\n  flex-shrink: 0; }\n\n.showArticle-curInfo {\n  background: #ffffff;\n  border: 1px solid #d5d5d5;\n  width: 278px;\n  height: 204px;\n  margin-top: 42px;\n  padding: 46px 20px 20px;\n  position: relative; }\n\n.showArticle-headImg {\n  box-shadow: 1px 3px 12px 0 rgba(44, 64, 88, 0.4);\n  border-radius: 4px;\n  width: 70px;\n  height: 70px;\n  position: absolute;\n  left: 20px;\n  top: -44px; }\n\n.showArticle-authorName, .showArticle-latest, .showArticle-latestTitle {\n  font-family: PingFangSC-Regular;\n  font-size: 14px;\n  color: #555555;\n  line-height: 14px;\n  margin-bottom: 12px; }\n\n.showArticle-authorInfo {\n  width: 280px;\n  height: 44px;\n  font-family: PingFangSC-Regular;\n  font-size: 12px;\n  color: #999999;\n  line-height: 20px;\n  padding-bottom: 20px;\n  border-bottom: 1px solid #d5d5d5;\n  margin-bottom: 20px; }\n\n.showArticle-latestTitle {\n  width: 280px;\n  line-height: 20px;\n  margin-top: 20px;\n  cursor: pointer; }\n\n.showArticle-latestTime {\n  font-family: PingFangSC-Regular;\n  font-size: 12px;\n  color: #bbbbbb;\n  line-height: 12px; }\n\n.personal-page {\n  width: 1000px;\n  margin: 30px auto;\n  display: flex;\n  justify-content: space-between; }\n\n.personal-info {\n  width: 320px;\n  height: 245px;\n  background: #ffffff;\n  border: 1px solid #d5d5d5;\n  border-radius: 4px; }\n  .personal-info .personal-info-box {\n    width: 100%;\n    padding: 30px 20px;\n    box-sizing: border-box;\n    border-bottom: 1px solid #d5d5d5; }\n    .personal-info .personal-info-box .personal-info-name {\n      font-family: PingFangSC-Regular;\n      font-size: 18px;\n      color: #555555;\n      line-height: 18px;\n      margin-bottom: 20px; }\n    .personal-info .personal-info-box .personal-info-detail {\n      display: flex; }\n      .personal-info .personal-info-box .personal-info-detail img {\n        width: 70px;\n        height: 70px; }\n      .personal-info .personal-info-box .personal-info-detail .personal-info-msg {\n        width: 200px;\n        margin-left: 10px; }\n        .personal-info .personal-info-box .personal-info-detail .personal-info-msg p {\n          font-family: PingFangSC-Regular;\n          font-size: 16px;\n          color: #555555;\n          line-height: 16px;\n          margin-bottom: 8px; }\n        .personal-info .personal-info-box .personal-info-detail .personal-info-msg div {\n          font-family: PingFangSC-Regular;\n          font-size: 14px;\n          color: #bbbbbb;\n          width: 100%; }\n  .personal-info .personal-info-data {\n    width: 100%;\n    padding: 30px 20px;\n    box-sizing: border-box; }\n    .personal-info .personal-info-data .personal-info-thumb {\n      width: 100%;\n      display: flex;\n      justify-content: space-between; }\n      .personal-info .personal-info-data .personal-info-thumb img {\n        width: 14px;\n        height: 15px;\n        margin-right: 10px; }\n      .personal-info .personal-info-data .personal-info-thumb span {\n        font-size: 14px;\n        color: #555555;\n        line-height: 14px; }\n      .personal-info .personal-info-data .personal-info-thumb p {\n        font-size: 14px;\n        color: #555555; }\n\n.personal-content {\n  width: 640px;\n  background: #ffffff;\n  border: 1px solid #d5d5d5;\n  border-radius: 4px; }\n  .personal-content .personal-content-tabs {\n    width: 100%;\n    height: 56px;\n    border-bottom: 1px solid #d5d5d5;\n    display: flex;\n    justify-content: center; }\n    .personal-content .personal-content-tabs .tabs-cell {\n      height: 100%;\n      line-height: 56px;\n      font-size: 16px;\n      color: #555555;\n      padding-left: 10px;\n      padding-right: 10px;\n      cursor: pointer; }\n    .personal-content .personal-content-tabs .active {\n      border-bottom: 2px solid #4a90e2;\n      box-sizing: border-box;\n      color: #4990e2; }\n  .personal-content .personal-content-list .item {\n    width: 580px;\n    box-sizing: border-box;\n    padding-top: 30px;\n    padding-bottom: 20px;\n    margin-left: 30px;\n    margin-right: 30px;\n    display: flex;\n    justify-content: space-between;\n    border-bottom: 1px solid #f0f0f0; }\n    .personal-content .personal-content-list .item .title {\n      font-size: 18px;\n      color: #555555;\n      line-height: 18px;\n      width: 390px; }\n    .personal-content .personal-content-list .item .detail {\n      width: 390px;\n      height: 44px;\n      font-size: 12px;\n      color: #555555;\n      line-height: 20px;\n      margin-top: 12px;\n      overflow: hidden; }\n    .personal-content .personal-content-list .item .like .hot {\n      margin-right: 10px;\n      width: 12px;\n      height: 15px; }\n    .personal-content .personal-content-list .item .like .thumb-up {\n      margin-left: 20px;\n      margin-right: 10px;\n      width: 14px;\n      height: 15px; }\n    .personal-content .personal-content-list .item .like span {\n      font-size: 12px;\n      color: #bbbbbb;\n      line-height: 12px; }\n    .personal-content .personal-content-list .item .img {\n      width: 176px;\n      height: 93px; }\n  .personal-content .personal-content-list a:last-child {\n    border-bottom: 0px solid #f0f0f0; }\n  .personal-content .personal-content-list .personal-content-none {\n    text-align: center;\n    width: 640px;\n    padding-top: 80px;\n    color: #555555; }\n\n.setting-page {\n  width: 1000px;\n  margin: 30px auto 0;\n  position: relative; }\n  .setting-page .setting-nav {\n    border: 1px solid #d5d5d5;\n    border-radius: 4px;\n    width: 318px;\n    height: 89px;\n    position: fixed; }\n    .setting-page .setting-nav p {\n      width: 100%;\n      height: 45px;\n      box-sizing: border-box;\n      border-bottom: 1px solid #d5d5d5;\n      font-size: 15px;\n      color: #555555;\n      line-height: 45px;\n      padding-left: 20px;\n      border-left: 3px solid transparent; }\n    .setting-page .setting-nav p:last-child {\n      border-bottom: 0px solid #d5d5d5; }\n    .setting-page .setting-nav .active {\n      border-left: 3px solid #4990e2;\n      color: #4990e2; }\n  .setting-page .setting-content {\n    width: 640px;\n    float: right; }\n    .setting-page .setting-content .setting-content-detail {\n      width: 100%;\n      padding: 27px 30px 33px;\n      box-sizing: border-box;\n      border: 1px solid #d5d5d5;\n      border-radius: 4px;\n      margin-bottom: 30px; }\n      .setting-page .setting-content .setting-content-detail .setting-content-title {\n        font-size: 16px;\n        color: #555555; }\n      .setting-page .setting-content .setting-content-detail .setting-content-base {\n        width: 100%;\n        display: flex;\n        justify-content: space-between;\n        margin-top: 20px; }\n        .setting-page .setting-content .setting-content-detail .setting-content-base .setting-content-img {\n          width: 120px;\n          height: 120px;\n          position: relative; }\n          .setting-page .setting-content .setting-content-detail .setting-content-base .setting-content-img:hover .mask {\n            display: flex; }\n          .setting-page .setting-content .setting-content-detail .setting-content-base .setting-content-img .mask {\n            width: 120px;\n            height: 120px;\n            background-color: rgba(0, 0, 0, 0.5);\n            position: absolute;\n            top: 0px;\n            left: 0px;\n            display: none;\n            justify-content: center;\n            align-items: center; }\n            .setting-page .setting-content .setting-content-detail .setting-content-base .setting-content-img .mask div {\n              text-align: center; }\n              .setting-page .setting-content .setting-content-detail .setting-content-base .setting-content-img .mask div .upload {\n                width: 120px;\n                height: 120px;\n                position: absolute;\n                top: 0px;\n                left: 0px;\n                opacity: 0; }\n              .setting-page .setting-content .setting-content-detail .setting-content-base .setting-content-img .mask div img {\n                width: 28px;\n                height: 19px; }\n              .setting-page .setting-content .setting-content-detail .setting-content-base .setting-content-img .mask div p {\n                font-size: 14px;\n                color: #ffffff; }\n          .setting-page .setting-content .setting-content-detail .setting-content-base .setting-content-img img {\n            width: 120px;\n            height: 120px; }\n        .setting-page .setting-content .setting-content-detail .setting-content-base .setting-content-separate {\n          border-left: 1px solid #d5d5d5;\n          height: 300px; }\n        .setting-page .setting-content .setting-content-detail .setting-content-base .setting-content-box {\n          width: 400px; }\n          .setting-page .setting-content .setting-content-detail .setting-content-base .setting-content-box .setting-content-input {\n            width: 100%;\n            margin-bottom: 20px; }\n            .setting-page .setting-content .setting-content-detail .setting-content-base .setting-content-box .setting-content-input p {\n              font-size: 18px;\n              color: #999999;\n              margin-bottom: 10px; }\n            .setting-page .setting-content .setting-content-detail .setting-content-base .setting-content-box .setting-content-input input {\n              width: 100%;\n              height: 32px;\n              background: #ffffff;\n              border: 1px solid #acacac;\n              border-radius: 4px;\n              padding-left: 10px;\n              box-sizing: border-box; }\n          .setting-page .setting-content .setting-content-detail .setting-content-base .setting-content-box .setting-content-btn {\n            width: 100%;\n            height: 34px;\n            background-color: #4990e2;\n            text-align: center;\n            color: #fff;\n            line-height: 34px;\n            font-size: 16px;\n            border-radius: 4px;\n            cursor: pointer; }\n      .setting-page .setting-content .setting-content-detail .setting-cell {\n        width: 580px;\n        height: 84px;\n        display: flex;\n        justify-content: space-between;\n        align-items: center; }\n        .setting-page .setting-content .setting-content-detail .setting-cell p {\n          font-size: 18px;\n          color: #999999; }\n        .setting-page .setting-content .setting-content-detail .setting-cell div {\n          background: #4990e2;\n          border-radius: 4px;\n          width: 92px;\n          height: 41px;\n          color: #ffffff;\n          font-size: 16px;\n          text-align: center;\n          line-height: 41px;\n          cursor: pointer; }\n\n.page-setting-mask {\n  width: 100vw;\n  background-color: rgba(0, 0, 0, 0.4);\n  position: fixed;\n  top: 0px;\n  left: 0px;\n  bottom: 0px;\n  right: 0px;\n  justify-content: center;\n  align-items: center;\n  display: none;\n  z-index: 2; }\n  .page-setting-mask .setting-mask-div {\n    width: 460px;\n    margin: 100px auto;\n    padding: 30px 40px;\n    box-sizing: border-box;\n    background-color: #ffffff;\n    border-radius: 4px;\n    position: relative; }\n    .page-setting-mask .setting-mask-div .close {\n      position: absolute;\n      right: 24px;\n      top: 24px;\n      font-size: 20px;\n      cursor: pointer; }\n    .page-setting-mask .setting-mask-div span {\n      font-size: 20px;\n      color: #555555;\n      display: inline-block;\n      margin-bottom: 20px; }\n    .page-setting-mask .setting-mask-div p {\n      font-size: 18px;\n      color: #999999; }\n    .page-setting-mask .setting-mask-div input {\n      width: 100%;\n      height: 32px;\n      border: 1px solid #acacac;\n      border-radius: 4px;\n      margin-top: 10px;\n      margin-bottom: 20px;\n      box-sizing: border-box;\n      padding-left: 10px; }\n    .page-setting-mask .setting-mask-div .setting-submit {\n      width: 100%;\n      height: 40px;\n      font-size: 18px;\n      color: #ffffff;\n      margin-top: 20px;\n      margin-bottom: 40px;\n      background: #4990e2;\n      border-radius: 4px;\n      line-height: 40px;\n      text-align: center;\n      cursor: pointer; }\n\n.home-page {\n  width: 100%;\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between; }\n  .home-page .recent {\n    width: 640px;\n    padding-top: 10px;\n    padding-bottom: 60px; }\n    .home-page .recent .item {\n      width: 100%;\n      padding-top: 20px;\n      padding-bottom: 20px;\n      border-bottom: 1px solid #f0f0f0; }\n      .home-page .recent .item .user {\n        display: flex;\n        flex-direction: row;\n        align-items: center; }\n        .home-page .recent .item .user .head {\n          width: 32px;\n          height: 32px;\n          margin-right: 10px; }\n        .home-page .recent .item .user .name {\n          font-size: 12px;\n          color: #555;\n          margin-right: 10px; }\n        .home-page .recent .item .user .time {\n          font-size: 12px;\n          color: #bbb; }\n      .home-page .recent .item .article {\n        width: 100%;\n        display: flex;\n        flex-direction: row;\n        justify-content: space-between; }\n      .home-page .recent .item .title {\n        max-width: 450px;\n        height: 25px;\n        margin-top: 6px;\n        margin-bottom: 6px;\n        font-size: 18px;\n        color: #555;\n        overflow: hidden;\n        white-space: nowrap;\n        text-overflow: ellipsis; }\n      .home-page .recent .item .content {\n        width: 420px;\n        overflow: hidden;\n        display: -webkit-box;\n        -webkit-box-orient: vertical;\n        -webkit-line-clamp: 3;\n        font-size: 12px;\n        color: #555;\n        line-height: 22px; }\n        .home-page .recent .item .content p {\n          width: 420px; }\n      .home-page .recent .item .banner {\n        width: 176px;\n        height: 92px;\n        margin-top: 6px; }\n    .home-page .recent .load {\n      width: 640px;\n      height: 50px;\n      border: 1px solid #f0f0f0;\n      margin-top: 30px;\n      font-size: 16px;\n      color: #bbb;\n      line-height: 50px;\n      text-align: center;\n      cursor: pointer; }\n    .home-page .recent .load:hover {\n      color: #4a90e2; }\n  .home-page .hot {\n    width: 320px; }\n    .home-page .hot .title {\n      width: 100%;\n      height: 54px;\n      border-top: 2px solid #4a90e2;\n      border-bottom: 1px dashed #f0f0f0;\n      font-size: 14px;\n      color: #555;\n      line-height: 54px;\n      text-align: center;\n      margin-top: 30px;\n      margin-bottom: 26px; }\n    .home-page .hot .item-top {\n      display: flex;\n      flex-direction: column;\n      justify-content: space-between;\n      overflow: hidden;\n      width: 320px;\n      height: 168px;\n      background-image: url();\n      background-position: center;\n      background-repeat: no-repeat;\n      background-size: 320px 168px;\n      border-radius: 4px;\n      margin-bottom: 20px; }\n      .home-page .hot .item-top .ranking {\n        width: 38px;\n        height: 20px;\n        margin-left: 20px;\n        background-position: center;\n        background-repeat: no-repeat;\n        background-size: 38px 20px;\n        color: #fff;\n        display: flex;\n        flex-direction: row;\n        justify-content: center;\n        align-items: center; }\n        .home-page .hot .item-top .ranking .font10 {\n          -webkit-transfrom: originX(0);\n          -webkit-transform: scale(0.72);\n          margin-top: -2px; }\n      .home-page .hot .item-top .blocked {\n        width: 288px;\n        height: 30px;\n        background-color: rgba(0, 0, 0, 0.4);\n        padding-top: 8px;\n        padding-bottom: 8px;\n        padding-left: 16px;\n        padding-right: 16px;\n        line-height: 16px;\n        font-size: 12px;\n        color: #fff; }\n    .home-page .hot .item {\n      display: flex;\n      flex-direction: row;\n      margin-bottom: 20px; }\n      .home-page .hot .item .banner {\n        width: 112px;\n        height: 60px;\n        margin-right: 10px; }\n      .home-page .hot .item .content {\n        display: flex;\n        flex-direction: column;\n        justify-content: space-between;\n        width: 196px;\n        font-size: 12px;\n        color: #555;\n        line-height: 16px; }\n      .home-page .hot .item .time {\n        font-size: 12px;\n        color: #bbb; }\n    .home-page .hot .advert {\n      display: flex;\n      flex-direction: column;\n      align-items: flex-end; }\n      .home-page .hot .advert .img {\n        width: 320px;\n        height: 220px;\n        cursor: pointer; }\n      .home-page .hot .advert .text {\n        width: 34px;\n        height: 16px;\n        background-color: rgba(0, 0, 0, 0.3);\n        font-size: 12px;\n        color: #fff;\n        text-align: center;\n        line-height: 16px;\n        cursor: default; }\n\n.toast-warpper {\n  width: 100vw;\n  height: 76px;\n  position: fixed;\n  top: 0;\n  left: 0;\n  z-index: 999;\n  background: rgba(73, 144, 226, 0.8);\n  text-align: center;\n  display: flex;\n  display: -webkit-flex;\n  align-items: center;\n  justify-content: center;\n  color: #fff;\n  animation-name: ToastFadeOut;\n  animation-timing-function: ease-in-out; }\n\n@keyframes ToastFadeOut {\n  0% {\n    opacity: 1;\n    top: -76px; }\n  20% {\n    opacity: 1;\n    top: 0; }\n  80% {\n    opacity: 1; }\n  100% {\n    opacity: 0; } }\n", ""]);
+exports.push([module.i, "@charset \"UTF-8\";\nbody, ul, li, h1, h2, h3, h4, h5, h6, p, form, dl, dt, dd, div {\n  margin: 0px;\n  padding: 0px;\n  font-size: 14px;\n  font-weight: normal;\n  -webkit-tap-highlight-color: transparent;\n  width: max-content; }\n\nul {\n  list-style: none; }\n\nimg {\n  border-style: none; }\n\na {\n  text-decoration: none; }\n\n::-webkit-scrollbar {\n  width: 6px;\n  height: 6px;\n  background-color: #9b9b9b;\n  padding: 2px; }\n\n/*定义滚动条轨道 内阴影+圆角*/\n::-webkit-scrollbar-track {\n  background-color: #fafafa; }\n\n/*定义滑块 内阴影+圆角*/\n::-webkit-scrollbar-thumb {\n  border-radius: 2px;\n  background-color: #bbb; }\n\n.header {\n  position: fixed;\n  width: 100vw;\n  height: 60px;\n  background-color: #fff;\n  border-bottom: 1px solid #d5d5d5;\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n  z-index: 1; }\n  .header .body {\n    display: flex;\n    flex-direction: row;\n    align-items: center;\n    width: 1000px; }\n  .header .logo {\n    width: 96px;\n    height: 24px;\n    background-image: url(/images/community/header_logo.png);\n    background-position: center;\n    background-repeat: no-repeat;\n    background-size: 96px 24px;\n    margin-right: 26px; }\n  .header .group {\n    flex: 1; }\n    .header .group .home {\n      display: flex;\n      justify-content: center;\n      width: 60px;\n      height: 59px;\n      border-bottom: 2px solid #4a90e2;\n      line-height: 59px;\n      text-align: center;\n      font-size: 16px;\n      color: #555; }\n  .header .write {\n    width: 114px;\n    height: 36px;\n    background-image: url(/images/community/header_write.png);\n    background-position: center;\n    background-repeat: no-repeat;\n    background-size: 114px 36px;\n    margin-right: 30px;\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    align-items: center; }\n    .header .write .icon {\n      width: 16px;\n      height: 16px;\n      background-image: url(/images/community/header_write_icon.png);\n      background-position: center;\n      background-repeat: no-repeat;\n      background-size: 16px 16px;\n      margin-right: 9px; }\n    .header .write span {\n      font-size: 16px;\n      color: #fff; }\n  .header .user {\n    display: flex;\n    flex-direction: row;\n    position: relative; }\n    .header .user .login {\n      margin-right: 30px; }\n    .header .user a {\n      font-size: 16px;\n      color: #555; }\n    .header .user .img {\n      width: 32px;\n      height: 32px;\n      cursor: pointer; }\n  .header .expand {\n    position: absolute;\n    top: 46px;\n    left: -30px;\n    width: 92px;\n    padding-top: 10px;\n    padding-bottom: 10px;\n    background-color: #fff;\n    border: 1px solid #d5d5d5;\n    box-shadow: 1px 2px 8px 0 rgba(44, 64, 88, 0.2); }\n    .header .expand .item {\n      width: 100%;\n      height: 34px;\n      text-align: center;\n      line-height: 34px;\n      font-size: 14px;\n      color: #bbb; }\n    .header .expand .item:hover {\n      background-color: #f9f9f9;\n      color: #969696; }\n\n.footer {\n  width: 100vw;\n  height: 98px;\n  border-top: 1px solid #d5d5d5;\n  display: flex;\n  flex-direction: column;\n  align-items: center; }\n  .footer .body {\n    width: 1000px; }\n    .footer .body .row1 {\n      display: flex;\n      flex-direction: row;\n      margin-top: 28px; }\n    .footer .body .row2 {\n      margin-top: 18px; }\n    .footer .body .div {\n      padding-left: 10px;\n      padding-right: 10px;\n      border-right: 1px solid #969696; }\n    .footer .body .div:first-child {\n      padding-left: 0px; }\n    .footer .body .div:last-child {\n      padding-right: 0px;\n      border-right: 0px; }\n    .footer .body a {\n      font-size: 12px;\n      color: #969696; }\n    .footer .body a:hover {\n      color: #4a90e2; }\n\n.container {\n  width: 100vw;\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n  padding-top: 60px; }\n  .container .body {\n    width: 1000px;\n    min-height: calc(100vh - 160px); }\n\n.addArticle-layout {\n  margin: 50px auto 0;\n  padding: 0px 0px 20px 0px;\n  width: 600px;\n  z-index: 1;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n  -ms-flex-direction: column;\n  flex-direction: column;\n  -webkit-box-align: stretch;\n  -ms-flex-align: stretch;\n  align-items: stretch;\n  -ms-flex-negative: 0;\n  flex-shrink: 0;\n  overflow: hidden; }\n\n.fake-wrapper {\n  position: relative;\n  width: 600px;\n  height: 260px;\n  background: #f7f8f9;\n  line-height: 192px;\n  color: gray;\n  text-align: center; }\n\n.fake-banner {\n  height: 100%;\n  width: 100%; }\n\n.addArticle-banner {\n  position: absolute;\n  display: block;\n  top: 0;\n  left: 0;\n  height: 100%;\n  width: 100%;\n  opacity: 0;\n  cursor: pointer;\n  z-index: 2; }\n\n.addArticle-title {\n  margin: 20px auto; }\n\n.addArticle-input {\n  display: block;\n  width: 600px;\n  height: 60px;\n  box-sizing: border-box;\n  border: none;\n  border-radius: 2px;\n  font-size: 28px;\n  color: #888;\n  line-height: 16px;\n  padding: 6px 8px 2px 0px; }\n  .addArticle-input:focus {\n    outline: none;\n    border: none; }\n  .addArticle-input::placeholder {\n    font-size: 28px;\n    color: #999999; }\n\n.addArticle-upload {\n  border-radius: 4px;\n  text-align: center;\n  border: 1px solid #b3b3b3;\n  color: gray;\n  width: 82px;\n  height: 32px;\n  line-height: 30px;\n  padding: 0;\n  cursor: pointer; }\n\n/*simditor*/\n.simditor {\n  width: 600px !important;\n  border: none !important;\n  border-top: 1px solid #c9d8db !important;\n  margin: 0 auto; }\n  .simditor p {\n    width: 560px !important; }\n  .simditor .simditor-toolbar {\n    border-bottom: none !important; }\n\n.showArticle-layout {\n  padding: 30px 0;\n  margin: 0 auto;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  overflow: hidden; }\n\n.showArticle-left {\n  width: 650px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n  -ms-flex-direction: column;\n  flex-direction: column;\n  -webkit-box-align: stretch;\n  -ms-flex-align: stretch;\n  align-items: stretch;\n  -ms-flex-negative: 0;\n  flex-shrink: 0; }\n\n.showArticle-title {\n  width: 650px;\n  line-height: 30px;\n  font-size: 26px;\n  color: #3d464d;\n  margin-bottom: 30px; }\n\n.showArticle-info {\n  font-size: 12px;\n  color: #4a90e2;\n  line-height: 12px; }\n  .showArticle-info .showArticle-time {\n    font-size: 12px;\n    color: #bbbbbb;\n    line-height: 12px;\n    margin-left: 20px; }\n\n.showArticle-content {\n  margin: 30px auto;\n  padding: 0;\n  width: 640px;\n  z-index: 1;\n  font-size: 16px;\n  color: #3d464d;\n  line-height: 20px; }\n  .showArticle-content p {\n    width: 640px;\n    text-indent: 16px; }\n\n.showArticle-like, .showArticle-dislike {\n  margin: 0 auto;\n  background: #4a90e2;\n  border-radius: 4px;\n  width: 135px;\n  height: 40px;\n  color: #fff;\n  font-size: 16px;\n  line-height: 18px;\n  display: flex;\n  justify-content: center; }\n  .showArticle-like img, .showArticle-dislike img {\n    width: 17px;\n    height: 18px;\n    margin-right: 10px; }\n\n.showArticle-dislike {\n  background: #bbbbbb;\n  cursor: not-allowed; }\n\n.showArticle-right {\n  width: 320px;\n  margin-left: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n  -ms-flex-direction: column;\n  flex-direction: column;\n  -webkit-box-align: stretch;\n  -ms-flex-align: stretch;\n  align-items: stretch;\n  -ms-flex-negative: 0;\n  flex-shrink: 0; }\n\n.showArticle-curInfo {\n  background: #ffffff;\n  border: 1px solid #d5d5d5;\n  width: 278px;\n  height: 204px;\n  margin-top: 42px;\n  padding: 46px 20px 20px;\n  position: relative; }\n\n.showArticle-headImg {\n  box-shadow: 1px 3px 12px 0 rgba(44, 64, 88, 0.4);\n  border-radius: 4px;\n  width: 70px;\n  height: 70px;\n  position: absolute;\n  left: 20px;\n  top: -44px; }\n\n.showArticle-authorName, .showArticle-latest, .showArticle-latestTitle {\n  font-family: PingFangSC-Regular;\n  font-size: 14px;\n  color: #555555;\n  line-height: 14px;\n  margin-bottom: 12px; }\n\n.showArticle-authorInfo {\n  width: 280px;\n  height: 44px;\n  font-family: PingFangSC-Regular;\n  font-size: 12px;\n  color: #999999;\n  line-height: 20px;\n  padding-bottom: 20px;\n  border-bottom: 1px solid #d5d5d5;\n  margin-bottom: 20px; }\n\n.showArticle-latestTitle {\n  width: 280px;\n  line-height: 20px;\n  margin-top: 20px;\n  cursor: pointer; }\n\n.showArticle-latestTime {\n  font-family: PingFangSC-Regular;\n  font-size: 12px;\n  color: #bbbbbb;\n  line-height: 12px; }\n\n.personal-page {\n  width: 1000px;\n  margin: 30px auto;\n  display: flex;\n  justify-content: space-between; }\n\n.personal-info {\n  width: 320px;\n  height: 245px;\n  background: #ffffff;\n  border: 1px solid #d5d5d5;\n  border-radius: 4px; }\n  .personal-info .personal-info-box {\n    width: 100%;\n    padding: 30px 20px;\n    box-sizing: border-box;\n    border-bottom: 1px solid #d5d5d5; }\n    .personal-info .personal-info-box .personal-info-name {\n      font-family: PingFangSC-Regular;\n      font-size: 18px;\n      color: #555555;\n      line-height: 18px;\n      margin-bottom: 20px; }\n    .personal-info .personal-info-box .personal-info-detail {\n      display: flex; }\n      .personal-info .personal-info-box .personal-info-detail img {\n        width: 70px;\n        height: 70px; }\n      .personal-info .personal-info-box .personal-info-detail .personal-info-msg {\n        width: 200px;\n        margin-left: 10px; }\n        .personal-info .personal-info-box .personal-info-detail .personal-info-msg p {\n          font-family: PingFangSC-Regular;\n          font-size: 16px;\n          color: #555555;\n          line-height: 16px;\n          margin-bottom: 8px; }\n        .personal-info .personal-info-box .personal-info-detail .personal-info-msg div {\n          font-family: PingFangSC-Regular;\n          font-size: 14px;\n          color: #bbbbbb;\n          width: 100%; }\n  .personal-info .personal-info-data {\n    width: 100%;\n    padding: 30px 20px;\n    box-sizing: border-box; }\n    .personal-info .personal-info-data .personal-info-thumb {\n      width: 100%;\n      display: flex;\n      justify-content: space-between; }\n      .personal-info .personal-info-data .personal-info-thumb img {\n        width: 14px;\n        height: 15px;\n        margin-right: 10px; }\n      .personal-info .personal-info-data .personal-info-thumb span {\n        font-size: 14px;\n        color: #555555;\n        line-height: 14px; }\n      .personal-info .personal-info-data .personal-info-thumb p {\n        font-size: 14px;\n        color: #555555; }\n\n.personal-content {\n  width: 640px;\n  background: #ffffff;\n  border: 1px solid #d5d5d5;\n  border-radius: 4px; }\n  .personal-content .personal-content-tabs {\n    width: 100%;\n    height: 56px;\n    border-bottom: 1px solid #d5d5d5;\n    display: flex;\n    justify-content: center; }\n    .personal-content .personal-content-tabs .tabs-cell {\n      height: 100%;\n      line-height: 56px;\n      font-size: 16px;\n      color: #555555;\n      padding-left: 10px;\n      padding-right: 10px;\n      cursor: pointer; }\n    .personal-content .personal-content-tabs .active {\n      border-bottom: 2px solid #4a90e2;\n      box-sizing: border-box;\n      color: #4990e2; }\n  .personal-content .personal-content-list .item {\n    width: 580px;\n    box-sizing: border-box;\n    padding-top: 30px;\n    padding-bottom: 20px;\n    margin-left: 30px;\n    margin-right: 30px;\n    display: flex;\n    justify-content: space-between;\n    border-bottom: 1px solid #f0f0f0; }\n    .personal-content .personal-content-list .item .title {\n      font-size: 18px;\n      color: #555555;\n      line-height: 18px;\n      width: 390px; }\n    .personal-content .personal-content-list .item .detail {\n      width: 390px;\n      height: 44px;\n      font-size: 12px;\n      color: #555555;\n      line-height: 20px;\n      margin-top: 12px;\n      overflow: hidden; }\n    .personal-content .personal-content-list .item .like .hot {\n      margin-right: 10px;\n      width: 12px;\n      height: 15px; }\n    .personal-content .personal-content-list .item .like .thumb-up {\n      margin-left: 20px;\n      margin-right: 10px;\n      width: 14px;\n      height: 15px; }\n    .personal-content .personal-content-list .item .like span {\n      font-size: 12px;\n      color: #bbbbbb;\n      line-height: 12px; }\n    .personal-content .personal-content-list .item .img {\n      width: 176px;\n      height: 93px; }\n  .personal-content .personal-content-list a:last-child {\n    border-bottom: 0px solid #f0f0f0; }\n  .personal-content .personal-content-list .personal-content-none {\n    text-align: center;\n    width: 640px;\n    padding-top: 80px;\n    color: #555555; }\n\n.setting-page {\n  width: 1000px;\n  margin: 30px auto 0;\n  position: relative; }\n  .setting-page .setting-nav {\n    border: 1px solid #d5d5d5;\n    border-radius: 4px;\n    width: 318px;\n    height: 89px;\n    position: fixed; }\n    .setting-page .setting-nav p {\n      width: 100%;\n      height: 45px;\n      box-sizing: border-box;\n      border-bottom: 1px solid #d5d5d5;\n      font-size: 15px;\n      color: #555555;\n      line-height: 45px;\n      padding-left: 20px;\n      border-left: 3px solid transparent; }\n    .setting-page .setting-nav p:last-child {\n      border-bottom: 0px solid #d5d5d5; }\n    .setting-page .setting-nav .active {\n      border-left: 3px solid #4990e2;\n      color: #4990e2; }\n  .setting-page .setting-content {\n    width: 640px;\n    float: right; }\n    .setting-page .setting-content .setting-content-detail {\n      width: 100%;\n      padding: 27px 30px 33px;\n      box-sizing: border-box;\n      border: 1px solid #d5d5d5;\n      border-radius: 4px;\n      margin-bottom: 30px; }\n      .setting-page .setting-content .setting-content-detail .setting-content-title {\n        font-size: 16px;\n        color: #555555; }\n      .setting-page .setting-content .setting-content-detail .setting-content-base {\n        width: 100%;\n        display: flex;\n        justify-content: space-between;\n        margin-top: 20px; }\n        .setting-page .setting-content .setting-content-detail .setting-content-base .setting-content-img {\n          width: 120px;\n          height: 120px;\n          position: relative; }\n          .setting-page .setting-content .setting-content-detail .setting-content-base .setting-content-img:hover .mask {\n            display: flex; }\n          .setting-page .setting-content .setting-content-detail .setting-content-base .setting-content-img .mask {\n            width: 120px;\n            height: 120px;\n            background-color: rgba(0, 0, 0, 0.5);\n            position: absolute;\n            top: 0px;\n            left: 0px;\n            display: none;\n            justify-content: center;\n            align-items: center; }\n            .setting-page .setting-content .setting-content-detail .setting-content-base .setting-content-img .mask div {\n              text-align: center; }\n              .setting-page .setting-content .setting-content-detail .setting-content-base .setting-content-img .mask div .upload {\n                width: 120px;\n                height: 120px;\n                position: absolute;\n                top: 0px;\n                left: 0px;\n                opacity: 0; }\n              .setting-page .setting-content .setting-content-detail .setting-content-base .setting-content-img .mask div img {\n                width: 28px;\n                height: 19px; }\n              .setting-page .setting-content .setting-content-detail .setting-content-base .setting-content-img .mask div p {\n                font-size: 14px;\n                color: #ffffff; }\n          .setting-page .setting-content .setting-content-detail .setting-content-base .setting-content-img img {\n            width: 120px;\n            height: 120px; }\n        .setting-page .setting-content .setting-content-detail .setting-content-base .setting-content-separate {\n          border-left: 1px solid #d5d5d5;\n          height: 300px; }\n        .setting-page .setting-content .setting-content-detail .setting-content-base .setting-content-box {\n          width: 400px; }\n          .setting-page .setting-content .setting-content-detail .setting-content-base .setting-content-box .setting-content-input {\n            width: 100%;\n            margin-bottom: 20px; }\n            .setting-page .setting-content .setting-content-detail .setting-content-base .setting-content-box .setting-content-input p {\n              font-size: 18px;\n              color: #999999;\n              margin-bottom: 10px; }\n            .setting-page .setting-content .setting-content-detail .setting-content-base .setting-content-box .setting-content-input input {\n              width: 100%;\n              height: 32px;\n              background: #ffffff;\n              border: 1px solid #acacac;\n              border-radius: 4px;\n              padding-left: 10px;\n              box-sizing: border-box; }\n          .setting-page .setting-content .setting-content-detail .setting-content-base .setting-content-box .setting-content-btn {\n            width: 100%;\n            height: 34px;\n            background-color: #4990e2;\n            text-align: center;\n            color: #fff;\n            line-height: 34px;\n            font-size: 16px;\n            border-radius: 4px;\n            cursor: pointer; }\n      .setting-page .setting-content .setting-content-detail .setting-cell {\n        width: 580px;\n        height: 84px;\n        display: flex;\n        justify-content: space-between;\n        align-items: center; }\n        .setting-page .setting-content .setting-content-detail .setting-cell p {\n          font-size: 18px;\n          color: #999999; }\n        .setting-page .setting-content .setting-content-detail .setting-cell div {\n          background: #4990e2;\n          border-radius: 4px;\n          width: 92px;\n          height: 41px;\n          color: #ffffff;\n          font-size: 16px;\n          text-align: center;\n          line-height: 41px;\n          cursor: pointer; }\n\n.page-setting-mask {\n  width: 100vw;\n  background-color: rgba(0, 0, 0, 0.4);\n  position: fixed;\n  top: 0px;\n  left: 0px;\n  bottom: 0px;\n  right: 0px;\n  justify-content: center;\n  align-items: center;\n  display: none;\n  z-index: 2; }\n  .page-setting-mask .setting-mask-div {\n    width: 460px;\n    margin: 100px auto;\n    padding: 30px 40px;\n    box-sizing: border-box;\n    background-color: #ffffff;\n    border-radius: 4px;\n    position: relative; }\n    .page-setting-mask .setting-mask-div .close {\n      position: absolute;\n      right: 24px;\n      top: 24px;\n      font-size: 20px;\n      cursor: pointer; }\n    .page-setting-mask .setting-mask-div span {\n      font-size: 20px;\n      color: #555555;\n      display: inline-block;\n      margin-bottom: 20px; }\n    .page-setting-mask .setting-mask-div p {\n      font-size: 18px;\n      color: #999999; }\n    .page-setting-mask .setting-mask-div input {\n      width: 100%;\n      height: 32px;\n      border: 1px solid #acacac;\n      border-radius: 4px;\n      margin-top: 10px;\n      margin-bottom: 20px;\n      box-sizing: border-box;\n      padding-left: 10px; }\n    .page-setting-mask .setting-mask-div .setting-submit {\n      width: 100%;\n      height: 40px;\n      font-size: 18px;\n      color: #ffffff;\n      margin-top: 20px;\n      margin-bottom: 40px;\n      background: #4990e2;\n      border-radius: 4px;\n      line-height: 40px;\n      text-align: center;\n      cursor: pointer; }\n\n.home-page {\n  width: 100%;\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between; }\n  .home-page .recent {\n    width: 640px;\n    padding-top: 10px;\n    padding-bottom: 60px; }\n    .home-page .recent .item {\n      width: 100%;\n      padding-top: 20px;\n      padding-bottom: 20px;\n      border-bottom: 1px solid #f0f0f0; }\n      .home-page .recent .item .user {\n        display: flex;\n        flex-direction: row;\n        align-items: center; }\n        .home-page .recent .item .user .head {\n          width: 32px;\n          height: 32px;\n          margin-right: 10px; }\n        .home-page .recent .item .user .name {\n          font-size: 12px;\n          color: #555;\n          margin-right: 10px; }\n        .home-page .recent .item .user .time {\n          font-size: 12px;\n          color: #bbb; }\n      .home-page .recent .item .article {\n        width: 100%;\n        display: flex;\n        flex-direction: row;\n        justify-content: space-between; }\n      .home-page .recent .item .title {\n        max-width: 450px;\n        height: 25px;\n        margin-top: 6px;\n        margin-bottom: 6px;\n        font-size: 18px;\n        color: #555;\n        overflow: hidden;\n        white-space: nowrap;\n        text-overflow: ellipsis; }\n      .home-page .recent .item .content {\n        width: 420px;\n        overflow: hidden;\n        display: -webkit-box;\n        -webkit-box-orient: vertical;\n        -webkit-line-clamp: 3;\n        font-size: 12px;\n        color: #555;\n        line-height: 22px; }\n        .home-page .recent .item .content p {\n          width: 420px; }\n      .home-page .recent .item .banner {\n        width: 176px;\n        height: 92px;\n        margin-top: 6px; }\n    .home-page .recent .load {\n      width: 640px;\n      height: 50px;\n      border: 1px solid #f0f0f0;\n      margin-top: 30px;\n      font-size: 16px;\n      color: #bbb;\n      line-height: 50px;\n      text-align: center;\n      cursor: pointer; }\n    .home-page .recent .load:hover {\n      color: #4a90e2; }\n  .home-page .hot {\n    width: 320px; }\n    .home-page .hot .title {\n      width: 100%;\n      height: 54px;\n      border-top: 2px solid #4a90e2;\n      border-bottom: 1px dashed #f0f0f0;\n      font-size: 14px;\n      color: #555;\n      line-height: 54px;\n      text-align: center;\n      margin-top: 30px;\n      margin-bottom: 26px; }\n    .home-page .hot .item-top {\n      display: flex;\n      flex-direction: column;\n      justify-content: space-between;\n      overflow: hidden;\n      width: 320px;\n      height: 168px;\n      background-image: url();\n      background-position: center;\n      background-repeat: no-repeat;\n      background-size: 320px 168px;\n      border-radius: 4px;\n      margin-bottom: 20px; }\n      .home-page .hot .item-top .ranking {\n        width: 38px;\n        height: 20px;\n        margin-left: 20px;\n        background-position: center;\n        background-repeat: no-repeat;\n        background-size: 38px 20px;\n        color: #fff;\n        display: flex;\n        flex-direction: row;\n        justify-content: center;\n        align-items: center; }\n        .home-page .hot .item-top .ranking .font10 {\n          -webkit-transfrom: originX(0);\n          -webkit-transform: scale(0.72);\n          margin-top: -2px; }\n      .home-page .hot .item-top .blocked {\n        width: 288px;\n        height: 30px;\n        background-color: rgba(0, 0, 0, 0.4);\n        padding-top: 8px;\n        padding-bottom: 8px;\n        padding-left: 16px;\n        padding-right: 16px;\n        line-height: 16px;\n        font-size: 12px;\n        color: #fff; }\n    .home-page .hot .item {\n      display: flex;\n      flex-direction: row;\n      margin-bottom: 20px; }\n      .home-page .hot .item .banner {\n        width: 112px;\n        height: 60px;\n        margin-right: 10px; }\n      .home-page .hot .item .content {\n        display: flex;\n        flex-direction: column;\n        justify-content: space-between;\n        width: 196px;\n        font-size: 12px;\n        color: #555;\n        line-height: 16px; }\n      .home-page .hot .item .time {\n        font-size: 12px;\n        color: #bbb; }\n    .home-page .hot .advert {\n      display: flex;\n      flex-direction: column;\n      align-items: flex-end; }\n      .home-page .hot .advert .img {\n        width: 320px;\n        height: 220px;\n        cursor: pointer; }\n      .home-page .hot .advert .text {\n        width: 34px;\n        height: 16px;\n        background-color: rgba(0, 0, 0, 0.3);\n        font-size: 12px;\n        color: #fff;\n        text-align: center;\n        line-height: 16px;\n        cursor: default; }\n\n.toast-warpper {\n  width: 100vw;\n  height: 76px;\n  position: fixed;\n  top: 0;\n  left: 0;\n  z-index: 999;\n  background: rgba(73, 144, 226, 0.8);\n  text-align: center;\n  display: flex;\n  display: -webkit-flex;\n  align-items: center;\n  justify-content: center;\n  color: #fff;\n  animation-name: ToastFadeOut;\n  animation-timing-function: ease-in-out; }\n\n@keyframes ToastFadeOut {\n  0% {\n    opacity: 1;\n    top: -76px; }\n  20% {\n    opacity: 1;\n    top: 0; }\n  80% {\n    opacity: 1; }\n  100% {\n    opacity: 0; } }\n", ""]);
 
 // exports
 
@@ -32261,8 +31966,6 @@ var _redux = __webpack_require__(4);
 
 var _reactRouterRedux = __webpack_require__(179);
 
-var _test = __webpack_require__(182);
-
 var _article = __webpack_require__(183);
 
 var _header = __webpack_require__(184);
@@ -32272,7 +31975,6 @@ var _home = __webpack_require__(185);
 var _personal = __webpack_require__(186);
 
 var rootReducer = (0, _redux.combineReducers)({
-  test: _test.test,
   article: _article.article,
   header: _header.header,
   home: _home.home,
@@ -32586,50 +32288,7 @@ function routerMiddleware(history) {
 }
 
 /***/ }),
-/* 182 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.test = test;
-
-var _lodash = __webpack_require__(14);
-
-var _lodash2 = _interopRequireDefault(_lodash);
-
-var _actionTypes = __webpack_require__(7);
-
-var types = _interopRequireWildcard(_actionTypes);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var defaultStatus = {
-  a: 'a',
-  b: 'b',
-  c: false
-};
-
-function test() {
-  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : defaultStatus;
-  var action = arguments[1];
-
-  switch (action.type) {
-    case types.TEST:
-      console.log('reducers action', action);
-      return (0, _lodash2.default)({}, state, action.payload);
-
-    default:
-      return state;
-  }
-}
-
-/***/ }),
+/* 182 */,
 /* 183 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -32851,10 +32510,9 @@ function home() {
         return (0, _lodash2.default)({}, state, _stateObj2);
       }
 
-    case types.CLEAR_PROPS:
-      {
-        return defaultStatus;
-      }
+    // case types.CLEAR_PROPS: {
+    //   return defaultStatus;
+    // }
 
     default:
       {

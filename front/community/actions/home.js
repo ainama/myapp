@@ -23,6 +23,6 @@ export function getArticleHot() {
   };
 }
 
-export function clearProps() {
-  return { type: types.CLEAR_PROPS };
-}
+// export function clearProps() {
+//   return { type: types.CLEAR_PROPS };
+// }

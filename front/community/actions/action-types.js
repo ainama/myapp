@@ -1,5 +1,3 @@
-export const TEST = 'TEST';
-
 export const ADD_ARTICLE_IMG = 'ADD_ARTICLE_IMG';  // add/edit页上传图片
 export const SHOW_ARTICLE = 'SHOW_ARTICLE';  // 展示文章
 export const SHOW_LIKE = 'SHOW_LIKE';  // 文章详情页展示like
@@ -9,7 +7,7 @@ export const GET_USER_BASE = 'GET_USER_BASE';
 export const GET_ARTICLE_RECENT = 'GET_ARTICLE_RECENT';
 export const GET_ARTICLE_HOT = 'GET_ARTICLE_HOT';
 export const SET_LOAD_TEXT = 'SET_LOAD_TEXT';
-export const CLEAR_PROPS = 'CLEAR_PROPS';
+// export const CLEAR_PROPS = 'CLEAR_PROPS';
 
 export const GET_USER_INFO = 'GET_USER_INFO';
 export const GET_USER_ARTICLES = 'GET_USER_ARTICLES';

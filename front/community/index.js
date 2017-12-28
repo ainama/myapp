@@ -10,7 +10,7 @@ class Index extends React.Component {
 
   render() {
     return (
-      <div>
+      <React.Fragment>
         <Header />
         <div className = 'container'>
           <div className = 'body'>
@@ -18,7 +18,7 @@ class Index extends React.Component {
           </div>
         </div>
         <Footer />
-      </div>
+      </React.Fragment>
     );
   }
 }

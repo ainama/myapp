@@ -259,7 +259,7 @@ router.get('/logout', function (req, res) {
 /**
  * 获取用户信息（顶导）
  * @method /api/community/user/base
- * @author zhang
+ * @author zn
  */
 router.get('/user/base', function (req, res) {
   var sid = req.session.sessionId;
@@ -273,7 +273,7 @@ router.get('/user/base', function (req, res) {
 /**
  * 最近文章列表
  * @method /api/community/article/recent
- * @author zhang
+ * @author zn
  */
 router.get('/article/recent', function (req, res) {
   var start = (req.query.page - 1) * 10;
@@ -288,7 +288,7 @@ router.get('/article/recent', function (req, res) {
 /**
  * 热门文章列表
  * @method /api/community/article/hot
- * @author zhang
+ * @author zn
  */
 router.get('/article/hot', function (req, res) {
   var sql = 'SELECT id, title, banner, create_time FROM t_article ORDER BY praise DESC limit 10';
@@ -493,12 +493,35 @@ router.post('/article/like', function(req, res) {
         query(sql, null, function (error, results, fields) {
           if (error) throw error;
         });
+
+        insertNews(1, req.session.sessionId, req.body.article_id);
       } else {
         res.send({ code: 10001, msg: '发布失败' });
       }
     }
   });
 });
+
+/**
+ * 插入消息
+ * @method insertNews
+ * @param {int} type 1-消息 2-收藏
+ * @param {int} userID 当前用户ID
+ * @param {int} articleID 文章ID
+ * @author zn
+ */
+function insertNews(type, userID, articleID) {
+  // 查找文章作者
+  var select = 'SELECT author_id FROM t_article WHERE id=' + articleID;
+  query(select, null, function (error, results, fields) {
+    if (error) throw error;
+    var authorID = results[0].author_id;
+    // 插入消息
+    var insert = 'INSERT INTO t_news(type, launch_id, accept_id) VALUES (?, ?, ?)';
+    var params = [type, userID, authorID];
+    query(insert, params);
+  });
+}
 
 /**
  * get authorInfo

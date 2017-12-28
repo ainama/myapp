@@ -28265,7 +28265,7 @@ var Home = function (_React$Component) {
       var len = this.props.home.recentList.length;
       if (len == 0) this.props.actions.getArticleRecent('page=1');
 
-      var len2 = this.props.home.hotList.length;
+      var len2 = this.props.home.hostList.length;
       if (len2 == 0) this.props.actions.getArticleHot();
     }
   }, {

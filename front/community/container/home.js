@@ -21,7 +21,7 @@ class Home extends React.Component {
     let len = this.props.home.recentList.length;
     if (len == 0) this.props.actions.getArticleRecent('page=1');
 
-    let len2 = this.props.home.hotList.length;
+    let len2 = this.props.home.hostList.length;
     if (len2 == 0) this.props.actions.getArticleHot();
   }
 
